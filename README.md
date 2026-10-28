@@ -75,3 +75,10 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Keranjang/pembayaran menjadi floating checkout sheet pada layar kecil saat ada item; rincian item dapat digulir dan metode pembayaran, uang diterima, kembalian, serta tombol bayar tetap berada dalam panel.
 - Penyegaran gaya visual dengan warna wine, orange hangat, ivory, radius lembut, dan bayangan ringan.
 - Uji langsung di perangkat dan printer tetap diperlukan sebelum operasional.
+
+## v2.5 — perbaikan interaksi kasir
+- Kartu menu dapat diketuk untuk menambahkan satu item; tombol +/− tetap mengubah qty secara langsung.
+- Bottom sheet pembayaran di HP muncul saat item pertama ditambahkan. Tampilan tertutup hanya menampilkan jumlah item dan total, lalu dapat dibuka untuk mengatur pembayaran tanpa scroll panjang ke bawah.
+- Panel pembayaran tetap menggunakan validasi transaksi, stok, metode pembayaran, uang diterima, dan kembalian yang sudah ada.
+- Edge panel navigasi kiri dipersempit; warna dan bayangan diperhalus.
+- Perbarui cache/service worker ke v2.5. Uji ulang pada perangkat sebelum digunakan langsung.
