@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#5c1d18">
+  <meta name="description" content="Kasir PWA OR!ON CORNDOG dengan rekap omzet, HPP, dan laba.">
+  <title>OR!ON CORNDOG — POS</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon-192.png">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">O!</div>
+    <div class="brand-copy"><strong>OR!ON <span>CORNDOG</span></strong><small>POINT OF SALE</small></div>
+    <div class="top-actions"><span id="offline-status" class="status"><i></i> Online</span><button id="history-btn" class="btn btn-ghost">Riwayat</button></div>
+  </header>
+
+  <main class="app-shell">
+    <section class="metrics" aria-label="Ringkasan hari ini">
+      <article class="metric metric-sales"><span>Omset hari ini</span><strong id="metric-sales">Rp0</strong><small id="metric-count">0 transaksi</small></article>
+      <article class="metric"><span>Total HPP</span><strong id="metric-hpp">Rp0</strong><small>Modal produk terjual</small></article>
+      <article class="metric"><span>Laba kotor</span><strong id="metric-profit">Rp0</strong><small>Omset dikurangi HPP</small></article>
+    </section>
+
+    <div class="workspace">
+      <section class="catalog-panel">
+        <div class="section-heading"><div><p class="eyebrow">MENU OR!ON</p><h1>Pilih produk</h1></div><span id="product-count" class="count-pill">0 produk</span></div>
+        <label class="searchbox"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Cari menu, mis. mozzarella..." autocomplete="off"><kbd>/</kbd></label>
+        <nav id="category-filters" class="category-filters" aria-label="Filter kategori"></nav>
+        <div id="product-grid" class="product-grid"></div>
+      </section>
+
+      <aside class="cart-panel">
+        <div class="cart-heading"><div><p class="eyebrow">PESANAN AKTIF</p><h2>Keranjang <span id="cart-count" class="cart-bubble">0</span></h2></div><button id="clear-cart" class="text-button">Kosongkan</button></div>
+        <div id="cart-items" class="cart-items"><div class="empty-cart"><span>＋</span><strong>Belum ada pesanan</strong><small>Pilih menu untuk mulai transaksi.</small></div></div>
+        <div class="cart-bottom">
+          <div class="totals-line"><span>Subtotal penjualan</span><strong id="cart-sales">Rp0</strong></div>
+          <div class="totals-line"><span>Estimasi HPP</span><strong id="cart-hpp">Rp0</strong></div>
+          <div class="totals-line profit-line"><span>Estimasi laba kotor</span><strong id="cart-profit">Rp0</strong></div>
+          <label class="field-label" for="payment-method">Metode pembayaran</label>
+          <select id="payment-method" class="payment-select"><option value="CASH">Tunai</option><option value="QRIS">QRIS</option></select>
+          <div id="cash-area"><label class="field-label" for="cash-received">Uang diterima</label><input id="cash-received" class="cash-input" type="number" min="0" inputmode="numeric" placeholder="Masukkan nominal tunai"></div>
+          <div id="change-row" class="change-row"><span>Kembalian</span><strong id="change-value">Rp0</strong></div>
+          <button id="checkout-btn" class="checkout-btn" disabled>Proses pembayaran <span>→</span></button>
+          <p class="checkout-note">Transaksi disimpan di perangkat ini.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <dialog id="history-dialog" class="modal">
+    <div class="modal-head"><div><p class="eyebrow">CATATAN PENJUALAN</p><h2>Riwayat transaksi</h2></div><button class="icon-button" data-close="history-dialog" aria-label="Tutup">×</button></div>
+    <div class="history-toolbar"><span id="history-summary">0 transaksi</span><button id="export-csv" class="btn btn-outline">Ekspor CSV</button></div>
+    <div id="history-list" class="history-list"></div>
+    <div class="modal-foot"><button id="clear-history" class="btn btn-danger">Hapus semua riwayat</button><button class="btn btn-primary" data-close="history-dialog">Selesai</button></div>
+  </dialog>
+
+  <dialog id="receipt-dialog" class="modal receipt-modal">
+    <div class="receipt-content" id="receipt-content"></div>
+    <div class="modal-foot"><button class="btn btn-outline" data-close="receipt-dialog">Tutup</button><button id="print-receipt" class="btn btn-primary">Cetak struk</button></div>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./js/db.js"></script>
+  <script src="./js/app.js"></script>
+</body>
+</html>

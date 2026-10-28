@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "short_name": "OR!ON POS",
+  "name": "OR!ON CORNDOG POS & Margin App",
+  "description": "Kasir OR!ON CORNDOG dengan rekap omzet, HPP, laba, dan transaksi offline.",
+  "lang": "id-ID",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fdfaf6",
+  "theme_color": "#5c1d18",
+  "icons": [
+    { "src": "icons/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any maskable" },
+    { "src": "icons/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any maskable" }
+  ]
+}
