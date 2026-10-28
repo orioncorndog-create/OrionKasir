@@ -59,3 +59,10 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Navigasi HP dibuat horizontal, dapat digeser, dan tidak memaksa semua tab masuk ke layar.
 - CSS cetak struk diarahkan ke format thermal 58 mm. Tetap lakukan uji cetak pada perangkat/printer yang digunakan.
 - Foto disimpan sebagai data gambar pada record menu; hindari gambar berukuran sangat besar karena mode lokal memakai penyimpanan browser.
+
+## Perbaikan v2.2
+- Kartu menu kini hanya memakai foto produk. Jika gambar belum ditambahkan, area gambar dibiarkan kosong tanpa emoji atau ikon.
+- Foto produk memakai object-fit: contain agar tidak terpotong; rasio dan area gambar dibuat konsisten.
+- Navigasi responsif diperbaiki: pada HP tampil penuh dalam grid 2/3 kolom, bukan menimpa judul halaman atau hanya terlihat setengah.
+- Tombol smart sidebar untuk menyembunyikan/menampilkan navigasi. Pada desktop, navigasi dapat diciutkan menjadi ikon.
+- Header logo disesuaikan agar tidak terpotong dan seluruh halaman menggunakan tata letak responsif yang lebih rapi.
