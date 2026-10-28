@@ -4,3 +4,37 @@
 @media(max-width:1100px){.content{padding:18px}.pos-grid{grid-template-columns:minmax(0,1fr) 320px}.split{grid-template-columns:1fr}.sidebar{width:190px}.layout{grid-template-columns:190px minmax(0,1fr)}}
 @media(max-width:780px){.topbar{padding:0 14px;height:62px}.top-actions{gap:8px}.user-label{display:none}.layout{display:block}.sidebar{padding:8px 10px;border-right:0;border-bottom:1px solid var(--line);position:sticky;top:62px;z-index:4;display:block}.outlet-label{display:none}#main-nav{display:flex;overflow:auto;gap:4px} .nav-btn{padding:9px 12px;white-space:nowrap;gap:7px}.nav-btn span{font-size:15px}.sidebar-bottom{display:none}.content{padding:15px 12px}.page-heading{align-items:flex-start;flex-wrap:wrap}.page-heading .btn{padding:9px 11px}.metrics,.metrics.compact{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{padding:13px}.metric strong{font-size:17px}.pos-grid{grid-template-columns:1fr}.cart-panel{position:static;order:2}.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.product-card{min-height:128px}.catalog{padding:12px}.toolbar{flex-wrap:wrap}.toolbar .btn{flex:0 0 auto}.split{grid-template-columns:1fr}.form-fields{grid-template-columns:1fr}.form-fields label.full-field{grid-column:auto}.report-filters{display:grid;grid-template-columns:1fr 1fr}.report-filters button{grid-column:1/-1}.status{font-size:0}.status i{width:9px;height:9px}.brand strong{font-size:13px}.brand-mark.small{width:34px;height:34px}.modal{padding:17px}.cart-items{max-height:260px}}
 @media print{body *{visibility:hidden!important}.receipt,.receipt *{visibility:visible!important}.receipt{position:absolute;left:0;top:0;width:100%;padding:0}.modal-actions{display:none!important}}
+
+/* OR!ON POS v2.1 fixes: branding, menu photos, mobile navigation and thermal receipt */
+.brand-logo{width:118px;height:42px;object-fit:contain;mix-blend-mode:multiply;border-radius:5px}
+.login-logo{display:block;width:min(100%,260px);height:100px;object-fit:contain;mix-blend-mode:multiply;margin:0 auto 12px}
+.product-visual{overflow:hidden;display:grid;place-items:center}
+.product-visual img{width:100%;height:100%;max-height:84px;object-fit:cover;border-radius:10px}
+.menu-thumb{width:42px;height:42px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-right:6px}
+.form-image-preview{display:block;width:100%;max-width:220px;max-height:180px;object-fit:contain;border:1px solid var(--line);border-radius:10px;margin-top:8px;background:#faf7f1}
+.receipt-logo{display:block;width:150px;max-height:65px;object-fit:contain;margin:0 auto 8px;mix-blend-mode:multiply}
+@media(max-width:780px){
+  #main-nav{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;max-width:100%;padding-bottom:4px;align-items:stretch}
+  .nav-btn{flex:0 0 auto;min-width:max-content;font-size:12px;line-height:1.2}
+  .sidebar{overflow:hidden;top:62px}
+  .brand-logo{width:84px;height:34px}
+  .topbar{gap:8px}
+  .top-actions .btn{padding:8px 10px}
+  .metrics.compact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .product-visual{height:70px}
+}
+@media print{
+  @page{size:58mm auto;margin:3mm}
+  html,body{width:58mm!important;min-width:0!important;margin:0!important;padding:0!important;background:#fff!important}
+  body *{visibility:hidden!important}
+  #receipt-dialog[open]{display:block!important;visibility:visible!important;position:absolute!important;inset:0 auto auto 0!important;width:52mm!important;max-width:52mm!important;height:auto!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:#fff!important;overflow:visible!important}
+  #receipt-content,#receipt-content *,.receipt,.receipt *{visibility:visible!important}
+  #receipt-content{display:block!important;width:52mm!important}
+  .receipt{position:static!important;width:52mm!important;max-width:52mm!important;padding:0!important;margin:0!important;color:#000!important;background:#fff!important;font-family:monospace!important}
+  .receipt h2{font-size:13px!important;margin:3px 0!important}
+  .receipt p{font-size:9px!important;margin:3px 0!important}
+  .receipt .receipt-line{font-size:9px!important;gap:4px!important;break-inside:avoid}
+  .receipt .receipt-total{font-size:11px!important}
+  .receipt-logo{width:34mm!important;max-height:16mm!important}
+  .modal-actions{display:none!important;visibility:hidden!important}
+}

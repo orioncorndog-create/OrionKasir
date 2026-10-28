@@ -1,4 +1,4 @@
-# OR!ON CORNDOG POS Pro v2
+# OR!ON CORNDOG POS Pro v2.1 — UI & receipt fixes
 
 ## Fitur yang tersedia
 - Login demo lokal.
@@ -51,3 +51,11 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - `js/supabase-config.js` — konfigurasi backend yang perlu diisi
 - `schema.sql` — tabel dan kebijakan dasar Supabase
 - `manifest.json`, `service-worker.js`, `icons/` — dukungan PWA
+
+## Perbaikan v2.1
+- Logo OR!ON CORNDOG ditampilkan di header, halaman login, dan struk.
+- Form tambah/edit menu mendukung unggah foto dari perangkat; gambar dikompres sebelum disimpan.
+- Foto menu ditampilkan pada kartu kasir dan tabel menu.
+- Navigasi HP dibuat horizontal, dapat digeser, dan tidak memaksa semua tab masuk ke layar.
+- CSS cetak struk diarahkan ke format thermal 58 mm. Tetap lakukan uji cetak pada perangkat/printer yang digunakan.
+- Foto disimpan sebagai data gambar pada record menu; hindari gambar berukuran sangat besar karena mode lokal memakai penyimpanan browser.
