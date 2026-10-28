@@ -8,12 +8,12 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css">
+<link rel="stylesheet" href="./css/styles.css?v=2.4">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
   <form id="login-form" class="login-card">
-    <img class="login-logo" src="./assets/orion-logo.jpg" alt="Logo OR!ON CORNDOG"><p class="eyebrow">OR!ON CORNDOG</p><h1>Masuk ke POS</h1>
+    <img class="login-logo" src="./assets/orion-logo-full-4k.png?v=2.4" alt="Logo OR!ON CORNDOG lengkap"><p class="eyebrow">POINT OF SALE PRO</p><h1>Masuk ke POS</h1>
     <p class="muted">Gunakan akun outlet untuk membuka kasir dan laporan.</p>
     <label>Email<input id="login-email" type="email" placeholder="kasir@outlet.com" autocomplete="username" required></label>
     <label>Password<input id="login-password" type="password" placeholder="Password akun" autocomplete="current-password" required></label>
@@ -23,9 +23,10 @@
 </div>
 <div id="app" class="app hidden">
 <header class="topbar">
-  <div class="brand"><img class="brand-logo" src="./assets/orion-logo.jpg" alt="Logo OR!ON CORNDOG"><div><strong>OR!ON <span>CORNDOG</span></strong><small>POINT OF SALE PRO</small></div></div>
+  <div class="brand"><img class="brand-logo" src="./assets/orion-logo-full-4k.png?v=2.4" alt="Logo OR!ON CORNDOG lengkap"><div class="brand-caption"><small>POINT OF SALE PRO</small><span>Kasir • Inventori • Laporan</span></div></div>
   <div class="top-actions"><span id="connection-status" class="status"><i></i> Mode lokal</span><span id="user-label" class="user-label">Admin</span><button id="logout-btn" class="btn ghost small-btn">Keluar</button></div>
 </header>
+<button type="button" id="nav-edge-toggle" class="nav-edge-toggle" aria-label="Buka menu navigasi" aria-expanded="false"><span class="edge-grip"></span><span class="edge-menu-icon">☰</span></button><button type="button" id="nav-scrim" class="nav-scrim" aria-label="Tutup menu navigasi" tabindex="-1"></button>
 <div class="layout">
 <aside class="sidebar">
   <button type="button" id="sidebar-toggle" class="sidebar-toggle" aria-expanded="true"><span class="toggle-icon">☰</span><span class="toggle-label">Menu navigasi</span><span class="toggle-chevron">⌄</span></button>
@@ -125,5 +126,5 @@
 <dialog id="close-dialog" class="modal"><form id="close-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">OPERASIONAL</p><h2>Tutup outlet</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="muted">Ringkasan hari ini akan disimpan sebagai laporan tutup outlet. Pastikan transaksi sudah selesai.</p><div id="close-summary"></div><label>Catatan tutup outlet<textarea id="close-note" rows="3" placeholder="Catatan kas, stok, atau kendala..."></textarea></label><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn danger">Konfirmasi tutup outlet</button></div></form></dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.4"></script>
 </body></html>

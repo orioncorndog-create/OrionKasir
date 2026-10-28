@@ -66,3 +66,12 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Navigasi responsif diperbaiki: pada HP tampil penuh dalam grid 2/3 kolom, bukan menimpa judul halaman atau hanya terlihat setengah.
 - Tombol smart sidebar untuk menyembunyikan/menampilkan navigasi. Pada desktop, navigasi dapat diciutkan menjadi ikon.
 - Header logo disesuaikan agar tidak terpotong dan seluruh halaman menggunakan tata letak responsif yang lebih rapi.
+
+
+## OR!ON POS Pro v2.4 — branding, mobile checkout, quantity controls
+- Logo PNG transparan penuh 4K dipasang pada login, header, dan struk tanpa blend mode atau latar bawaan; rasio logo dipertahankan agar kata CORNDOG dan garis bawah tidak terpotong.
+- Login dan header menggunakan dimensi responsif dan object-fit: contain.
+- Setiap kartu produk memiliki kontrol qty minus/angka/plus; jumlah tersinkron dengan keranjang, batas stok tetap berlaku.
+- Keranjang/pembayaran menjadi floating checkout sheet pada layar kecil saat ada item; rincian item dapat digulir dan metode pembayaran, uang diterima, kembalian, serta tombol bayar tetap berada dalam panel.
+- Penyegaran gaya visual dengan warna wine, orange hangat, ivory, radius lembut, dan bayangan ringan.
+- Uji langsung di perangkat dan printer tetap diperlukan sebelum operasional.
