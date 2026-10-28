@@ -1,49 +1,39 @@
--- Skema MySQL opsional untuk pengembangan backend.
--- Aplikasi starter ini menggunakan localStorage dan belum mengirim data ke MySQL.
-CREATE DATABASE IF NOT EXISTS orion_corndog_pos
-  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE orion_corndog_pos;
+-- OR!ON CORNDOG POS v2 — Supabase SQL
+-- Jalankan pada Supabase SQL Editor. Buat user melalui Authentication > Users.
+-- Catatan: pos_state menyimpan snapshot aplikasi untuk prototipe/small outlet.
+-- Untuk penggunaan produksi multi-cabang dan audit ketat, normalisasi tabel dan kebijakan role lebih lanjut.
 
-CREATE TABLE categories (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(50) NOT NULL UNIQUE
+create table if not exists public.pos_state (
+  id integer primary key check (id = 1),
+  payload jsonb not null default '{}'::jsonb,
+  updated_at timestamptz not null default now()
 );
+alter table public.pos_state enable row level security;
 
-CREATE TABLE products (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL,
-  category_id INT NULL,
-  price DECIMAL(10,2) NOT NULL,
-  hpp DECIMAL(10,2) NOT NULL,
-  is_active BOOLEAN NOT NULL DEFAULT TRUE,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT fk_products_category FOREIGN KEY (category_id) REFERENCES categories(id)
-);
+-- Hanya pengguna yang login dapat membaca dan menulis snapshot.
+drop policy if exists "pos_state_authenticated_read" on public.pos_state;
+create policy "pos_state_authenticated_read" on public.pos_state
+for select to authenticated using (true);
+drop policy if exists "pos_state_authenticated_insert" on public.pos_state;
+create policy "pos_state_authenticated_insert" on public.pos_state
+for insert to authenticated with check (true);
+drop policy if exists "pos_state_authenticated_update" on public.pos_state;
+create policy "pos_state_authenticated_update" on public.pos_state
+for update to authenticated using (true) with check (true);
 
-CREATE TABLE transactions (
-  id VARCHAR(40) PRIMARY KEY,
-  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  total_sales DECIMAL(12,2) NOT NULL,
-  total_hpp DECIMAL(12,2) NOT NULL,
-  gross_profit DECIMAL(12,2) NOT NULL,
-  payment_method ENUM('CASH','QRIS') NOT NULL,
-  cash_received DECIMAL(12,2) NOT NULL DEFAULT 0,
-  change_amount DECIMAL(12,2) NOT NULL DEFAULT 0
-);
+insert into public.pos_state (id, payload)
+values (1, jsonb_build_object(
+  'products', '[]'::jsonb,
+  'categories', '[]'::jsonb,
+  'promos', '[]'::jsonb,
+  'sales', '[]'::jsonb,
+  'finance', '[]'::jsonb,
+  'attendance', '[]'::jsonb,
+  'closings', '[]'::jsonb,
+  'settings', jsonb_build_object('outlet','OR!ON CORNDOG','address','','phone','','footer','Terima kasih telah membeli!','lowStock',5),
+  'users', '[]'::jsonb
+))
+on conflict (id) do nothing;
 
-CREATE TABLE transaction_details (
-  id BIGINT AUTO_INCREMENT PRIMARY KEY,
-  transaction_id VARCHAR(40) NOT NULL,
-  product_id INT NOT NULL,
-  product_name_at_sale VARCHAR(100) NOT NULL,
-  qty INT UNSIGNED NOT NULL,
-  price_at_sale DECIMAL(10,2) NOT NULL,
-  hpp_at_sale DECIMAL(10,2) NOT NULL,
-  subtotal DECIMAL(12,2) NOT NULL,
-  CONSTRAINT fk_details_transaction FOREIGN KEY (transaction_id) REFERENCES transactions(id),
-  CONSTRAINT fk_details_product FOREIGN KEY (product_id) REFERENCES products(id)
-);
-
-INSERT INTO categories (name) VALUES
-('Sweet Corndog'), ('Original Corndog'), ('Potato Corndog'),
-('Dimsum & Fries'), ('Sosis Bakar');
+-- Aktifkan Realtime untuk perubahan snapshot:
+alter publication supabase_realtime add table public.pos_state;

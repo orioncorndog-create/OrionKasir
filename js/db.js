@@ -1,20 +1,26 @@
-/* Data produk awal OR!ON CORNDOG.
-   Harga dan HPP mengikuti data yang diberikan. Tambahkan/ubah item di sini sesuai menu dan biaya terbaru. */
-const PRODUCTS = [
-  { id: 1, name: "Mozzarella Coklat", category: "Sweet Corndog", price: 18000, hpp: 8958, icon: "🍫" },
-  { id: 2, name: "Mozzarella Tiramisu", category: "Sweet Corndog", price: 18000, hpp: 9454, icon: "🍮" },
-  { id: 3, name: "Mozzarella Greentea", category: "Sweet Corndog", price: 18000, hpp: 9454, icon: "🍵" },
-  { id: 4, name: "Mozzarella Taro", category: "Sweet Corndog", price: 18000, hpp: 9454, icon: "🟣" },
-  { id: 5, name: "Sosis Reguler", category: "Original Corndog", price: 8000, hpp: 4205, icon: "🌭" },
-  { id: 6, name: "Sosis Premium", category: "Original Corndog", price: 12000, hpp: 5697, icon: "🌭" },
-  { id: 7, name: "Mozzarella Sosis", category: "Original Corndog", price: 16000, hpp: 6701, icon: "🧀" },
-  { id: 8, name: "Mozzarella Original", category: "Original Corndog", price: 18000, hpp: 7705, icon: "🧀" },
-  { id: 9, name: "Sosis Kentang Reguler", category: "Potato Corndog", price: 11000, hpp: 6058, icon: "🍟" },
-  { id: 10, name: "Sosis Kentang Jumbo", category: "Potato Corndog", price: 22000, hpp: 8883, icon: "🍟" },
-  { id: 11, name: "Mozzarella Kentang", category: "Potato Corndog", price: 21000, hpp: 9555, icon: "🧀" },
-  { id: 12, name: "Dimsum Original Isi 6", category: "Dimsum & Fries", price: 25000, hpp: 14250, icon: "🥟" },
-  { id: 13, name: "Dimsum Spicy Mayo Isi 6", category: "Dimsum & Fries", price: 28000, hpp: 17910, icon: "🥟" },
-  { id: 14, name: "Kentang Goreng", category: "Dimsum & Fries", price: 10000, hpp: 4470, icon: "🍟" },
-  { id: 15, name: "Sosis Jumbo Bakar", category: "Sosis Bakar", price: 10000, hpp: 4808, icon: "🔥" },
-  { id: 16, name: "Dumpling Keju Bakar", category: "Sosis Bakar", price: 5000, hpp: 3088, icon: "🍢" }
-];
+(() => {
+"use strict";
+const KEY="orion_pos_v2_data";
+const seedProducts=[
+["Mozzarella Coklat","Corndog",18000,8958,"🍫",30],
+["Mozzarella Tiramisu","Corndog",18000,9454,"🍪",30],
+["Mozzarella Greentea","Corndog",18000,9454,"🍵",30],
+["Mozzarella Taro","Corndog",18000,9454,"🟣",30],
+["Sosis Reguler","Corndog",8000,4205,"🌭",30],
+["Sosis Premium","Corndog",12000,5697,"🌭",30],
+["Mozzarella Sosis","Corndog",16000,6701,"🧀",30],
+["Mozzarella Original","Corndog",18000,7705,"🧀",30],
+["Sosis Kentang Reguler","Corndog Kentang",11000,6058,"🥔",25],
+["Sosis Kentang Jumbo","Corndog Kentang",22000,8883,"🥔",25],
+["Mozzarella Kentang","Corndog Kentang",21000,9555,"🥔",25],
+["Dimsum Original Isi 6","Dimsum",25000,14250,"🥟",20],
+["Dimsum Spicy Mayo Isi 6","Dimsum",28000,17910,"🥟",20],
+["Kentang Goreng","Snack",10000,4470,"🍟",25],
+["Sosis Jumbo Bakar","Sosis Bakar",10000,4808,"🌭",25],
+["Dumpling Keju Bakar","Sosis Bakar",5000,3088,"🍢",30]
+].map((x,i)=>({id:i+1,name:x[0],category:x[1],price:x[2],hpp:x[3],icon:x[4],stock:x[5],active:true,createdAt:new Date().toISOString()}));
+function fresh(){return {products:seedProducts,categories:["Corndog","Corndog Kentang","Dimsum","Snack","Sosis Bakar","Minuman","Pisang","Lainnya"],promos:[],sales:[],finance:[],attendance:[],closings:[],settings:{outlet:"OR!ON CORNDOG",address:"",phone:"",footer:"Terima kasih telah membeli!",lowStock:5},users:[{name:"Admin Outlet",email:"admin@orion.local",role:"admin"}]};}
+function load(){try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.products))return {...fresh(),...d};}catch(e){}return fresh();}
+function save(data){localStorage.setItem(KEY,JSON.stringify(data));}
+window.ORION_DB={KEY,fresh,load,save,seedProducts};
+})();

@@ -1,33 +1,53 @@
-# OR!ON CORNDOG POS & Margin App
+# OR!ON CORNDOG POS Pro v2
 
-Starter PWA kasir offline-first. Tampilan responsif untuk HP dan desktop.
+## Fitur yang tersedia
+- Login demo lokal.
+- Menu dan kategori: tambah, edit, aktif/nonaktif.
+- Promo diskon per menu: persentase atau nominal, periode tanggal.
+- Stok: pengurangan otomatis saat checkout, penyesuaian manual, peringatan stok menipis/habis.
+- Kasir: tunai, QRIS, transfer, lainnya; diskon dihitung otomatis.
+- HPP dan laba kotor terlihat pada layar internal kasir/laporan, **tidak dicetak pada struk pelanggan**.
+- Struk pelanggan: nama outlet, item, subtotal, diskon, total, pembayaran, uang diterima, kembalian.
+- Laporan, menu terlaris, metode pembayaran, ekspor CSV.
+- Keuangan manual (pemasukan/pengeluaran), absensi, riwayat penjualan, tutup/buka outlet.
+- Pengaturan outlet, ekspor/pulihkan backup JSON.
+- PWA dapat dipasang pada layar utama.
 
-## Fitur
-- Grid menu, pencarian, filter kategori.
-- Keranjang dengan tambah/kurangi kuantitas.
-- Hitung omzet, HPP dan laba kotor otomatis.
-- Pembayaran Tunai dan QRIS; hitung uang diterima/kembalian untuk tunai.
-- Simpan riwayat transaksi ke localStorage.
-- Ekspor riwayat ke CSV dan cetak struk.
-- Service worker cache untuk penggunaan offline setelah kunjungan pertama.
-
-## Jalankan lokal
-Service worker membutuhkan HTTPS atau localhost. Cara mudah:
+## Jalankan mode lokal
 1. Ekstrak ZIP.
-2. Jalankan server statis dari folder ini, misalnya `python -m http.server 8000`.
-3. Buka `http://localhost:8000` di browser.
+2. Upload **isi folder** ini ke Netlify/Vercel/static hosting, sehingga `index.html`, `css/`, `js/`, `icons/`, `manifest.json` ada di root deploy.
+3. Buka URL. Login demo:
+   - Email: `admin@orion.local`
+   - Password: `orion123`
+4. Mode lokal menyimpan data di browser/perangkat yang dipakai. Jangan gunakan mode lokal untuk sinkronisasi antar-HP.
 
-Jangan hanya membuka `index.html` dengan `file://` jika ingin menguji PWA/offline.
+## Aktifkan login dan sinkronisasi real-time antar-HP (Supabase)
+Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proyek Supabase sendiri dan memasukkan kredensial proyek.
 
-## Unggah ke PWABuilder
-1. Unggah/deploy seluruh isi folder ini ke hosting HTTPS (mis. GitHub Pages, Netlify, atau hosting sendiri).
-2. Buka PWABuilder dan masukkan URL HTTPS aplikasi.
-3. Pastikan manifest dan service worker bisa diakses, lalu jalankan validasi.
+1. Buat proyek di Supabase.
+2. Buka **Project Settings → API** dan salin Project URL serta anon/public key.
+3. Edit `js/supabase-config.js`:
+   ```js
+   window.ORION_SUPABASE_URL = "https://PROJECT-ANDA.supabase.co";
+   window.ORION_SUPABASE_ANON_KEY = "ANON_PUBLIC_KEY_ANDA";
+   ```
+   Jangan masukkan `service_role` key ke aplikasi/browser.
+4. Di Supabase **SQL Editor**, jalankan isi `schema.sql`.
+5. Di **Authentication → Users**, buat akun untuk admin dan kasir. Login memakai email/password yang dibuat di sana.
+6. Deploy ulang seluruh isi folder ke hosting, buka aplikasi pada masing-masing HP dan login dengan akun yang sama/profil yang diizinkan.
+7. Gunakan tombol **Sinkronkan sekarang** untuk mengirim snapshot awal. Perubahan yang tersimpan pada tabel `pos_state` memicu pembaruan Realtime pada perangkat lain.
 
-## Ikon
-Folder `icons/` berisi ikon PNG 192×192 dan 512×512 yang dibuat untuk starter ini.
+### Penting untuk pemakaian bisnis
+- Skema Supabase pada paket ini adalah **prototipe snapshot** yang cocok untuk menguji sinkronisasi. Beberapa perangkat yang mengubah data secara bersamaan bisa menimpa perubahan satu sama lain; jangan jadikan ini satu-satunya catatan akuntansi produksi.
+- Kebijakan SQL contoh mengizinkan semua pengguna terautentikasi membaca/menulis snapshot. Untuk operasional sungguhan, atur role admin/kasir, pembatasan per outlet, audit log, backup, dan validasi server-side sebelum dipakai.
+- Aplikasi web ini bukan layanan backend yang sudah di-host oleh pembuat ZIP; sinkronisasi real-time baru aktif setelah konfigurasi Supabase, schema, dan akun selesai.
+- Login demo hanya untuk mode lokal dan bukan login aman untuk internet publik.
 
-## Penting tentang data
-Harga jual dan HPP adalah data awal yang disediakan dalam permintaan. Menu yang belum tercantum dan HPP yang belum terverifikasi belum ditambahkan. Periksa ulang semua harga/HPP sebelum dipakai untuk pembukuan resmi. Laba yang ditampilkan adalah laba kotor sederhana (penjualan − HPP), belum mengurangi biaya operasional, kemasan, komisi platform, pajak, atau biaya QRIS.
-
-Semua data transaksi tersimpan hanya di browser/perangkat yang dipakai. localStorage bukan database bersama dan data dapat hilang jika data situs dihapus. Ekspor CSV secara berkala. Skema SQL hanya contoh dan belum terhubung ke aplikasi.
+## Isi folder
+- `index.html` — layar login dan halaman aplikasi
+- `css/styles.css` — tampilan responsif
+- `js/db.js` — data awal dan penyimpanan lokal
+- `js/app.js` — logika POS dan modul
+- `js/supabase-config.js` — konfigurasi backend yang perlu diisi
+- `schema.sql` — tabel dan kebijakan dasar Supabase
+- `manifest.json`, `service-worker.js`, `icons/` — dukungan PWA

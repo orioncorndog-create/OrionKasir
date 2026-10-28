@@ -1,68 +1,128 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#5c1d18">
-  <meta name="description" content="Kasir PWA OR!ON CORNDOG dengan rekap omzet, HPP, dan laba.">
-  <title>OR!ON CORNDOG — POS</title>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" href="./icons/icon-192.png">
-  <link rel="stylesheet" href="./css/styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#5c1d18">
+<meta name="description" content="Sistem kasir dan operasional OR!ON CORNDOG">
+<title>OR!ON CORNDOG — POS Pro</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand-mark">O!</div>
-    <div class="brand-copy"><strong>OR!ON <span>CORNDOG</span></strong><small>POINT OF SALE</small></div>
-    <div class="top-actions"><span id="offline-status" class="status"><i></i> Online</span><button id="history-btn" class="btn btn-ghost">Riwayat</button></div>
-  </header>
-
-  <main class="app-shell">
-    <section class="metrics" aria-label="Ringkasan hari ini">
-      <article class="metric metric-sales"><span>Omset hari ini</span><strong id="metric-sales">Rp0</strong><small id="metric-count">0 transaksi</small></article>
-      <article class="metric"><span>Total HPP</span><strong id="metric-hpp">Rp0</strong><small>Modal produk terjual</small></article>
-      <article class="metric"><span>Laba kotor</span><strong id="metric-profit">Rp0</strong><small>Omset dikurangi HPP</small></article>
-    </section>
-
-    <div class="workspace">
-      <section class="catalog-panel">
-        <div class="section-heading"><div><p class="eyebrow">MENU OR!ON</p><h1>Pilih produk</h1></div><span id="product-count" class="count-pill">0 produk</span></div>
-        <label class="searchbox"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Cari menu, mis. mozzarella..." autocomplete="off"><kbd>/</kbd></label>
-        <nav id="category-filters" class="category-filters" aria-label="Filter kategori"></nav>
-        <div id="product-grid" class="product-grid"></div>
+<div id="login-screen" class="login-screen">
+  <form id="login-form" class="login-card">
+    <div class="brand-mark">O!</div><p class="eyebrow">OR!ON CORNDOG</p><h1>Masuk ke POS</h1>
+    <p class="muted">Gunakan akun outlet untuk membuka kasir dan laporan.</p>
+    <label>Email<input id="login-email" type="email" placeholder="kasir@outlet.com" autocomplete="username" required></label>
+    <label>Password<input id="login-password" type="password" placeholder="Password akun" autocomplete="current-password" required></label>
+    <button class="btn primary full" type="submit">Masuk</button>
+    <p id="login-message" class="form-message">Mode lokal demo: gunakan <b>admin@orion.local</b> / <b>orion123</b>. Untuk login online antar-HP, isi konfigurasi Supabase dan jalankan SQL di README.</p>
+  </form>
+</div>
+<div id="app" class="app hidden">
+<header class="topbar">
+  <div class="brand"><div class="brand-mark small">O!</div><div><strong>OR!ON <span>CORNDOG</span></strong><small>POINT OF SALE PRO</small></div></div>
+  <div class="top-actions"><span id="connection-status" class="status"><i></i> Mode lokal</span><span id="user-label" class="user-label">Admin</span><button id="logout-btn" class="btn ghost small-btn">Keluar</button></div>
+</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="outlet-label"><small>OUTLET AKTIF</small><strong id="outlet-name-side">OR!ON CORNDOG</strong><span id="outlet-state" class="pill open">Buka</span></div>
+  <nav id="main-nav">
+    <button class="nav-btn active" data-page="kasir"><span>▦</span> Kasir</button>
+    <button class="nav-btn" data-page="menu"><span>☷</span> Menu & Kategori</button>
+    <button class="nav-btn" data-page="promo"><span>％</span> Promo</button>
+    <button class="nav-btn" data-page="stok"><span>▤</span> Stok</button>
+    <button class="nav-btn" data-page="laporan"><span>▥</span> Laporan</button>
+    <button class="nav-btn" data-page="keuangan"><span>◈</span> Keuangan</button>
+    <button class="nav-btn" data-page="absensi"><span>◷</span> Absensi</button>
+    <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
+    <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
+  </nav>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.0</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button></div>
+</aside>
+<main class="content">
+  <section class="page active" id="page-kasir">
+    <div class="page-heading"><div><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions"><button id="open-history-shortcut" class="btn outline">Riwayat hari ini</button></div></div>
+    <div class="metrics compact">
+      <article class="metric sales"><span>Omzet hari ini</span><strong id="m-sales">Rp0</strong><small id="m-count">0 transaksi</small></article>
+      <article class="metric"><span>HPP terjual</span><strong id="m-hpp">Rp0</strong><small>Hanya untuk internal</small></article>
+      <article class="metric"><span>Laba kotor</span><strong id="m-profit">Rp0</strong><small>Omzet − HPP</small></article>
+    </div>
+    <div class="pos-grid">
+      <section class="panel catalog">
+        <div class="toolbar"><input id="product-search" type="search" placeholder="Cari menu..."><button class="btn primary" data-goto="menu">＋ Menu baru</button></div>
+        <div id="pos-categories" class="chips"></div><div id="pos-products" class="product-grid"></div>
       </section>
-
-      <aside class="cart-panel">
-        <div class="cart-heading"><div><p class="eyebrow">PESANAN AKTIF</p><h2>Keranjang <span id="cart-count" class="cart-bubble">0</span></h2></div><button id="clear-cart" class="text-button">Kosongkan</button></div>
-        <div id="cart-items" class="cart-items"><div class="empty-cart"><span>＋</span><strong>Belum ada pesanan</strong><small>Pilih menu untuk mulai transaksi.</small></div></div>
-        <div class="cart-bottom">
-          <div class="totals-line"><span>Subtotal penjualan</span><strong id="cart-sales">Rp0</strong></div>
-          <div class="totals-line"><span>Estimasi HPP</span><strong id="cart-hpp">Rp0</strong></div>
-          <div class="totals-line profit-line"><span>Estimasi laba kotor</span><strong id="cart-profit">Rp0</strong></div>
-          <label class="field-label" for="payment-method">Metode pembayaran</label>
-          <select id="payment-method" class="payment-select"><option value="CASH">Tunai</option><option value="QRIS">QRIS</option></select>
-          <div id="cash-area"><label class="field-label" for="cash-received">Uang diterima</label><input id="cash-received" class="cash-input" type="number" min="0" inputmode="numeric" placeholder="Masukkan nominal tunai"></div>
-          <div id="change-row" class="change-row"><span>Kembalian</span><strong id="change-value">Rp0</strong></div>
-          <button id="checkout-btn" class="checkout-btn" disabled>Proses pembayaran <span>→</span></button>
-          <p class="checkout-note">Transaksi disimpan di perangkat ini.</p>
+      <aside class="panel cart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">PESANAN AKTIF</p><h2>Keranjang <span id="cart-count" class="bubble">0</span></h2></div><button id="clear-cart" class="text-link">Kosongkan</button></div>
+        <div id="cart-items" class="cart-items"><div class="empty">Belum ada pesanan.</div></div>
+        <div class="cart-footer">
+          <div class="line"><span>Subtotal</span><b id="cart-subtotal">Rp0</b></div>
+          <div class="line discount-line"><span>Diskon promo</span><b id="cart-discount">Rp0</b></div>
+          <div class="line total-line"><span>Total bayar</span><b id="cart-total">Rp0</b></div>
+          <div class="internal-cost"><div class="line"><span>Estimasi HPP (internal)</span><b id="cart-hpp">Rp0</b></div><div class="line"><span>Estimasi laba kotor (internal)</span><b id="cart-profit">Rp0</b></div></div>
+          <label>Metode pembayaran<select id="payment-method"><option value="Tunai">Tunai</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option><option value="Lainnya">Lainnya</option></select></label>
+          <label id="cash-label">Uang diterima<input id="cash-received" type="number" min="0" inputmode="numeric" placeholder="Nominal tunai"></label>
+          <div class="line"><span>Kembalian</span><b id="cash-change">Rp0</b></div>
+          <button id="checkout-btn" class="btn primary full" disabled>Proses pembayaran →</button>
+          <small class="muted">Struk pelanggan hanya menampilkan item, diskon, total, pembayaran dan kembalian.</small>
         </div>
       </aside>
     </div>
-  </main>
-
-  <dialog id="history-dialog" class="modal">
-    <div class="modal-head"><div><p class="eyebrow">CATATAN PENJUALAN</p><h2>Riwayat transaksi</h2></div><button class="icon-button" data-close="history-dialog" aria-label="Tutup">×</button></div>
-    <div class="history-toolbar"><span id="history-summary">0 transaksi</span><button id="export-csv" class="btn btn-outline">Ekspor CSV</button></div>
-    <div id="history-list" class="history-list"></div>
-    <div class="modal-foot"><button id="clear-history" class="btn btn-danger">Hapus semua riwayat</button><button class="btn btn-primary" data-close="history-dialog">Selesai</button></div>
-  </dialog>
-
-  <dialog id="receipt-dialog" class="modal receipt-modal">
-    <div class="receipt-content" id="receipt-content"></div>
-    <div class="modal-foot"><button class="btn btn-outline" data-close="receipt-dialog">Tutup</button><button id="print-receipt" class="btn btn-primary">Cetak struk</button></div>
-  </dialog>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="./js/db.js"></script>
-  <script src="./js/app.js"></script>
-</body>
-</html>
+  </section>
+  <section class="page" id="page-menu">
+    <div class="page-heading"><div><p class="eyebrow">KATALOG PRODUK</p><h1>Menu & kategori</h1><p class="muted">Tambah, edit, nonaktifkan menu dan atur HPP untuk kebutuhan internal.</p></div><button id="add-product-btn" class="btn primary">＋ Tambah menu</button></div>
+    <div class="split">
+      <div class="panel"><div class="panel-heading"><h2>Daftar menu</h2><input id="menu-search" class="small-search" placeholder="Cari menu..."></div><div id="menu-table" class="table-wrap"></div></div>
+      <div class="panel"><div class="panel-heading"><h2>Kategori</h2><button id="add-category-btn" class="btn primary small-btn">＋ Kategori</button></div><div id="category-list" class="category-list"></div></div>
+    </div>
+  </section>
+  <section class="page" id="page-promo">
+    <div class="page-heading"><div><p class="eyebrow">MARKETING</p><h1>Promo & diskon</h1><p class="muted">Atur diskon persentase atau nominal per menu, dengan tanggal aktif.</p></div><button id="add-promo-btn" class="btn primary">＋ Buat promo</button></div>
+    <div class="panel"><div id="promo-list" class="table-wrap"></div></div>
+  </section>
+  <section class="page" id="page-stok">
+    <div class="page-heading"><div><p class="eyebrow">INVENTORI</p><h1>Stok</h1><p class="muted">Pantau stok produk jual, catat penambahan dan penyesuaian stok.</p></div><button id="stock-adjust-btn" class="btn primary">＋ Penyesuaian stok</button></div>
+    <div class="metrics compact"><article class="metric"><span>Produk aktif</span><strong id="stock-active">0</strong></article><article class="metric"><span>Stok menipis</span><strong id="stock-low">0</strong></article><article class="metric"><span>Habis</span><strong id="stock-out">0</strong></article></div>
+    <div class="panel"><div id="stock-table" class="table-wrap"></div></div>
+  </section>
+  <section class="page" id="page-laporan">
+    <div class="page-heading"><div><p class="eyebrow">ANALITIK</p><h1>Laporan penjualan</h1><p class="muted">Ringkasan penjualan, HPP dan laba kotor. Data internal, bukan untuk struk.</p></div><button id="export-report-btn" class="btn outline">Ekspor CSV</button></div>
+    <div class="toolbar report-filters"><label>Dari tanggal<input id="report-from" type="date"></label><label>Sampai tanggal<input id="report-to" type="date"></label><button id="filter-report" class="btn primary">Terapkan</button></div>
+    <div class="metrics compact"><article class="metric sales"><span>Omzet</span><strong id="r-sales">Rp0</strong></article><article class="metric"><span>HPP</span><strong id="r-hpp">Rp0</strong></article><article class="metric"><span>Laba kotor</span><strong id="r-profit">Rp0</strong></article><article class="metric"><span>Transaksi</span><strong id="r-count">0</strong></article></div>
+    <div class="split"><div class="panel"><div class="panel-heading"><h2>Menu terlaris</h2></div><div id="best-sellers" class="simple-list"></div></div><div class="panel"><div class="panel-heading"><h2>Metode pembayaran</h2></div><div id="payment-summary" class="simple-list"></div></div></div>
+  </section>
+  <section class="page" id="page-keuangan">
+    <div class="page-heading"><div><p class="eyebrow">ARUS KAS</p><h1>Keuangan</h1><p class="muted">Catat pemasukan dan pengeluaran di luar transaksi kasir.</p></div><button id="add-finance-btn" class="btn primary">＋ Catat transaksi</button></div>
+    <div class="metrics compact"><article class="metric"><span>Total pemasukan manual</span><strong id="fin-in">Rp0</strong></article><article class="metric"><span>Total pengeluaran</span><strong id="fin-out">Rp0</strong></article><article class="metric sales"><span>Selisih</span><strong id="fin-net">Rp0</strong></article></div>
+    <div class="panel"><div id="finance-table" class="table-wrap"></div></div>
+  </section>
+  <section class="page" id="page-absensi">
+    <div class="page-heading"><div><p class="eyebrow">TIM OUTLET</p><h1>Absensi</h1><p class="muted">Catat jam masuk dan pulang setiap staf pada perangkat kasir.</p></div><button id="clock-in-btn" class="btn primary">Absen masuk</button><button id="clock-out-btn" class="btn outline">Absen pulang</button></div>
+    <div class="panel"><div id="attendance-table" class="table-wrap"></div></div>
+  </section>
+  <section class="page" id="page-riwayat">
+    <div class="page-heading"><div><p class="eyebrow">TRANSAKSI TERSIMPAN</p><h1>Riwayat penjualan</h1><p class="muted">Lihat detail transaksi atau cetak ulang struk pelanggan.</p></div><button id="export-sales-btn" class="btn outline">Ekspor CSV</button></div>
+    <div class="toolbar"><input id="sales-search" type="search" placeholder="Cari nomor transaksi atau menu..."><input id="sales-date" type="date"><button id="clear-date" class="btn outline">Semua tanggal</button></div>
+    <div class="panel"><div id="sales-table" class="table-wrap"></div></div>
+  </section>
+  <section class="page" id="page-pengaturan">
+    <div class="page-heading"><div><p class="eyebrow">KONFIGURASI</p><h1>Pengaturan</h1><p class="muted">Identitas outlet, stok, sinkronisasi dan pengelolaan data.</p></div></div>
+    <div class="split">
+      <form id="settings-form" class="panel form-panel"><h2>Informasi outlet</h2><label>Nama outlet<input id="setting-outlet" required></label><label>Alamat struk<input id="setting-address" placeholder="Alamat outlet"></label><label>Nomor telepon<input id="setting-phone" placeholder="Nomor outlet"></label><label>Footer struk<input id="setting-footer" placeholder="Terima kasih telah membeli"></label><label>Stok minimum peringatan<input id="setting-low-stock" type="number" min="0" value="5"></label><button class="btn primary">Simpan pengaturan</button></form>
+      <div class="panel form-panel"><h2>Akun & sinkronisasi</h2><p id="sync-help" class="muted">Mode lokal menyimpan data pada perangkat ini saja. Untuk real-time lintas HP, sambungkan proyek Supabase pada js/supabase-config.js lalu jalankan schema.sql.</p><div class="setting-status"><span>Status backend</span><b id="backend-status">Belum dikonfigurasi</b></div><button id="sync-now-btn" class="btn outline">Sinkronkan sekarang</button><hr><h3>Data lokal</h3><p class="muted">Ekspor cadangan sebelum pindah perangkat. Jangan bagikan file cadangan ke orang yang tidak berwenang.</p><button id="backup-btn" class="btn outline">Unduh cadangan JSON</button><label class="file-button">Pulihkan cadangan JSON<input id="restore-file" type="file" accept="application/json"></label><button id="reset-demo-btn" class="btn danger">Reset data demo</button></div>
+    </div>
+  </section>
+</main>
+</div>
+</div>
+<dialog id="form-dialog" class="modal"><form id="dynamic-form" method="dialog"><div class="modal-head"><div><p class="eyebrow" id="form-eyebrow">FORMULIR</p><h2 id="form-title">Tambah data</h2></div><button type="button" class="icon-btn" data-close>×</button></div><div id="form-fields" class="form-fields"></div><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn primary">Simpan</button></div></form></dialog>
+<dialog id="receipt-dialog" class="modal receipt-modal"><div id="receipt-content"></div><div class="modal-actions"><button class="btn outline" data-close> Tutup </button><button id="print-receipt" class="btn primary">Cetak struk</button></div></dialog>
+<dialog id="detail-dialog" class="modal"><div id="detail-content"></div><div class="modal-actions"><button class="btn outline" data-close>Tutup</button></div></dialog>
+<dialog id="close-dialog" class="modal"><form id="close-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">OPERASIONAL</p><h2>Tutup outlet</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="muted">Ringkasan hari ini akan disimpan sebagai laporan tutup outlet. Pastikan transaksi sudah selesai.</p><div id="close-summary"></div><label>Catatan tutup outlet<textarea id="close-note" rows="3" placeholder="Catatan kas, stok, atau kendala..."></textarea></label><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn danger">Konfirmasi tutup outlet</button></div></form></dialog>
+<div id="toast" class="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js"></script>
+</body></html>
