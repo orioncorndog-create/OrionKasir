@@ -77,3 +77,11 @@ Manifest sudah menggunakan `display: standalone`, `display_override` dengan fall
 4. Catat Android package name dan SHA-256 fingerprint dari key yang benar-benar dipakai untuk menandatangani APK.
 5. Pasang `assetlinks.json` di `/.well-known/assetlinks.json` pada domain yang sama persis dengan start URL.
 6. Build ulang APK dan instal. Jika asset links tidak cocok/terjangkau, Chrome dapat menampilkan toolbar URL sebagai fallback.
+
+
+## v2.32 — Store, printer and payment settings update
+- Store profile: email, custom receipt logo, receipt header, timezone, opening/closing hours and optional schedule toggle.
+- Printer settings: Bluetooth/Web Bluetooth and USB/WebUSB device selection where supported, LAN/Wi-Fi printer IP, 58/80 mm paper, auto-print toggle, cash drawer setting and test actions. Actual printing/cash-drawer pulses depend on compatible ESC/POS hardware and a supported browser/bridge.
+- Payment settings: selectable enabled methods for cash, manual/dynamic QRIS, transfer, debit/credit cards and e-wallets; gateway provider/merchant reference fields. Dynamic QRIS is a configuration scaffold only until a provider API is integrated securely on a backend. Do not store gateway secret keys in frontend code.
+- Cashier reporting: sales include cashier identity and a day-based shift key; cashier report view is filtered to their own current-day records. Server-side database policies must still be configured to enforce access securely.
+- Quick PIN field saves a device-local preference only; it is not yet a secure login shortcut and must not be treated as account authentication.
