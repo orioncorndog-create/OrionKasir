@@ -308,3 +308,38 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
  .checkout-payment .cash-presets{gap:6px}
  .checkout-payment .cash-preset{flex:1 1 calc(50% - 6px);padding:10px 8px;min-height:42px;font-size:12px}
 }
+
+/* v2.11 — cleaner cashier catalog, compact sticky brand and draggable order sheet */
+@media(max-width:780px){
+ .topbar{height:64px;min-height:64px;padding:5px 10px;transition:height .2s,min-height .2s,padding .2s,box-shadow .2s;}
+ .topbar .brand-logo{width:clamp(96px,28vw,132px);max-height:52px;transition:width .2s,max-height .2s;}
+ .topbar .brand-caption{display:none}
+ body.app-scrolled .topbar{height:48px;min-height:48px;padding:3px 10px;box-shadow:0 5px 16px rgba(50,30,20,.1)}
+ body.app-scrolled .topbar .brand-logo{width:92px;max-height:40px}
+ body.app-scrolled .top-actions .user-label{display:none}
+ #page-kasir .cashier-heading{margin:-3px -2px 10px;padding:10px 11px;min-height:0;border-radius:13px;gap:8px;align-items:center;background-size:cover;background-position:center;transition:padding .2s;}
+ #page-kasir .cashier-heading .eyebrow{font-size:8px;letter-spacing:1.2px;margin-bottom:2px}
+ #page-kasir .cashier-heading h1{font-size:21px;margin:0;line-height:1.15}
+ #page-kasir .cashier-heading .muted{display:none}
+ #page-kasir .cashier-heading .heading-actions{gap:5px;display:flex;flex-wrap:nowrap}
+ #page-kasir .cashier-heading .heading-actions .btn{font-size:10px;padding:8px 9px;white-space:nowrap}
+ #page-kasir .cashier-heading .compact-image-btn{padding:8px 8px}
+ #page-kasir .metrics.compact{margin-top:0;margin-bottom:10px}
+ #page-kasir .catalog{padding:9px;border-radius:15px}
+ #page-kasir .toolbar input[type=search]{min-height:40px}
+ #page-kasir .product-card{padding:8px;gap:5px;border-radius:12px;box-shadow:0 2px 8px rgba(60,35,20,.035)}
+ #page-kasir .product-visual{height:clamp(64px,18vw,94px);border-radius:9px}
+ #page-kasir .product-category{font-size:9px;line-height:1.2}
+ #page-kasir .product-name{font-size:12px;min-height:0;line-height:1.25}
+ #page-kasir .product-bottom{margin-top:2px;gap:5px;flex-wrap:nowrap}
+ #page-kasir .product-qty{margin-left:auto}
+ #page-kasir .cart-sheet-toggle{touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+ #page-kasir .cart-panel.sheet-expanded{transform:translateY(0);max-height:82dvh}
+ #page-kasir .cart-panel.sheet-expanded .cart-items{max-height:28dvh}
+ #page-kasir .cart-panel:not(.sheet-expanded){transform:translateY(calc(100% - 88px))}
+ #page-kasir .cart-panel.cart-empty{display:none!important}
+}
+.cashier-heading{position:relative;overflow:hidden;border-radius:16px;padding:14px 16px;background-color:rgba(255,255,255,.72);background-size:cover;background-position:center;border:1px solid rgba(230,220,208,.72)}
+.cashier-heading.has-cashier-image{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.cashier-heading-copy,.cashier-heading .heading-actions{position:relative;z-index:1}
+@media(min-width:781px){.cashier-heading{padding:18px 20px}.cashier-heading .muted{margin-top:3px}}

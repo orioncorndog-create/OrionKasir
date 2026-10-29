@@ -8,7 +8,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.10">
+<link rel="stylesheet" href="./css/styles.css?v=2.11">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -46,7 +46,7 @@
 </aside>
 <main class="content">
   <section class="page active" id="page-kasir">
-    <div class="page-heading"><div><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions"><button id="open-history-shortcut" class="btn outline">Riwayat hari ini</button></div></div>
+    <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions"><button id="cashier-image-btn" class="btn outline compact-image-btn" type="button" aria-label="Tambah gambar latar kasir">＋ Gambar</button><input id="cashier-image-input" type="file" accept="image/*" hidden><button id="open-history-shortcut" class="btn outline">Riwayat hari ini</button></div></div>
     <div class="metrics compact">
       <article class="metric sales"><span>Omzet hari ini</span><strong id="m-sales">Rp0</strong><small id="m-count">0 transaksi</small></article>
       <article class="metric"><span>HPP terjual</span><strong id="m-hpp">Rp0</strong><small>Hanya untuk internal</small></article>

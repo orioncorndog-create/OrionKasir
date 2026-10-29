@@ -113,3 +113,10 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Ketuk panel pesanan atau swipe ke atas pada handle panel untuk membuka layar pembayaran.
 - Pembayaran tunai menyediakan tombol **Uang pas**, **Rp20.000**, **Rp50.000**, dan **Rp100.000**. Tombol Uang pas mengisi nominal persis sesuai total transaksi; kembalian dan validasi pembayaran diperbarui otomatis.
 - Pemeriksaan yang dilakukan: sintaks JavaScript dan integritas arsip ZIP. Perilaku swipe dan tombol berbagi tetap perlu diuji pada perangkat/browser target.
+
+
+## Pembaruan v2.11 — antarmuka kasir mobile
+- Tulisan stok di kartu menu kasir disembunyikan agar katalog lebih ringkas; kontrol stok dan validasi stok tetap aktif di sistem.
+- Bottom sheet pesanan mendukung geser ke atas untuk memperluas rincian pesanan dan geser ke bawah untuk meringkasnya. Ketuk header sheet tetap membuka layar pembayaran.
+- Header kasir dan logo outlet mengecil saat halaman digulir di layar mobile.
+- Tombol **＋ Gambar** pada header kasir memungkinkan pemilihan gambar latar. Gambar diperkecil/dikompresi dan disimpan bersama pengaturan lokal aplikasi.
