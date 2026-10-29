@@ -361,3 +361,15 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 .setting-image-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0}
 .setting-image-actions .file-button{margin:0}
 @media(max-width:390px){#page-kasir .product-qty{gap:3px}#page-kasir .product-qty button{width:25px;min-width:25px;height:27px;min-height:27px;flex-basis:25px;border-radius:8px}#page-kasir .product-qty output{min-width:14px;font-size:11px}#pos-products .bestseller-strip .product-card{flex-basis:152px;width:152px;min-width:152px}.category-actions{gap:3px}.category-actions button{min-width:30px;padding:6px 7px}}
+
+/* v2.13 — cashier hero background fades out at the menu search bar; square product photography */
+#page-kasir.has-cashier-background{background-repeat:no-repeat,no-repeat;background-color:var(--cream);background-clip:padding-box;border-radius:18px;padding:10px;margin:-10px;background-size:100% 760px,100% 760px;background-position:top center,top center}
+#page-kasir.has-cashier-background .cashier-heading{background:rgba(255,255,255,.30);backdrop-filter:blur(1.5px);border-color:rgba(230,220,208,.45)}
+#page-kasir.has-cashier-background .metric{background-color:rgba(255,255,255,.84)}
+#page-kasir.has-cashier-background .metric.sales{background-color:rgba(116,31,48,.94)}
+#page-kasir.has-cashier-background .catalog{background:rgba(255,255,255,.82)}
+#page-kasir .product-visual{height:auto;aspect-ratio:1/1;flex:0 0 auto}
+#page-kasir .product-visual img{width:100%;height:100%;object-fit:cover;object-position:center}
+#page-kasir .bestseller-strip .product-visual{aspect-ratio:1/1;height:auto}
+#page-kasir .cashier-heading .compact-image-btn{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:rgba(255,255,255,.88);border-color:rgba(230,220,208,.75);font-size:11px;padding:8px 12px}
+@media(max-width:780px){#page-kasir.has-cashier-background{background-size:100% 780px,100% 780px;padding:8px;margin:-8px}#page-kasir .product-visual{aspect-ratio:1/1;height:auto}#page-kasir .cashier-heading .heading-actions{gap:5px}#page-kasir .cashier-heading .heading-actions .btn{font-size:10px;padding:8px 10px}}
