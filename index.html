@@ -8,7 +8,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.21">
+<link rel="stylesheet" href="./css/styles.css?v=2.22">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -44,11 +44,11 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.21</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.23</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content">
   <section class="page active" id="page-kasir">
-    <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions"><button id="cashier-image-btn" class="btn outline compact-image-btn" type="button" aria-label="Ubah gambar latar kasir">▧ Gambar</button><input id="cashier-image-input" type="file" accept="image/*" hidden></div></div>
+    <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions"><button id="cashier-image-btn" class="btn outline compact-image-btn" type="button" aria-label="Ubah gambar latar kasir">▧ Gambar</button><button id="cashier-image-reset-btn" class="btn ghost compact-image-reset-btn" type="button" aria-label="Hapus gambar latar kasir" hidden>Hapus background</button><input id="cashier-image-input" type="file" accept="image/*" hidden></div></div>
     <div class="metrics compact">
       <article class="metric sales metric-navigable" data-goto="riwayat" role="button" tabindex="0" aria-label="Buka riwayat penjualan: omzet hari ini"><span class="metric-label">Omzet hari ini<img class="metric-icon-image" src="./assets/icon_omzet_hari_ini.png" alt="" aria-hidden="true"></span><strong id="m-sales">Rp0</strong><small id="m-count">0 transaksi</small></article>
       <article class="metric hpp-metric metric-navigable" data-goto="riwayat" role="button" tabindex="0" aria-label="Buka riwayat penjualan: HPP terjual"><span class="metric-label">HPP terjual<img class="metric-icon-image" src="./assets/icon_hpp_terjual.png" alt="" aria-hidden="true"></span><strong id="m-hpp">Rp0</strong><small>Hanya untuk internal</small></article>
@@ -144,5 +144,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.21"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.22"></script>
 </body></html>

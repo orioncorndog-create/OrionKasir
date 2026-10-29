@@ -578,3 +578,42 @@ html,body,#app{width:100%;max-width:100%;min-width:0;overflow-x:clip}
   #page-kasir .pos-grid{grid-template-columns:minmax(0,1fr) minmax(330px,400px)}
   #pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
 }
+
+/* v2.22 — true viewport-aligned cashier background + refined category scrollbar */
+#page-kasir.has-cashier-background::before{
+  left:calc(50% - 50vw)!important;
+  right:auto!important;
+  width:100vw!important;
+  max-width:none!important;
+  transform:none!important;
+  background-position:center top,center center!important;
+  background-repeat:no-repeat!important;
+  background-size:100% 100%,cover!important;
+}
+@media(max-width:780px){
+  #page-kasir.has-cashier-background::before{
+    left:calc(50% - 50vw)!important;
+    right:auto!important;
+    top:0!important;
+    width:100vw!important;
+    height:calc(100vw * .75)!important;
+    aspect-ratio:4 / 3!important;
+    transform:none!important;
+    background-position:center top,center center!important;
+    background-size:100% 100%,cover!important;
+  }
+}
+/* Category chips remain horizontally scrollable without the default grey bar. */
+.chips{
+  scrollbar-width:thin!important;
+  scrollbar-color:#8b2638 transparent!important;
+  -webkit-overflow-scrolling:touch;
+}
+.chips::-webkit-scrollbar{height:3px!important}
+.chips::-webkit-scrollbar-track{background:transparent!important}
+.chips::-webkit-scrollbar-thumb{background:#8b2638!important;border-radius:999px!important}
+.chips::-webkit-scrollbar-thumb:hover{background:#741f30!important}
+
+/* v2.23: background reset control */
+#page-kasir .cashier-heading .compact-image-reset-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;border-radius:999px;background:rgba(255,255,255,.9);border-color:rgba(230,220,208,.85);font-size:11px;padding:8px 12px;color:var(--wine);}
+#page-kasir .cashier-heading .compact-image-reset-btn[hidden]{display:none!important}

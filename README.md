@@ -12,3 +12,16 @@ Unggah seluruh isi folder hasil ekstrak ke hosting Netlify untuk menggantikan ve
 
 ## Supabase
 Jika memakai sinkronisasi online, isi `js/supabase-config.js` dengan Project URL dan publishable/anon key Supabase, lalu jalankan `schema.sql` pada SQL Editor. Jangan gunakan service_role key di browser.
+
+
+## v2.22 patch
+- Corrected cashier background alignment to use viewport-centered full-bleed positioning (100vw) without horizontal translation offsets.
+- Kept 4:3 background area and cover crop.
+- Changed horizontal category chip scrollbar from grey to a thin wine-red indicator.
+
+
+## v2.23 — Reset background kasir
+- Added a **Hapus background** button beside the cashier background image control. It appears only when a custom background is active.
+- Removing the custom image clears the saved `cashierHeaderImage` setting, restores the default cashier background, persists the change, and refreshes the UI.
+- Added a confirmation prompt to prevent accidental removal.
+- Updated service worker cache version to v2.23.
