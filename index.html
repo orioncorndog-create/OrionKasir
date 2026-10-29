@@ -8,12 +8,12 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.5">
+<link rel="stylesheet" href="./css/styles.css?v=2.6">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
   <form id="login-form" class="login-card">
-    <img class="login-logo" src="./assets/orion-logo-full-4k.png?v=2.5" alt="Logo OR!ON CORNDOG lengkap"><p class="eyebrow">POINT OF SALE PRO</p><h1>Masuk ke POS</h1>
+    <img class="login-logo" src="./assets/orion-logo-full-4k.png?v=2.6" alt="Logo OR!ON CORNDOG lengkap"><p class="eyebrow">POINT OF SALE PRO</p><h1>Masuk ke POS</h1>
     <p class="muted">Gunakan akun outlet untuk membuka kasir dan laporan.</p>
     <label>Email<input id="login-email" type="email" placeholder="kasir@outlet.com" autocomplete="username" required></label>
     <label>Password<input id="login-password" type="password" placeholder="Password akun" autocomplete="current-password" required></label>
@@ -23,7 +23,7 @@
 </div>
 <div id="app" class="app hidden">
 <header class="topbar">
-  <div class="brand"><img class="brand-logo" src="./assets/orion-logo-full-4k.png?v=2.5" alt="Logo OR!ON CORNDOG lengkap"><div class="brand-caption"><small>POINT OF SALE PRO</small><span>Kasir • Inventori • Laporan</span></div></div>
+  <div class="brand"><img class="brand-logo" src="./assets/orion-logo-full-4k.png?v=2.6" alt="Logo OR!ON CORNDOG lengkap"><div class="brand-caption"><small>POINT OF SALE PRO</small><span>Kasir • Inventori • Laporan</span></div></div>
   <div class="top-actions"><span id="connection-status" class="status"><i></i> Mode lokal</span><span id="user-label" class="user-label">Admin</span><button id="logout-btn" class="btn ghost small-btn">Keluar</button></div>
 </header>
 <button type="button" id="nav-edge-toggle" class="nav-edge-toggle" aria-label="Buka menu navigasi" aria-expanded="false"><span class="edge-grip"></span><span class="edge-menu-icon">☰</span></button><button type="button" id="nav-scrim" class="nav-scrim" aria-label="Tutup menu navigasi" tabindex="-1"></button>
@@ -66,11 +66,7 @@
           <div class="line discount-line"><span>Diskon promo</span><b id="cart-discount">Rp0</b></div>
           <div class="line total-line"><span>Total bayar</span><b id="cart-total">Rp0</b></div>
           <div class="internal-cost"><div class="line"><span>Estimasi HPP (internal)</span><b id="cart-hpp">Rp0</b></div><div class="line"><span>Estimasi laba kotor (internal)</span><b id="cart-profit">Rp0</b></div></div>
-          <label>Metode pembayaran<select id="payment-method"><option value="Tunai">Tunai</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option><option value="Lainnya">Lainnya</option></select></label>
-          <label id="cash-label">Uang diterima<input id="cash-received" type="number" min="0" inputmode="numeric" placeholder="Nominal tunai"></label>
-          <div class="line"><span>Kembalian</span><b id="cash-change">Rp0</b></div>
-          <button id="checkout-btn" class="btn primary full" disabled>Proses pembayaran →</button>
-          <small class="muted">Struk pelanggan hanya menampilkan item, diskon, total, pembayaran dan kembalian.</small>
+          <button id="checkout-btn" class="btn primary full" disabled>Lanjut ke pembayaran →</button><small class="muted">Metode pembayaran dan konfirmasi tersedia pada layar pembayaran.</small>
         </div>
       </aside>
     </div>
@@ -121,11 +117,20 @@
 </main>
 </div>
 </div>
+<section id="checkout-screen" class="checkout-screen hidden" aria-label="Layar pembayaran" aria-modal="true" role="dialog">
+ <header class="checkout-header"><button type="button" id="checkout-back" class="btn outline checkout-back">← Kembali ke menu</button><div><p class="eyebrow">OR!ON CORNDOG POS PRO</p><h1>Pembayaran</h1></div><span id="checkout-count" class="checkout-count">0 item</span></header>
+ <div class="checkout-layout"><section class="checkout-order panel"><div class="panel-heading"><div><p class="eyebrow">RINGKASAN PESANAN</p><h2>Pesanan Anda</h2></div></div><div id="checkout-items" class="checkout-items"></div></section>
+ <aside class="checkout-payment panel"><p class="eyebrow">RINCIAN PEMBAYARAN</p><div class="line"><span>Subtotal</span><b id="checkout-subtotal">Rp0</b></div><div class="line"><span>Diskon promo</span><b id="checkout-discount">−Rp0</b></div><div class="line total-line"><span>Total bayar</span><b id="checkout-total">Rp0</b></div>
+ <div class="internal-cost"><div class="line"><span>Estimasi HPP (internal)</span><b id="checkout-hpp">Rp0</b></div><div class="line"><span>Estimasi laba kotor (internal)</span><b id="checkout-profit">Rp0</b></div></div>
+ <label>Metode pembayaran utama<select id="payment-method"><option value="Tunai">Tunai</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option><option value="Lainnya">Lainnya</option></select></label>
+ <label id="checkout-cash-label">Uang diterima<input id="cash-received" type="number" min="0" step="1" inputmode="numeric" placeholder="Masukkan nominal tunai"></label>
+ <div class="line"><span>Kembalian</span><b id="checkout-cash-change">Rp0</b></div><button type="button" id="checkout-screen-btn" class="btn primary full">Konfirmasi & proses pembayaran →</button><small class="muted">HPP dan laba kotor hanya untuk internal dan tidak dicetak pada struk pelanggan.</small></aside></div>
+</section>
 <dialog id="form-dialog" class="modal"><form id="dynamic-form" method="dialog"><div class="modal-head"><div><p class="eyebrow" id="form-eyebrow">FORMULIR</p><h2 id="form-title">Tambah data</h2></div><button type="button" class="icon-btn" data-close>×</button></div><div id="form-fields" class="form-fields"></div><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn primary">Simpan</button></div></form></dialog>
 <dialog id="receipt-dialog" class="modal receipt-modal"><div id="receipt-content"></div><div class="modal-actions"><button class="btn outline" data-close> Tutup </button><button id="print-receipt" class="btn primary">Cetak struk</button></div></dialog>
 <dialog id="detail-dialog" class="modal"><div id="detail-content"></div><div class="modal-actions"><button class="btn outline" data-close>Tutup</button></div></dialog>
 <dialog id="close-dialog" class="modal"><form id="close-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">OPERASIONAL</p><h2>Tutup outlet</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="muted">Ringkasan hari ini akan disimpan sebagai laporan tutup outlet. Pastikan transaksi sudah selesai.</p><div id="close-summary"></div><label>Catatan tutup outlet<textarea id="close-note" rows="3" placeholder="Catatan kas, stok, atau kendala..."></textarea></label><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn danger">Konfirmasi tutup outlet</button></div></form></dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.4"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.6"></script>
 </body></html>

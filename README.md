@@ -82,3 +82,12 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Panel pembayaran tetap menggunakan validasi transaksi, stok, metode pembayaran, uang diterima, dan kembalian yang sudah ada.
 - Edge panel navigasi kiri dipersempit; warna dan bayangan diperhalus.
 - Perbarui cache/service worker ke v2.5. Uji ulang pada perangkat sebelum digunakan langsung.
+
+## OR!ON POS Pro v2.6 — checkout layar penuh dan menu tambahan
+- Tombol kuantitas pada kartu menu kini dapat menambahkan item dari qty 0, mengurangi sampai 0, dan tetap mengikuti batas stok.
+- Menambahkan menu tambahan dari lembar HPP yang diberikan: 10 menu Sosis Bakar dan 8 menu Milky Series II. Migrasi hanya menambahkan nama menu yang belum ada; produk yang sudah tersimpan tidak ditimpa.
+- Panel ringkas di HP hanya menampilkan jumlah item dan total nominal. Menambahkan item tidak otomatis membuka panel.
+- Tombol ringkasan membuka layar pembayaran penuh dengan daftar produk, qty, hapus item, subtotal, diskon, total, metode pembayaran, nominal tunai, kembalian, serta estimasi HPP/laba internal.
+- Sebelum menyimpan transaksi, aplikasi menampilkan ringkasan konfirmasi. Klik proses ganda diblokir selama proses berjalan; stok divalidasi sebelum disimpan dan kembalian hanya dihitung untuk tunai.
+- Cache service worker dinaikkan ke v2.6 agar browser mengambil versi aset yang baru.
+- Pemeriksaan sintaks JavaScript dan struktur ID dilakukan pada paket ini. Pengujian transaksi langsung di HP/Netlify dan sinkronisasi antar-perangkat tetap perlu dilakukan di lingkungan deployment Anda.
