@@ -137,11 +137,22 @@ function bindCashierHeaderImage(){
  const btn=$("#cashier-image-btn"),input=$("#cashier-image-input"),dialog=$("#cashier-crop-dialog");if(!input||!dialog)return;
  let sourceImage=null,sourceUrl=null;
  const preview=$("#cashier-crop-preview-img"),zoom=$("#crop-zoom"),xpos=$("#crop-x"),ypos=$("#crop-y");
- function updatePreview(){const z=Number(zoom.value);preview.style.transform=`scale(${z/100})`;preview.style.objectPosition=`${xpos.value}% ${ypos.value}%`;$("#crop-zoom-value").textContent=z+"%";$("#crop-x-value").textContent=xpos.value+"%";$("#crop-y-value").textContent=ypos.value+"%";}
+ function updatePreview(){
+  if(!sourceImage)return;
+  const box=$("#cashier-crop-preview").getBoundingClientRect();
+  const bw=Math.max(1,box.width),bh=Math.max(1,box.height),iw=sourceImage.naturalWidth,ih=sourceImage.naturalHeight;
+  const z=Number(zoom.value)/100,scale=Math.max(bw/iw,bh/ih)*z;
+  const rw=iw*scale,rh=ih*scale;
+  const overflowX=Math.max(0,rw-bw),overflowY=Math.max(0,rh-bh);
+  const left=-overflowX*(Number(xpos.value)/100),top=-overflowY*(Number(ypos.value)/100);
+  preview.style.width=rw+"px";preview.style.height=rh+"px";preview.style.maxWidth="none";preview.style.maxHeight="none";
+  preview.style.left=left+"px";preview.style.top=top+"px";preview.style.transform="none";preview.style.objectFit="fill";
+  $("#crop-zoom-value").textContent=Math.round(z*100)+"%";$("#crop-x-value").textContent=xpos.value+"%";$("#crop-y-value").textContent=ypos.value+"%";
+ }
  function cancelCrop(){if(dialog.open)dialog.close();sourceImage=null;if(sourceUrl){URL.revokeObjectURL(sourceUrl);sourceUrl=null}input.value="";}
  if(btn)btn.onclick=()=>input.click();
- input.onchange=()=>{const file=input.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Pilih file gambar yang valid.");input.value="";return}if(sourceUrl)URL.revokeObjectURL(sourceUrl);sourceUrl=URL.createObjectURL(file);const img=new Image();img.onload=()=>{sourceImage=img;preview.src=sourceUrl;zoom.value="100";xpos.value="50";ypos.value="50";updatePreview();dialog.showModal()};img.onerror=()=>{toast("Gambar tidak dapat dibaca.");cancelCrop()};img.src=sourceUrl;};
- [zoom,xpos,ypos].forEach(el=>el.addEventListener("input",updatePreview));
+ input.onchange=()=>{const file=input.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Pilih file gambar yang valid.");input.value="";return}if(sourceUrl)URL.revokeObjectURL(sourceUrl);sourceUrl=URL.createObjectURL(file);const img=new Image();img.onload=()=>{sourceImage=img;preview.src=sourceUrl;zoom.value="100";xpos.value="50";ypos.value="50";dialog.showModal();requestAnimationFrame(updatePreview)};img.onerror=()=>{toast("Gambar tidak dapat dibaca.");cancelCrop()};img.src=sourceUrl;};
+ [zoom,xpos,ypos].forEach(el=>el.addEventListener("input",updatePreview));window.addEventListener("resize",()=>{if(dialog.open&&sourceImage)updatePreview()},{passive:true});
  $("#crop-cancel").onclick=cancelCrop;$("#crop-cancel-x").onclick=cancelCrop;
  dialog.addEventListener("cancel",()=>{sourceImage=null;if(sourceUrl){URL.revokeObjectURL(sourceUrl);sourceUrl=null}input.value=""});
  $("#crop-apply").onclick=()=>{if(!sourceImage)return;const iw=sourceImage.naturalWidth,ih=sourceImage.naturalHeight,ratio=4/3,z=Number(zoom.value)/100;let cw,ch;if(iw/ih>ratio){ch=ih;cw=ih*ratio}else{cw=iw;ch=iw/ratio}cw/=z;ch/=z;const maxX=Math.max(0,iw-cw),maxY=Math.max(0,ih-ch),sx=maxX*Number(xpos.value)/100,sy=maxY*Number(ypos.value)/100;const canvas=document.createElement("canvas");canvas.width=1200;canvas.height=900;const ctx=canvas.getContext("2d");ctx.drawImage(sourceImage,sx,sy,cw,ch,0,0,canvas.width,canvas.height);const cropped=canvas.toDataURL("image/jpeg",.84);data.settings=data.settings||{};data.settings.cashierHeaderImage=cropped;persist();applyCashierHeaderImage();dialog.close();sourceImage=null;if(sourceUrl){URL.revokeObjectURL(sourceUrl);sourceUrl=null}input.value="";toast("Gambar latar 4:3 berhasil dipasang")};

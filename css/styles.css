@@ -497,3 +497,13 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
   #page-kasir.has-cashier-background{margin:0 -12px!important;padding:8px 12px!important;}
   #page-kasir.has-cashier-background::before{top:-8px;left:50%;right:auto;width:100vw;height:calc(100vw * .75);transform:translateX(-50%);background-position:center top,center center;background-size:100% 100%,cover;}
 }
+
+
+/* v2.20 — remove mobile top gap and use reliable 4:3 crop preview pan */
+@media(max-width:780px){
+ .content:has(#page-kasir.active){padding-top:0!important;}
+ #page-kasir.has-cashier-background{margin:0 -12px!important;padding:0 12px 8px!important;}
+ #page-kasir.has-cashier-background::before{top:0!important;left:50%!important;right:auto!important;width:100vw!important;height:calc(100vw * .75)!important;transform:translateX(-50%)!important;background-position:center top,center center!important;background-size:100% 100%,cover!important;}
+}
+.cashier-crop-preview{position:relative;isolation:isolate;touch-action:pan-y;}
+.cashier-crop-preview img{position:absolute;left:0;top:0;width:auto;height:auto;max-width:none;max-height:none;object-fit:fill;object-position:initial;transform:none;transform-origin:top left;will-change:left,top,width,height;}
