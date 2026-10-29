@@ -450,3 +450,18 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 #page-kasir .metric-icon-image{display:block;width:27px;height:27px;object-fit:contain;flex:0 0 27px}
 #page-kasir .metric.sales .metric-icon-image{filter:brightness(0) invert(1)}
 @media(max-width:780px){#page-kasir .cashier-heading{padding:10px 2px 9px!important;margin-bottom:9px!important}#page-kasir .metric-icon-image{width:24px;height:24px;flex-basis:24px}}
+
+/* v2.17 — full-bleed 4:3 cashier background and crop editor */
+.crop-modal{width:min(94vw,520px)}
+.cashier-crop-preview{width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:14px;background:#f3e8dc;border:1px solid var(--line);position:relative;margin:8px 0 18px}
+.cashier-crop-preview::after{content:"";position:absolute;inset:0;border:1px solid rgba(255,255,255,.45);border-radius:14px;pointer-events:none}
+.cashier-crop-preview img{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transform-origin:center;display:block}
+.crop-controls{display:grid;gap:13px}
+.crop-controls label{display:grid;grid-template-columns:1fr auto;gap:7px;font-size:12px;font-weight:700;color:var(--ink)}
+.crop-controls output{color:var(--wine);font-variant-numeric:tabular-nums}
+.crop-controls input{grid-column:1/-1;width:100%;accent-color:var(--wine)}
+#page-kasir.has-cashier-background::before{left:-26px;right:-26px;top:-26px;width:auto;aspect-ratio:4/3;height:auto;max-height:none;background-size:100% 100%,cover;background-position:center top}
+@media(max-width:780px){
+ #page-kasir.has-cashier-background{margin:-8px -12px!important;padding:8px 12px!important}
+ #page-kasir.has-cashier-background::before{left:-12px;right:-12px;top:-8px;width:auto;aspect-ratio:4/3;height:auto;max-height:none;background-size:100% 100%,cover;background-position:center top}
+}

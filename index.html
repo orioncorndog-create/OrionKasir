@@ -8,7 +8,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.16">
+<link rel="stylesheet" href="./css/styles.css?v=2.17">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -130,7 +130,17 @@
 <dialog id="receipt-dialog" class="modal receipt-modal"><div id="receipt-content"></div><div class="modal-actions"><button class="btn outline" data-close> Tutup </button><button id="whatsapp-receipt" class="btn outline">Kirim WhatsApp</button><button id="print-receipt" class="btn primary">Cetak struk</button></div></dialog>
 <dialog id="detail-dialog" class="modal"><div id="detail-content"></div><div class="modal-actions"><button class="btn outline" data-close>Tutup</button></div></dialog>
 <dialog id="close-dialog" class="modal"><form id="close-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">OPERASIONAL</p><h2>Tutup outlet</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="muted">Ringkasan hari ini akan disimpan sebagai laporan tutup outlet. Pastikan transaksi sudah selesai.</p><div id="close-summary"></div><label>Catatan tutup outlet<textarea id="close-note" rows="3" placeholder="Catatan kas, stok, atau kendala..."></textarea></label><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn danger">Konfirmasi tutup outlet</button></div></form></dialog>
+<dialog id="cashier-crop-dialog" class="modal crop-modal">
+  <div class="modal-head"><div><p class="eyebrow">BACKGROUND KASIR</p><h2>Sesuaikan potongan gambar</h2><p class="muted">Geser posisi dan zoom agar gambar pas di area latar 4:3.</p></div><button type="button" class="icon-btn" id="crop-cancel-x" aria-label="Tutup">×</button></div>
+  <div id="cashier-crop-preview" class="cashier-crop-preview"><img id="cashier-crop-preview-img" alt="Pratinjau potongan gambar"></div>
+  <div class="crop-controls">
+    <label>Zoom <output id="crop-zoom-value">100%</output><input id="crop-zoom" type="range" min="100" max="220" value="100"></label>
+    <label>Geser horizontal <output id="crop-x-value">50%</output><input id="crop-x" type="range" min="0" max="100" value="50"></label>
+    <label>Geser vertikal <output id="crop-y-value">50%</output><input id="crop-y" type="range" min="0" max="100" value="50"></label>
+  </div>
+  <div class="modal-actions"><button type="button" class="btn outline" id="crop-cancel">Batal</button><button type="button" class="btn primary" id="crop-apply">Gunakan gambar</button></div>
+</dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.16"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.17"></script>
 </body></html>
