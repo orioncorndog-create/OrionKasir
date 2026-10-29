@@ -36,7 +36,11 @@ values (1, jsonb_build_object(
 on conflict (id) do nothing;
 
 -- Aktifkan Realtime untuk perubahan snapshot:
-alter publication supabase_realtime add table public.pos_state;
+do $$ begin
+  if not exists (select 1 from pg_publication_tables where pubname='supabase_realtime' and schemaname='public' and tablename='pos_state') then
+    alter publication supabase_realtime add table public.pos_state;
+  end if;
+end $$;
 
 -- Profil akun POS: role ditetapkan oleh owner melalui SQL Editor, bukan dari metadata signup.
 -- Role tersedia: owner, manager, employee. Jangan memberi hak owner melalui user_metadata.
@@ -58,7 +62,7 @@ create or replace function public.pos_create_profile_for_auth_user()
 returns trigger language plpgsql security definer set search_path = '' as $$
 begin
   insert into public.pos_profiles(id, display_name, role, active)
-  values (new.id, coalesce(new.raw_user_meta_data ->> 'display_name', split_part(coalesce(new.email,''),'@',1)), 'employee', true)
+  values (new.id, coalesce(nullif(new.raw_user_meta_data ->> 'display_name',''), nullif(split_part(coalesce(new.email,''),'@',1),''), new.phone, 'Pengguna'), 'employee', true)
   on conflict (id) do nothing;
   return new;
 end; $$;
@@ -67,3 +71,22 @@ create trigger on_auth_user_created_pos_profile after insert on auth.users for e
 -- Contoh penetapan role setelah akun dibuat (ganti email dan role):
 -- update public.pos_profiles p set role='owner', updated_at=now()
 -- from auth.users u where p.id=u.id and u.email='owner@contoh.com';
+
+
+-- v2.27: hanya owner yang dapat mengubah peran akun melalui aplikasi.
+create or replace function public.pos_owner_set_role(target_user_id uuid, new_role text)
+returns void language plpgsql security definer set search_path = '' as $$
+declare current_role text;
+begin
+  if new_role not in ('manager','employee') then
+    raise exception 'Peran tidak valid';
+  end if;
+  select role into current_role from public.pos_profiles where id = auth.uid() and active = true;
+  if current_role is distinct from 'owner' then
+    raise exception 'Hanya owner yang dapat mengatur peran akun';
+  end if;
+  update public.pos_profiles set role = new_role, updated_at = now() where id = target_user_id;
+  if not found then raise exception 'Profil akun belum tersedia'; end if;
+end; $$;
+revoke all on function public.pos_owner_set_role(uuid,text) from public, anon;
+grant execute on function public.pos_owner_set_role(uuid,text) to authenticated;

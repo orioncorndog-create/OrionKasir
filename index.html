@@ -8,7 +8,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.26">
+<link rel="stylesheet" href="./css/styles.css?v=2.27">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -16,7 +16,7 @@
     <img class="login-logo" src="./assets/orion-logo-full-4k.png?v=2.9" alt="Logo OR!ON CORNDOG lengkap"><p class="eyebrow">POINT OF SALE PRO</p><h1>Masuk ke POS</h1>
     <p class="muted">Gunakan akun outlet untuk membuka kasir dan laporan.</p>
     <label id="signup-name-wrap" class="hidden">Nama lengkap<input id="signup-name" type="text" placeholder="Nama kasir" autocomplete="name"></label>
-    <label>Email<input id="login-email" type="email" placeholder="kasir@outlet.com" autocomplete="username" required></label>
+    <label>Email atau nomor HP<input id="login-email" type="text" placeholder="email@outlet.com atau +6281234567890" autocomplete="username" required></label>
     <label>Password<input id="login-password" type="password" placeholder="Minimal 6 karakter" autocomplete="current-password" minlength="6" required></label>
     <button id="login-submit" class="btn primary full" type="submit">Masuk</button>
     <button id="signup-toggle" class="btn outline full" type="button" style="margin-top:8px">Buat akun baru</button>
@@ -44,11 +44,11 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.26</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.27</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content">
   <section class="page active" id="page-kasir">
-    <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><img class="cashier-brand-logo" src="./assets/orion-logo-full-4k.png?v=2.26" alt="OR!ON CORNDOG"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions cashier-tools"><details class="cashier-tools-menu"><summary aria-label="Pengaturan tampilan kasir" title="Pengaturan tampilan">⋮</summary><div class="cashier-tools-popover"><button id="cashier-image-btn" type="button">▧ Ganti gambar background</button><button id="cashier-image-reset-btn" class="compact-image-reset-btn" type="button" hidden>↺ Hapus background</button><button id="cashier-theme-btn" type="button">◉ Kustomisasi warna & font</button></div></details><input id="cashier-image-input" type="file" accept="image/*" hidden></div></div>
+    <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><img class="cashier-brand-logo" src="./assets/orion-logo-full-4k.png?v=2.27" alt="OR!ON CORNDOG"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions cashier-tools"><details class="cashier-tools-menu"><summary aria-label="Pengaturan tampilan kasir" title="Pengaturan tampilan">⋮</summary><div class="cashier-tools-popover"><button id="cashier-image-btn" type="button">▧ Ganti gambar background</button><button id="cashier-image-reset-btn" class="compact-image-reset-btn" type="button" hidden>↺ Hapus background</button><button id="cashier-theme-btn" type="button">◉ Kustomisasi warna & font</button></div></details><input id="cashier-image-input" type="file" accept="image/*" hidden></div></div>
     <div class="metrics compact">
       <article class="metric sales metric-navigable" data-goto="riwayat" role="button" tabindex="0" aria-label="Buka riwayat penjualan: omzet hari ini"><span class="metric-label">Omzet hari ini<img class="metric-icon-image" src="./assets/icon_omzet_hari_ini.png" alt="" aria-hidden="true"></span><strong id="m-sales">Rp0</strong><small id="m-count">0 transaksi</small></article>
       <article class="metric hpp-metric metric-navigable" data-goto="riwayat" role="button" tabindex="0" aria-label="Buka riwayat penjualan: HPP terjual"><span class="metric-label">HPP terjual<img class="metric-icon-image" src="./assets/icon_hpp_terjual.png" alt="" aria-hidden="true"></span><strong id="m-hpp">Rp0</strong><small>Hanya untuk internal</small></article>
@@ -113,7 +113,7 @@
     <div class="page-heading"><div><p class="eyebrow">KONFIGURASI</p><h1>Pengaturan</h1><p class="muted">Identitas outlet, stok, sinkronisasi dan pengelolaan data.</p></div></div>
     <div class="split">
       <form id="settings-form" class="panel form-panel"><h2>Informasi outlet</h2><label>Nama outlet<input id="setting-outlet" required></label><label>Alamat struk<input id="setting-address" placeholder="Alamat outlet"></label><label>Nomor telepon<input id="setting-phone" placeholder="Nomor outlet"></label><label>Footer struk<input id="setting-footer" placeholder="Terima kasih telah membeli"></label><label>Stok minimum peringatan<input id="setting-low-stock" type="number" min="0" value="5"></label><button class="btn primary">Simpan pengaturan</button><hr></form>
-      <div class="panel form-panel"><h2>Akun & sinkronisasi</h2><p id="sync-help" class="muted">Mode lokal menyimpan data pada perangkat ini saja. Untuk real-time lintas HP, sambungkan proyek Supabase pada js/supabase-config.js lalu jalankan schema.sql.</p><div class="setting-status"><span>Status backend</span><b id="backend-status">Belum dikonfigurasi</b></div><button id="sync-now-btn" class="btn outline">Sinkronkan sekarang</button><hr><h3>Data lokal</h3><p class="muted">Ekspor cadangan sebelum pindah perangkat. Jangan bagikan file cadangan ke orang yang tidak berwenang.</p><button id="backup-btn" class="btn outline">Unduh cadangan JSON</button><label class="file-button">Pulihkan cadangan JSON<input id="restore-file" type="file" accept="application/json"></label><button id="reset-demo-btn" class="btn danger">Reset data demo</button></div>
+      <div class="panel form-panel"><h2>Akun & sinkronisasi</h2><section id="staff-account-section" class="hidden"><h3>Buat akun manager / karyawan</h3><p class="muted">Khusus owner. Akun baru akan menerima email konfirmasi jika verifikasi email diaktifkan.</p><form id="staff-account-form"><label>Nama lengkap<input id="staff-name" required></label><label>Email atau nomor HP<input id="staff-identifier" type="text" placeholder="email atau +628..." required></label><label>Password sementara<input id="staff-password" type="password" minlength="6" required></label><label>Peran akun<select id="staff-role"><option value="employee">Karyawan</option><option value="manager">Manager</option></select></label><button class="btn primary full" type="submit">Buat akun staf</button><p id="staff-account-message" class="form-message"></p></form><hr></section><p id="sync-help" class="muted">Mode lokal menyimpan data pada perangkat ini saja. Untuk real-time lintas HP, sambungkan proyek Supabase pada js/supabase-config.js lalu jalankan schema.sql.</p><div class="setting-status"><span>Status backend</span><b id="backend-status">Belum dikonfigurasi</b></div><button id="sync-now-btn" class="btn outline">Sinkronkan sekarang</button><hr><h3>Data lokal</h3><p class="muted">Ekspor cadangan sebelum pindah perangkat. Jangan bagikan file cadangan ke orang yang tidak berwenang.</p><button id="backup-btn" class="btn outline">Unduh cadangan JSON</button><label class="file-button">Pulihkan cadangan JSON<input id="restore-file" type="file" accept="application/json"></label><button id="reset-demo-btn" class="btn danger">Reset data demo</button></div>
     </div>
   </section>
 </main>
@@ -153,5 +153,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.26"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.27"></script>
 </body></html>
