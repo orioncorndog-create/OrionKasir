@@ -507,3 +507,74 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 }
 .cashier-crop-preview{position:relative;isolation:isolate;touch-action:pan-y;}
 .cashier-crop-preview img{position:absolute;left:0;top:0;width:auto;height:auto;max-width:none;max-height:none;object-fit:fill;object-position:initial;transform:none;transform-origin:top left;will-change:left,top,width,height;}
+
+
+/* v2.21 — fully responsive layout: fluid content + permanent tablet sidebar */
+html,body,#app{width:100%;max-width:100%;min-width:0;overflow-x:clip}
+.layout,.content,.page,.page.active,.pos-grid,.panel,.catalog,.split,.metrics,.product-grid,#pos-products{max-width:100%;min-width:0}
+.content{width:100%;padding:clamp(14px,2.2vw,30px);}
+.page{width:100%;}
+/* Keep tables usable without forcing the whole page wider than the viewport. */
+.table-wrap,.menu-table-wrap{max-width:100%;min-width:0;overflow-x:auto}
+.product-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr))}
+.metrics,.metrics.compact{grid-template-columns:repeat(3,minmax(0,1fr))}
+.split{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr)}
+
+/* Tablet and iPad: navigation is always visible as a real dashboard sidebar. */
+@media (min-width:768px){
+  .layout{display:grid!important;grid-template-columns:clamp(190px,22vw,240px) minmax(0,1fr)!important;align-items:stretch;min-height:calc(100vh - 70px)}
+  #app .sidebar{position:sticky!important;top:70px!important;left:auto!important;bottom:auto!important;width:auto!important;height:calc(100vh - 70px)!important;max-height:calc(100vh - 70px)!important;overflow-y:auto;overflow-x:hidden;display:flex!important;flex-direction:column;transform:none!important;transition:none!important;padding:18px 12px!important;border-right:1px solid var(--line);border-bottom:0;border-radius:0;box-shadow:none;background:#fff;z-index:4}
+  #app .sidebar-toggle{display:none!important}
+  #app .sidebar .outlet-label{display:grid!important}
+  #app #main-nav{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:5px;width:100%;max-width:100%;overflow:visible;padding:0}
+  #app .nav-btn{display:flex;justify-content:flex-start;min-width:0;width:100%;white-space:normal;font-size:12px;padding:11px 10px;line-height:1.3}
+  #app .nav-btn span{flex:0 0 20px}
+  #app .sidebar-bottom{display:grid!important;grid-template-columns:minmax(0,1fr);position:static;margin-top:auto;padding:8px 2px;background:transparent;border-top:1px solid var(--line);box-shadow:none}
+  .nav-edge-toggle,.nav-scrim{display:none!important}
+  #app.nav-open .sidebar{transform:none!important}
+  #app.nav-collapsed .layout{grid-template-columns:clamp(190px,22vw,240px) minmax(0,1fr)!important}
+  #app.nav-collapsed .sidebar .outlet-label,#app.nav-collapsed .sidebar .sidebar-bottom{display:grid!important}
+  #app.nav-collapsed .nav-btn{font-size:12px;justify-content:flex-start;padding:11px 10px}
+  #app.nav-collapsed .nav-btn span{font-size:18px}
+  .content{padding:clamp(16px,2vw,28px)!important}
+  .page-heading{flex-wrap:wrap}
+  #page-kasir .metrics.compact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #page-kasir .pos-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px}
+  #page-kasir .cart-panel{position:relative!important;top:auto!important;left:auto!important;right:auto!important;bottom:auto!important;width:100%;max-height:none;transform:none!important;overflow:hidden}
+  #page-kasir .cart-sheet-toggle{display:none!important}
+  #page-kasir .cart-items{max-height:320px}
+  #pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}
+  .checkout-header,.checkout-layout{width:100%;max-width:none}
+}
+
+/* Larger tablets / desktop: use the available width for a two-column cashier dashboard. */
+@media (min-width:1024px){
+  .content{padding:clamp(22px,2.3vw,36px)!important}
+  #page-kasir .metrics.compact{grid-template-columns:repeat(3,minmax(0,1fr))}
+  #page-kasir .pos-grid{grid-template-columns:minmax(0,1fr) minmax(290px, min(34%,390px));gap:16px;align-items:start}
+  #page-kasir .cart-panel{position:sticky!important;top:86px!important;max-height:calc(100vh - 100px);overflow:hidden}
+  #page-kasir .cart-sheet-toggle{display:none!important}
+  #page-kasir .cart-items{max-height:min(34vh,360px)}
+  #pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+  .metrics,.metrics.compact{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+/* Narrow phones: no horizontal page overflow; internal horizontal lists remain scrollable. */
+@media (max-width:767px){
+  .layout{display:block!important;width:100%;}
+  .content{width:100%;padding-left:12px;padding-right:12px;}
+  .metrics,.metrics.compact{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .split{grid-template-columns:minmax(0,1fr)}
+  .toolbar{min-width:0;flex-wrap:wrap}
+  .toolbar input[type=search],.toolbar>input{min-width:0;flex:1 1 160px}
+  #page-kasir .pos-grid{display:block}
+  #page-kasir .cart-panel{position:fixed!important}
+  #pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .checkout-header,.checkout-layout{max-width:100%;width:100%}
+}
+@media (min-width:1400px){
+  .layout{grid-template-columns:250px minmax(0,1fr)!important}
+  .content{padding:34px 40px!important}
+  #page-kasir .pos-grid{grid-template-columns:minmax(0,1fr) minmax(330px,400px)}
+  #pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+}
