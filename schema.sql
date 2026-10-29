@@ -44,6 +44,14 @@ end $$;
 
 -- Profil akun POS: role ditetapkan oleh owner melalui SQL Editor, bukan dari metadata signup.
 -- Role tersedia: owner, manager, employee. Jangan memberi hak owner melalui user_metadata.
+create table if not exists public.pos_pending_roles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  role text not null check (role in ('manager','employee')),
+  display_name text not null default '',
+  created_at timestamptz not null default now()
+);
+revoke all on table public.pos_pending_roles from anon, authenticated;
+
 create table if not exists public.pos_profiles (
   id uuid primary key references auth.users(id) on delete cascade,
   display_name text not null default '',
@@ -57,17 +65,32 @@ revoke all on table public.pos_profiles from anon;
 grant select on table public.pos_profiles to authenticated;
 drop policy if exists "pos_profiles_read_self" on public.pos_profiles;
 create policy "pos_profiles_read_self" on public.pos_profiles for select to authenticated using (id = (select auth.uid()));
--- Profile role dibuat otomatis sebagai employee. Role tinggi harus ditetapkan owner melalui SQL Editor.
+-- Profil POS baru dibuat HANYA setelah email atau nomor HP terverifikasi.
+-- Supabase tetap menyimpan auth.users sebagai pending signup; akun itu belum boleh login.
+-- Profil employee dibuat saat user terkonfirmasi, bukan saat formulir pendaftaran dikirim.
 create or replace function public.pos_create_profile_for_auth_user()
 returns trigger language plpgsql security definer set search_path = '' as $$
 begin
-  insert into public.pos_profiles(id, display_name, role, active)
-  values (new.id, coalesce(nullif(new.raw_user_meta_data ->> 'display_name',''), nullif(split_part(coalesce(new.email,''),'@',1),''), new.phone, 'Pengguna'), 'employee', true)
-  on conflict (id) do nothing;
+  if new.email_confirmed_at is not null or new.phone_confirmed_at is not null then
+    insert into public.pos_profiles(id, display_name, role, active)
+    values (
+      new.id,
+      coalesce(nullif(new.raw_user_meta_data ->> 'display_name',''), nullif(split_part(coalesce(new.email,''),'@',1),''), new.phone, 'Pengguna'),
+      coalesce((select pr.role from public.pos_pending_roles pr where pr.user_id = new.id), 'employee'),
+      true
+    )
+    on conflict (id) do nothing;
+    delete from public.pos_pending_roles where user_id = new.id;
+  end if;
   return new;
 end; $$;
 drop trigger if exists on_auth_user_created_pos_profile on auth.users;
+drop trigger if exists on_auth_user_verified_pos_profile on auth.users;
 create trigger on_auth_user_created_pos_profile after insert on auth.users for each row execute procedure public.pos_create_profile_for_auth_user();
+create trigger on_auth_user_verified_pos_profile after update of email_confirmed_at, phone_confirmed_at on auth.users for each row execute procedure public.pos_create_profile_for_auth_user();
+-- Bersihkan profil akun yang belum terverifikasi dari instalasi sebelumnya.
+delete from public.pos_profiles p using auth.users u
+where p.id = u.id and u.email_confirmed_at is null and u.phone_confirmed_at is null;
 -- Contoh penetapan role setelah akun dibuat (ganti email dan role):
 -- update public.pos_profiles p set role='owner', updated_at=now()
 -- from auth.users u where p.id=u.id and u.email='owner@contoh.com';
@@ -86,7 +109,15 @@ begin
     raise exception 'Hanya owner yang dapat mengatur peran akun';
   end if;
   update public.pos_profiles set role = new_role, updated_at = now() where id = target_user_id;
-  if not found then raise exception 'Profil akun belum tersedia'; end if;
+  if not found then
+    if exists (select 1 from auth.users u where u.id = target_user_id and u.email_confirmed_at is null and u.phone_confirmed_at is null) then
+      insert into public.pos_pending_roles(user_id, role)
+      values (target_user_id, new_role)
+      on conflict (user_id) do update set role = excluded.role, created_at = now();
+      return;
+    end if;
+    raise exception 'Profil akun belum tersedia atau akun sudah tidak valid';
+  end if;
 end; $$;
 revoke all on function public.pos_owner_set_role(uuid,text) from public, anon;
 grant execute on function public.pos_owner_set_role(uuid,text) to authenticated;

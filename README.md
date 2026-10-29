@@ -31,3 +31,34 @@ update public.pos_profiles p set role='owner', updated_at=now()
 from auth.users u where p.id=u.id and u.email='email-pemilik@contoh.com';
 ```
 Catatan keamanan: versi ini menggunakan satu snapshot `pos_state` bersama. Pembatasan menu di antarmuka adalah kontrol UI; untuk keamanan produksi yang ketat, backend perlu dinormalisasi/ditambah RPC tervalidasi agar karyawan tidak dapat mengubah data selain transaksi melalui API langsung.
+
+
+## v2.28 — Verifikasi email dan alur kembali ke aplikasi
+- Layar pendaftaran menjelaskan dengan jelas bahwa pengguna harus membuka Gmail dan menekan tautan verifikasi terlebih dahulu.
+- Setelah callback verifikasi kembali ke URL aplikasi dan Supabase membentuk sesi, aplikasi membuka POS dan menampilkan pesan berhasil login.
+- Login callback menggunakan PKCE dan memeriksa sesi setelah redirect.
+
+### Wajib dilakukan di Supabase agar email benar-benar terkirim
+1. Buka Authentication → Providers → Email dan pastikan Email provider aktif serta Confirm email diaktifkan.
+2. Buka Authentication → URL Configuration. Isi Site URL dengan URL aplikasi yang benar dan tambahkan URL lengkap aplikasi ke Redirect URLs, misalnya `https://domain-netlify-anda.netlify.app/` (gunakan domain asli milik Anda).
+3. Untuk pengiriman ke Gmail pelanggan/pengguna umum, konfigurasi SMTP provider sendiri di Authentication → SMTP Settings. SMTP bawaan Supabase umumnya hanya untuk uji coba dan memiliki batasan penerima/pengiriman; memasukkan URL/key saja tidak mengaktifkan layanan email produksi.
+4. Periksa folder Spam/Promosi dan log email/Auth di Supabase. Pastikan template Confirm signup menggunakan `{{ .ConfirmationURL }}` agar Supabase memverifikasi token lalu mengarahkan ke `emailRedirectTo` aplikasi.
+5. Setelah verifikasi, pengguna akan login otomatis hanya jika tautan redirect diizinkan, proses callback berhasil, dan pengaturan Auth/template mendukung pembentukan sesi. Jika tidak, pengguna dapat kembali ke layar login dan masuk secara manual.
+
+Catatan: aplikasi tidak dapat memaksa email terkirim jika SMTP/provider Supabase belum dikonfigurasi. Nomor HP menggunakan SMS, bukan Gmail, dan memerlukan Phone Auth serta penyedia SMS aktif.
+
+
+## v2.29 — Akun hanya aktif setelah verifikasi
+- `schema.sql` kini membuat profil POS hanya setelah email/nomor HP terverifikasi. Akun pending yang belum terverifikasi dibersihkan dari `pos_profiles`.
+- Layar daftar menegaskan akun belum aktif sampai verifikasi berhasil.
+- Catatan penting: Supabase Auth tetap menyimpan record pending di `auth.users` untuk mengirim dan memvalidasi token; ini perilaku normal, bukan akun yang sudah bisa digunakan.
+- Untuk email ke Gmail, aktifkan Confirm email dan konfigurasi SMTP provider di Supabase. URL/key saja tidak mengirim email.
+- Jalankan `schema.sql` versi ini di Supabase SQL Editor. Query aman menghapus hanya profil yang belum terverifikasi; periksa sebelum menjalankan jika sebelumnya ada akun uji yang belum dikonfirmasi.
+
+
+## v2.30 — Pengaturan
+- Pengaturan dibagi menjadi Profil & Umum, Hak Akses Pegawai, dan Perangkat Keras.
+- Preferensi sinkronisasi, izin peran, dan hardware disimpan dalam data pengaturan POS.
+- Pengaturan dapat dibuka oleh Owner dan Manajer; pembuatan akun pegawai dan perubahan hak akses hanya Owner.
+- Printer Bluetooth/USB/LAN dan laci uang memerlukan dukungan perangkat/browser/driver. Bagian ini menyimpan preferensi; bukan jaminan koneksi perangkat secara otomatis.
+- Email verifikasi dikirim oleh Supabase Auth. Untuk pengiriman email yang andal, konfigurasikan SMTP khusus di Supabase Authentication → SMTP Settings dan cek Authentication → Logs.

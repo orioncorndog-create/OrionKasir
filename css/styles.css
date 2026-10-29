@@ -675,3 +675,19 @@ body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var
 .delivery-fee-label{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:12px;font-weight:700}
 .delivery-fee-label input{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;color:var(--ink)}
 .delivery-summary-line{color:var(--wine)}
+
+/* v2.28: instruksi verifikasi email lebih jelas di layar pendaftaran */
+.form-message.verification{font-size:12px;line-height:1.75;color:#4d3428;background:#fff1df;border:1px solid #efd0a7;padding:14px 15px;border-radius:12px;font-weight:600}
+
+/* v2.30 — settings workspace */
+.settings-tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;margin-bottom:8px}
+.settings-tab{flex:0 0 auto;border:1px solid var(--line);border-radius:11px;background:#fff;color:var(--ink);padding:11px 14px;font:inherit;font-size:12px;font-weight:750;cursor:pointer}
+.settings-tab.active{background:var(--wine);border-color:var(--wine);color:#fff}
+.settings-pane[hidden]{display:none!important}
+.settings-card{max-width:900px;margin-bottom:16px}
+.settings-card>.muted{line-height:1.6}
+.setting-toggle{display:flex!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center;gap:14px!important;border:1px solid var(--line);border-radius:12px;padding:13px!important;background:#fff}
+.setting-toggle span{display:grid;gap:5px}.setting-toggle strong{font-size:12px}.setting-toggle small{font-size:10px;font-weight:400;color:var(--muted);line-height:1.5}.setting-toggle input{width:20px;height:20px;accent-color:var(--wine)}
+.role-matrix{width:100%;overflow-x:auto;margin:15px 0}.role-head,.permission-row{display:grid!important;grid-template-columns:minmax(155px,1fr) repeat(3,minmax(48px,68px));gap:8px!important;align-items:center;padding:12px 8px!important;margin:0!important;border-bottom:1px solid var(--line);min-width:360px}.role-head{font-size:11px;font-weight:800;background:#faf6f1;border-radius:8px}.role-head span:not(:first-child){text-align:center}.permission-row{font-size:11px!important}.permission-row span{line-height:1.4}.permission-row input{width:18px;height:18px;justify-self:center;accent-color:var(--wine)}.settings-extra{margin-top:16px}.staff-account-section{margin-top:18px}
+@media(max-width:780px){.settings-tabs{margin-right:-4px}.settings-tab{padding:10px 12px;font-size:11px}.settings-card{padding:15px}.settings-extra{grid-template-columns:1fr}.permission-row,.role-head{grid-template-columns:minmax(145px,1fr) repeat(3,minmax(42px,54px));gap:5px!important}}
+@media print{ @page{size:auto;margin:4mm} .receipt{width:var(--receipt-width,58mm);max-width:100%;margin:0 auto} }
