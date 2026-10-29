@@ -280,3 +280,6 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 @media(prefers-reduced-motion:reduce){.checkout-screen{animation:none}}
 
 @media(max-width:780px){#page-kasir .cart-panel.cart-empty{display:flex!important;transform:translateY(calc(100% - 78px));min-height:68px;max-height:78px}#page-kasir .cart-panel.cart-empty .cart-sheet-toggle{display:flex;min-height:68px;border-bottom:0}}
+
+/* POS category grouping and best-seller markers */
+.pos-category-section{margin:0 0 22px}.pos-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px;padding:9px 11px;border-left:4px solid var(--orange);border-radius:7px;background:#fbf3eb;color:var(--wine);font-size:13px}.pos-section-title small{font:600 10px 'DM Sans',sans-serif;color:var(--muted);white-space:nowrap}.best-seller{font-size:12px;white-space:nowrap}.promo-products-section .pos-section-title{background:#fff0e7;border-left-color:var(--orange)}.product-category{display:flex;align-items:center;gap:4px}
