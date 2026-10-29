@@ -283,3 +283,16 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 
 /* POS category grouping and best-seller markers */
 .pos-category-section{margin:0 0 22px}.pos-section-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px;padding:9px 11px;border-left:4px solid var(--orange);border-radius:7px;background:#fbf3eb;color:var(--wine);font-size:13px}.pos-section-title small{font:600 10px 'DM Sans',sans-serif;color:var(--muted);white-space:nowrap}.best-seller{font-size:12px;white-space:nowrap}.promo-products-section .pos-section-title{background:#fff0e7;border-left-color:var(--orange)}.product-category{display:flex;align-items:center;gap:4px}
+
+/* v2.8: POS catalog categories stack vertically; only Best Seller scrolls horizontally */
+#pos-products.product-grid{display:block;min-width:0}
+#pos-products>.pos-category-section{display:block;width:100%;min-width:0;clear:both}
+#pos-products .pos-category-section>.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:9px;min-width:0}
+#pos-products .pos-section-title{font-size:12px;padding:7px 9px;margin-bottom:8px;line-height:1.25}
+#pos-products .pos-section-title small{font-size:9px}
+#pos-products .bestseller-strip{display:flex;gap:9px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;padding:1px 1px 10px;scrollbar-width:thin}
+#pos-products .bestseller-strip .product-card{flex:0 0 148px;width:148px;min-width:148px;scroll-snap-align:start}
+#pos-products .product-card{min-width:0;overflow:hidden}
+#pos-products .product-name{overflow-wrap:anywhere;word-break:normal}
+@media(max-width:900px){#pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:390px){#pos-products .pos-category-section>.product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}#pos-products .bestseller-strip .product-card{flex-basis:138px;width:138px;min-width:138px}#pos-products .pos-section-title{font-size:11px;padding:7px 8px}}
