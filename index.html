@@ -8,7 +8,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.24">
+<link rel="stylesheet" href="./css/styles.css?v=2.25">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -44,7 +44,7 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.24</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.25</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content">
   <section class="page active" id="page-kasir">
@@ -122,7 +122,7 @@
 <section id="checkout-screen" class="checkout-screen hidden" aria-label="Layar pembayaran" aria-modal="true" role="dialog">
  <header class="checkout-header"><button type="button" id="checkout-back" class="btn outline checkout-back">← Kembali ke menu</button><div><p class="eyebrow">OR!ON CORNDOG POS PRO</p><h1>Pembayaran</h1></div><span id="checkout-count" class="checkout-count">0 item</span></header>
  <div class="checkout-layout"><section class="checkout-order panel"><div class="panel-heading"><div><p class="eyebrow">RINGKASAN PESANAN</p><h2>Pesanan Anda</h2></div></div><div id="checkout-items" class="checkout-items"></div></section>
- <aside class="checkout-payment panel"><p class="eyebrow">RINCIAN PEMBAYARAN</p><div class="line"><span>Subtotal</span><b id="checkout-subtotal">Rp0</b></div><div class="line"><span>Diskon promo</span><b id="checkout-discount">−Rp0</b></div><div class="line total-line"><span>Total bayar</span><b id="checkout-total">Rp0</b></div>
+ <aside class="checkout-payment panel"><p class="eyebrow">RINCIAN PEMBAYARAN</p><div class="line"><span>Subtotal</span><b id="checkout-subtotal">Rp0</b></div><div class="line"><span>Diskon promo</span><b id="checkout-discount">−Rp0</b></div><section class="delivery-fee-box"><label class="delivery-toggle"><input type="checkbox" id="delivery-enabled"> <span><strong>Ongkir delivery</strong><small>Aktifkan jika pesanan diantar ke pelanggan</small></span></label><label id="delivery-fee-label" class="delivery-fee-label hidden">Biaya ongkir (Rp)<input id="delivery-fee" type="number" min="0" step="500" inputmode="numeric" placeholder="Contoh: 5000" value="0"></label></section><div class="line delivery-summary-line hidden" id="checkout-delivery-row"><span>Ongkir delivery</span><b id="checkout-delivery-fee">Rp0</b></div><div class="line total-line"><span>Total bayar</span><b id="checkout-total">Rp0</b></div>
  <div class="internal-cost"><div class="line"><span>Estimasi HPP (internal)</span><b id="checkout-hpp">Rp0</b></div><div class="line"><span>Estimasi laba kotor (internal)</span><b id="checkout-profit">Rp0</b></div></div>
  <label>Metode pembayaran utama<select id="payment-method"><option value="Tunai">Tunai</option><option value="QRIS">QRIS</option><option value="Transfer">Transfer</option><option value="Lainnya">Lainnya</option></select></label>
  <label id="checkout-cash-label">Uang diterima<input id="cash-received" type="number" min="0" step="1" inputmode="numeric" placeholder="Masukkan nominal tunai"><span class="cash-presets" aria-label="Pilihan nominal uang diterima"><button type="button" class="cash-preset exact" data-cash-preset="exact">Uang pas</button><button type="button" class="cash-preset" data-cash-preset="20000">Rp20.000</button><button type="button" class="cash-preset" data-cash-preset="50000">Rp50.000</button><button type="button" class="cash-preset" data-cash-preset="100000">Rp100.000</button></span></label>
@@ -153,5 +153,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.24"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.25"></script>
 </body></html>

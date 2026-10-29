@@ -655,3 +655,18 @@ body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var
 #page-kasir .metric:not(.sales),#page-kasir .panel,#page-kasir .product-card{background:var(--paper,#fff)}
 #page-kasir .metric.sales,.btn.primary,.chip.active{background:var(--wine)!important;border-color:var(--wine)!important}
 @media(max-width:420px){.theme-fields{grid-template-columns:minmax(0,1fr)}.theme-font-field{grid-column:auto}.cashier-tools-menu>summary{width:34px;height:34px}}
+
+/* v2.25: keep cashier tools above metric cards and prevent popover clipping */
+#page-kasir .cashier-heading{position:relative;z-index:80;isolation:isolate;overflow:visible}
+#page-kasir .cashier-tools{position:relative;z-index:90}
+#page-kasir .cashier-tools-menu{position:static}
+#page-kasir .cashier-tools-menu[open] .cashier-tools-popover{position:fixed;right:max(12px,env(safe-area-inset-right));top:max(58px,env(safe-area-inset-top));z-index:99999;max-height:calc(100dvh - 80px);overflow:auto}
+.delivery-fee-box{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bubble-bg,#f5e6dd)}
+.delivery-toggle{display:flex;align-items:center;gap:10px;cursor:pointer}
+.delivery-toggle input{width:19px;height:19px;accent-color:var(--wine);flex:0 0 auto}
+.delivery-toggle span{display:flex;flex-direction:column;gap:3px}
+.delivery-toggle strong{font-size:13px}
+.delivery-toggle small{font-size:11px;color:var(--muted)}
+.delivery-fee-label{display:flex;flex-direction:column;gap:6px;margin-top:12px;font-size:12px;font-weight:700}
+.delivery-fee-label input{width:100%;box-sizing:border-box;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;color:var(--ink)}
+.delivery-summary-line{color:var(--wine)}
