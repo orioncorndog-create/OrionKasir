@@ -127,3 +127,9 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Tombol tambah gambar dihilangkan dari header transaksi kasir.
 - Kontrol jumlah produk Best Seller diperkecil agar tombol minus, jumlah, dan plus tidak terpotong di layar HP.
 - Kategori dapat diubah namanya dan diurutkan dengan tombol panah atas/bawah; urutan mengikuti tampilan kategori kasir.
+
+
+## v2.15 — Mobile template and receipt branding
+- Refined mobile cashier layout to match the supplied reference: left edge drawer navigation, compact solid metric cards with icons, square product photos, and full-bleed 4:3 cashier background image.
+- WhatsApp receipt PNG now embeds the actual OR!ON CORNDOG logo asset instead of rendering the brand name as plain text.
+- Service-worker cache and asset versions updated to 2.15.
