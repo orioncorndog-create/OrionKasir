@@ -8,7 +8,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.11">
+<link rel="stylesheet" href="./css/styles.css?v=2.14">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -24,7 +24,7 @@
 <div id="app" class="app hidden">
 <header class="topbar">
   <div class="brand"><img class="brand-logo" src="./assets/orion-logo-full-4k.png?v=2.9" alt="Logo OR!ON CORNDOG lengkap"><div class="brand-caption"><small>POINT OF SALE PRO</small><span>Kasir • Inventori • Laporan</span></div></div>
-  <div class="top-actions"><span id="connection-status" class="status"><i></i> Mode lokal</span><span id="user-label" class="user-label">Admin</span><button id="logout-btn" class="btn ghost small-btn">Keluar</button></div>
+  <div class="top-actions"><span id="connection-status" class="status"><i></i> Mode lokal</span><span id="user-label" class="user-label">Admin</span></div>
 </header>
 <button type="button" id="nav-edge-toggle" class="nav-edge-toggle" aria-label="Buka menu navigasi" aria-expanded="false"><span class="edge-grip"></span><span class="edge-menu-icon">☰</span></button><button type="button" id="nav-scrim" class="nav-scrim" aria-label="Tutup menu navigasi" tabindex="-1"></button>
 <div class="layout">
@@ -42,15 +42,15 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.0</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.14</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content">
   <section class="page active" id="page-kasir">
     <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions"><button id="cashier-image-btn" class="btn outline compact-image-btn" type="button" aria-label="Ubah gambar latar kasir">▧ Gambar</button><input id="cashier-image-input" type="file" accept="image/*" hidden><button id="open-history-shortcut" class="btn outline">Riwayat hari ini</button></div></div>
     <div class="metrics compact">
-      <article class="metric sales"><span>Omzet hari ini</span><strong id="m-sales">Rp0</strong><small id="m-count">0 transaksi</small></article>
-      <article class="metric"><span>HPP terjual</span><strong id="m-hpp">Rp0</strong><small>Hanya untuk internal</small></article>
-      <article class="metric"><span>Laba kotor</span><strong id="m-profit">Rp0</strong><small>Omzet − HPP</small></article>
+      <article class="metric sales"><span class="metric-label"><span class="metric-icon" aria-hidden="true">▥</span>Omzet hari ini</span><strong id="m-sales">Rp0</strong><small id="m-count">0 transaksi</small></article>
+      <article class="metric hpp-metric"><span class="metric-label"><span class="metric-icon" aria-hidden="true">▤</span>HPP terjual</span><strong id="m-hpp">Rp0</strong><small>Hanya untuk internal</small></article>
+      <article class="metric profit-metric"><span class="metric-label"><span class="metric-icon" aria-hidden="true">↗</span>Laba kotor</span><strong id="m-profit">Rp0</strong><small>Omzet − HPP</small></article>
     </div>
     <div class="pos-grid">
       <section class="panel catalog">
@@ -132,5 +132,5 @@
 <dialog id="close-dialog" class="modal"><form id="close-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">OPERASIONAL</p><h2>Tutup outlet</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="muted">Ringkasan hari ini akan disimpan sebagai laporan tutup outlet. Pastikan transaksi sudah selesai.</p><div id="close-summary"></div><label>Catatan tutup outlet<textarea id="close-note" rows="3" placeholder="Catatan kas, stok, atau kendala..."></textarea></label><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn danger">Konfirmasi tutup outlet</button></div></form></dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.10"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.14"></script>
 </body></html>

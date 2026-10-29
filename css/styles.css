@@ -373,3 +373,31 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 #page-kasir .bestseller-strip .product-visual{aspect-ratio:1/1;height:auto}
 #page-kasir .cashier-heading .compact-image-btn{display:inline-flex;align-items:center;gap:5px;border-radius:999px;background:rgba(255,255,255,.88);border-color:rgba(230,220,208,.75);font-size:11px;padding:8px 12px}
 @media(max-width:780px){#page-kasir.has-cashier-background{background-size:100% 780px,100% 780px;padding:8px;margin:-8px}#page-kasir .product-visual{aspect-ratio:1/1;height:auto}#page-kasir .cashier-heading .heading-actions{gap:5px}#page-kasir .cashier-heading .heading-actions .btn{font-size:10px;padding:8px 10px}}
+
+/* v2.14 — polished cashier: 4:3 image hero, solid metric cards, sidebar logout */
+#page-kasir.has-cashier-background{position:relative;isolation:isolate;overflow:visible;background:var(--cream);border-radius:0;padding:0;margin:0}
+#page-kasir.has-cashier-background::before{content:"";position:absolute;z-index:-1;pointer-events:none;left:0;right:0;top:0;aspect-ratio:4/3;max-height:680px;background-image:linear-gradient(180deg,rgba(250,247,241,.08) 0%,rgba(250,247,241,.10) 42%,rgba(250,247,241,.55) 72%,var(--cream) 100%),var(--cashier-bg-image);background-position:center top;background-size:100% 100%,cover;background-repeat:no-repeat;}
+#page-kasir.has-cashier-background .cashier-heading{background:rgba(255,255,255,.46);backdrop-filter:blur(1px);border-color:rgba(230,220,208,.65)}
+#page-kasir.has-cashier-background .metric{background:#fffaf4;color:var(--ink);border-color:#eadfd3;box-shadow:0 5px 18px rgba(70,39,23,.07)}
+#page-kasir.has-cashier-background .metric.sales{background:#852b3a;color:#fff;border-color:#852b3a}
+#page-kasir.has-cashier-background .metric.sales span,#page-kasir.has-cashier-background .metric.sales small{color:#f4dfe0}
+#page-kasir .metrics.compact{gap:9px;margin-bottom:14px}
+#page-kasir .metric{padding:13px 15px;border-radius:17px;min-height:104px}
+#page-kasir .metric-label{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;margin-bottom:8px}
+#page-kasir .metric-icon{display:inline-grid;place-items:center;width:25px;height:25px;border-radius:8px;background:#f5e9df;color:#7a4036;font-size:17px;line-height:1;flex:0 0 auto}
+#page-kasir .metric.sales .metric-icon{background:rgba(255,255,255,.15);color:#fff}
+#page-kasir .metric strong{font-size:clamp(16px,1.9vw,21px);letter-spacing:-.45px}
+#page-kasir .metric small{font-size:10px;margin-top:6px}
+.sidebar-bottom #logout-btn{margin-top:1px}
+@media(max-width:780px){
+ #page-kasir.has-cashier-background::before{aspect-ratio:4/3;max-height:none;background-position:center top;background-size:100% 100%,cover}
+ #page-kasir .metrics.compact{gap:8px;margin-bottom:12px}
+ #page-kasir .metric{padding:12px 13px;min-height:98px;border-radius:16px}
+ #page-kasir .metric-label{font-size:10px;margin-bottom:7px}
+ #page-kasir .metric-icon{width:23px;height:23px;font-size:15px}
+ #page-kasir .metric strong{font-size:16px}
+ #page-kasir .metric small{font-size:9px}
+ .sidebar-bottom{position:static;display:grid;grid-template-columns:1fr;padding:8px;margin-top:auto;background:transparent;border-top:1px solid var(--line);box-shadow:none}
+ .sidebar-bottom small{grid-column:auto}
+ .sidebar-bottom #close-outlet-btn,.sidebar-bottom #logout-btn{width:100%;min-height:40px}
+}
