@@ -8,16 +8,18 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.18">
+<link rel="stylesheet" href="./css/styles.css?v=2.19">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
   <form id="login-form" class="login-card">
     <img class="login-logo" src="./assets/orion-logo-full-4k.png?v=2.9" alt="Logo OR!ON CORNDOG lengkap"><p class="eyebrow">POINT OF SALE PRO</p><h1>Masuk ke POS</h1>
     <p class="muted">Gunakan akun outlet untuk membuka kasir dan laporan.</p>
+    <label id="signup-name-wrap" class="hidden">Nama lengkap<input id="signup-name" type="text" placeholder="Nama kasir" autocomplete="name"></label>
     <label>Email<input id="login-email" type="email" placeholder="kasir@outlet.com" autocomplete="username" required></label>
-    <label>Password<input id="login-password" type="password" placeholder="Password akun" autocomplete="current-password" required></label>
-    <button class="btn primary full" type="submit">Masuk</button>
+    <label>Password<input id="login-password" type="password" placeholder="Minimal 6 karakter" autocomplete="current-password" minlength="6" required></label>
+    <button id="login-submit" class="btn primary full" type="submit">Masuk</button>
+    <button id="signup-toggle" class="btn outline full" type="button" style="margin-top:8px">Buat akun baru</button>
     <p id="login-message" class="form-message">Mode lokal demo: gunakan <b>admin@orion.local</b> / <b>orion123</b>. Untuk login online antar-HP, isi konfigurasi Supabase dan jalankan SQL di README.</p>
   </form>
 </div>
@@ -142,5 +144,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.18"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.19"></script>
 </body></html>
