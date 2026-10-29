@@ -62,3 +62,18 @@ Catatan: aplikasi tidak dapat memaksa email terkirim jika SMTP/provider Supabase
 - Pengaturan dapat dibuka oleh Owner dan Manajer; pembuatan akun pegawai dan perubahan hak akses hanya Owner.
 - Printer Bluetooth/USB/LAN dan laci uang memerlukan dukungan perangkat/browser/driver. Bagian ini menyimpan preferensi; bukan jaminan koneksi perangkat secara otomatis.
 - Email verifikasi dikirim oleh Supabase Auth. Untuk pengiriman email yang andal, konfigurasikan SMTP khusus di Supabase Authentication → SMTP Settings dan cek Authentication → Logs.
+
+
+## PWA / PWABuilder / Trusted Web Activity (v2.31)
+
+Manifest sudah menggunakan `display: standalone`, `display_override` dengan fallback fullscreen/standalone, scope/start URL relatif, ikon 192/512, dan metadata mobile. Service worker cache dinaikkan ke v2.31.
+
+**Penting:** `display: standalone` tidak sendirinya menjamin APK tidak menampilkan bilah URL. Untuk APK Android tanpa bilah URL, PWABuilder harus membangun aplikasi sebagai **Trusted Web Activity (TWA)** dan domain Netlify harus diverifikasi melalui Digital Asset Links. File `/.well-known/assetlinks.json` tidak dapat diisi valid tanpa domain publik yang benar, Android package/application ID, dan SHA-256 fingerprint sertifikat penandatanganan APK. Setelah PWABuilder menghasilkan/menentukan ketiganya, buat file `/.well-known/assetlinks.json` di situs dengan isi yang disediakan PWABuilder dan pastikan URL tersebut bisa dibuka publik dengan HTTP 200 serta `Content-Type: application/json`. Jangan menebak fingerprint atau package ID.
+
+### Checklist PWABuilder
+1. Deploy isi folder ini ke Netlify (HTTPS).
+2. Buka URL publik di PWABuilder dan jalankan validasi manifest/service worker.
+3. Pilih Android package dengan mode Trusted Web Activity (TWA), bukan sekadar WebView wrapper.
+4. Catat Android package name dan SHA-256 fingerprint dari key yang benar-benar dipakai untuk menandatangani APK.
+5. Pasang `assetlinks.json` di `/.well-known/assetlinks.json` pada domain yang sama persis dengan start URL.
+6. Build ulang APK dan instal. Jika asset links tidak cocok/terjangkau, Chrome dapat menampilkan toolbar URL sebagai fallback.
