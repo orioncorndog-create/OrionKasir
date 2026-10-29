@@ -465,3 +465,35 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
  #page-kasir.has-cashier-background{margin:-8px -12px!important;padding:8px 12px!important}
  #page-kasir.has-cashier-background::before{left:-12px;right:-12px;top:-8px;width:auto;aspect-ratio:4/3;height:auto;max-height:none;background-size:100% 100%,cover;background-position:center top}
 }
+
+
+/* v2.18 — FIX: cashier background spans full mobile viewport, no half-width container */
+#page-kasir.has-cashier-background{
+  position:relative;
+  width:100%;
+  max-width:none;
+  isolation:isolate;
+  overflow:visible;
+}
+#page-kasir.has-cashier-background::before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  top:0;
+  left:50%;
+  right:auto;
+  width:100vw;
+  height:calc(100vw * .75);
+  aspect-ratio:4 / 3;
+  max-height:none;
+  transform:translateX(-50%);
+  background-image:linear-gradient(180deg,rgba(250,247,241,.08) 0%,rgba(250,247,241,.10) 42%,rgba(250,247,241,.55) 72%,var(--cream) 100%),var(--cashier-bg-image);
+  background-position:center top,center center;
+  background-size:100% 100%,cover;
+  background-repeat:no-repeat;
+}
+@media(max-width:780px){
+  #page-kasir.has-cashier-background{margin:0 -12px!important;padding:8px 12px!important;}
+  #page-kasir.has-cashier-background::before{top:-8px;left:50%;right:auto;width:100vw;height:calc(100vw * .75);transform:translateX(-50%);background-position:center top,center center;background-size:100% 100%,cover;}
+}
