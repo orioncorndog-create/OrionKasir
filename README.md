@@ -100,9 +100,16 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Struk memiliki tombol Kirim WhatsApp yang menyusun teks rincian transaksi tanpa HPP dan laba kotor internal.
 - Menu mozzarella tambahan yang belum ada akan dibuat nonaktif dengan harga/HPP/stok nol agar tidak ikut dijual sebelum datanya dilengkapi di halaman Menu.
 
-## v2.9 — Struk gambar & role akun (catatan penting)
+## v2.10 — Struk gambar & role akun (catatan penting)
 - Tombol WhatsApp mencoba membagikan file PNG struk melalui Web Share API jika browser/perangkat mendukung berbagi file. Jika tidak, PNG diunduh dan WhatsApp dibuka dengan teks singkat; kasir perlu melampirkan PNG secara manual. Ini bukan pengiriman otomatis tanpa tindakan pengguna.
 - Login Supabase membaca role dari `public.pos_profiles`. Trigger SQL membuat akun baru sebagai `employee` secara default. Owner perlu menetapkan `owner` atau `manager` melalui SQL Editor setelah membuat akun di Supabase Authentication.
 - Role pada UI membantu menyembunyikan halaman dan mencegah sebagian aksi. Namun tabel snapshot `pos_state` pada skema lama masih memberi akses tulis kepada seluruh pengguna terautentikasi. Karena data aplikasi tersimpan dalam satu JSON snapshot, pembatasan per-role belum aman di tingkat database. Jangan gunakan ini sebagai kontrol keamanan produksi sebelum data dinormalisasi dan RLS/operasi transaksi dibatasi, atau seluruh mutasi dipindahkan ke backend tepercaya.
-- Jangan pernah memasukkan Supabase service-role/secret key ke JavaScript frontend. Pembuatan/invitasi akun dari dalam aplikasi memerlukan backend tepercaya (mis. Supabase Edge Function) yang memvalidasi sesi owner; v2.9 belum menyediakan endpoint tersebut.
+- Jangan pernah memasukkan Supabase service-role/secret key ke JavaScript frontend. Pembuatan/invitasi akun dari dalam aplikasi memerlukan backend tepercaya (mis. Supabase Edge Function) yang memvalidasi sesi owner; v2.10 belum menyediakan endpoint tersebut.
 - Setelah menjalankan SQL, buat user di Supabase Authentication. Role default adalah employee. Contoh untuk menaikkan role: lihat komentar `update public.pos_profiles` di bagian akhir `schema.sql`.
+
+
+### v2.10 — Penyempurnaan kasir mobile
+- Bottom sheet pesanan sekarang benar-benar disembunyikan saat keranjang kosong, dan muncul setelah menu ditambahkan.
+- Ketuk panel pesanan atau swipe ke atas pada handle panel untuk membuka layar pembayaran.
+- Pembayaran tunai menyediakan tombol **Uang pas**, **Rp20.000**, **Rp50.000**, dan **Rp100.000**. Tombol Uang pas mengisi nominal persis sesuai total transaksi; kembalian dan validasi pembayaran diperbarui otomatis.
+- Pemeriksaan yang dilakukan: sintaks JavaScript dan integritas arsip ZIP. Perilaku swipe dan tombol berbagi tetap perlu diuji pada perangkat/browser target.
