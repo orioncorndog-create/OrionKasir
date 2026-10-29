@@ -25,3 +25,10 @@ Jika memakai sinkronisasi online, isi `js/supabase-config.js` dengan Project URL
 - Removing the custom image clears the saved `cashierHeaderImage` setting, restores the default cashier background, persists the change, and refreshes the UI.
 - Added a confirmation prompt to prevent accidental removal.
 - Updated service worker cache version to v2.23.
+
+## v2.24 — Background layout & visual customization
+- Isolated cashier background in an absolutely positioned 4:3 layer aligned to the viewport; the background no longer participates in layout sizing or pushes foreground content sideways.
+- Consolidated background actions into a top-right three-dot menu: change background image, reset to default, and customize colors/fonts.
+- Added saved theme controls for page background, card/panel background, primary buttons, sidebar, payment bubbles, text color, and font family.
+- Theme settings are stored in the existing application settings and applied through CSS variables. The reset button inside the theme dialog returns the controls to default values; saving persists the selected theme.
+- Updated asset and service-worker cache versions to v2.24.

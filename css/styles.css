@@ -617,3 +617,41 @@ html,body,#app{width:100%;max-width:100%;min-width:0;overflow-x:clip}
 /* v2.23: background reset control */
 #page-kasir .cashier-heading .compact-image-reset-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;border-radius:999px;background:rgba(255,255,255,.9);border-color:rgba(230,220,208,.85);font-size:11px;padding:8px 12px;color:var(--wine);}
 #page-kasir .cashier-heading .compact-image-reset-btn[hidden]{display:none!important}
+
+/* v2.24 — isolated full-bleed background, cashier tools menu, configurable theme */
+#page-kasir.has-cashier-background{
+  position:relative!important;isolation:isolate!important;width:100%!important;max-width:100%!important;
+  margin:0!important;overflow:visible!important;transform:none!important;
+}
+#page-kasir.has-cashier-background::before{
+  content:"";position:absolute!important;z-index:0!important;pointer-events:none!important;
+  top:0!important;left:calc(50% - 50vw)!important;right:auto!important;width:100vw!important;
+  height:calc(100vw * .75)!important;max-width:none!important;aspect-ratio:4/3!important;
+  transform:none!important;background-image:linear-gradient(180deg,rgba(251,247,240,.04) 0%,rgba(251,247,240,.08) 45%,rgba(251,247,240,.56) 76%,var(--cream) 100%),var(--cashier-bg-image)!important;
+  background-position:center top,center center!important;background-size:100% 100%,cover!important;background-repeat:no-repeat!important;
+}
+#page-kasir.has-cashier-background>*{position:relative;z-index:1}
+@media(max-width:780px){#page-kasir.has-cashier-background{padding:0 0 8px!important}#page-kasir.has-cashier-background::before{top:0!important;left:calc(50% - 50vw)!important;width:100vw!important;height:calc(100vw * .75)!important}}
+.cashier-tools{position:relative;z-index:4;align-items:flex-start!important}
+.cashier-tools-menu{position:relative}
+.cashier-tools-menu>summary{list-style:none;display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:rgba(255,255,255,.94);color:var(--wine);font-size:24px;font-weight:800;cursor:pointer;line-height:1}
+.cashier-tools-menu>summary::-webkit-details-marker{display:none}
+.cashier-tools-popover{position:absolute;right:0;top:calc(100% + 7px);width:max-content;max-width:min(270px,82vw);display:grid;gap:4px;padding:7px;background:#fff;border:1px solid var(--line);border-radius:13px;box-shadow:0 12px 30px #2c1b1726;z-index:20}
+.cashier-tools-popover button{border:0;background:transparent;text-align:left;color:var(--ink);border-radius:8px;padding:11px 12px;font-size:12px;font-weight:700;white-space:normal}
+.cashier-tools-popover button:hover{background:#f8eee8;color:var(--wine)}
+.cashier-tools-popover button[hidden]{display:none!important}
+#page-kasir .compact-image-reset-btn{display:block!important}
+#page-kasir .compact-image-reset-btn[hidden]{display:none!important}
+.theme-modal{width:min(94vw,560px)}
+.theme-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:12px 0 18px}
+.theme-fields label{display:flex;flex-direction:column;gap:8px;font-size:12px;font-weight:700;color:var(--ink)}
+.theme-fields input[type=color]{width:100%;height:42px;padding:4px;border:1px solid var(--line);border-radius:9px;background:#fff}
+.theme-fields select{width:100%;min-width:0;border:1px solid var(--line);border-radius:9px;padding:11px;background:#fff;color:var(--ink)}
+.theme-font-field{grid-column:1/-1}
+:root{--pos-sidebar-bg:#fff;--pos-bubble-bg:#f5e6dd;--pos-font-family:'DM Sans'}
+body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var(--ink)}
+#app .sidebar{background:var(--pos-sidebar-bg,#fff)!important}
+.bubble,.cash-preset,.cash-presets button,.internal-cost{background:var(--pos-bubble-bg,#f5e6dd)}
+#page-kasir .metric:not(.sales),#page-kasir .panel,#page-kasir .product-card{background:var(--paper,#fff)}
+#page-kasir .metric.sales,.btn.primary,.chip.active{background:var(--wine)!important;border-color:var(--wine)!important}
+@media(max-width:420px){.theme-fields{grid-template-columns:minmax(0,1fr)}.theme-font-field{grid-column:auto}.cashier-tools-menu>summary{width:34px;height:34px}}
