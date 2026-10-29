@@ -120,3 +120,10 @@ Backend tidak bisa dibuat aktif hanya dengan upload ZIP: Anda perlu membuat proy
 - Bottom sheet pesanan mendukung geser ke atas untuk memperluas rincian pesanan dan geser ke bawah untuk meringkasnya. Ketuk header sheet tetap membuka layar pembayaran.
 - Header kasir dan logo outlet mengecil saat halaman digulir di layar mobile.
 - Tombol **＋ Gambar** pada header kasir memungkinkan pemilihan gambar latar. Gambar diperkecil/dikompresi dan disimpan bersama pengaturan lokal aplikasi.
+
+
+## v2.12 — penyempurnaan tampilan kasir
+- Gambar latar kasir dikelola dari halaman Pengaturan, dengan efek fade gradient di seluruh area transaksi dan katalog.
+- Tombol tambah gambar dihilangkan dari header transaksi kasir.
+- Kontrol jumlah produk Best Seller diperkecil agar tombol minus, jumlah, dan plus tidak terpotong di layar HP.
+- Kategori dapat diubah namanya dan diurutkan dengan tombol panah atas/bawah; urutan mengikuti tampilan kategori kasir.

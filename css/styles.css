@@ -343,3 +343,21 @@ body{background:linear-gradient(145deg,#fbf7f0 0%,#f6f5f1 54%,#f3f7f4 100%);colo
 .cashier-heading.has-cashier-image{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
 .cashier-heading-copy,.cashier-heading .heading-actions{position:relative;z-index:1}
 @media(min-width:781px){.cashier-heading{padding:18px 20px}.cashier-heading .muted{margin-top:3px}}
+
+/* v2.12 — soft full-cashier background, compact product controls, editable ordered categories */
+#page-kasir.has-cashier-background{background-repeat:no-repeat;background-color:var(--cream);background-clip:padding-box;border-radius:18px;padding:10px; margin:-10px;}
+#page-kasir.has-cashier-background .cashier-heading{background:rgba(255,255,255,.38);backdrop-filter:blur(1px);border-color:rgba(230,220,208,.55)}
+#page-kasir.has-cashier-background .metric,#page-kasir.has-cashier-background .catalog{background-color:rgba(255,255,255,.94)}
+#page-kasir .product-qty{display:flex;align-items:center;gap:4px;flex:0 0 auto;min-width:0;white-space:nowrap}
+#page-kasir .product-qty button{display:grid;place-items:center;width:28px;min-width:28px;height:30px;min-height:30px;padding:0;border-radius:9px;font-size:16px;line-height:1;flex:0 0 28px}
+#page-kasir .product-qty output{display:inline-grid;place-items:center;min-width:17px;font-size:12px;font-weight:750;line-height:1}
+#pos-products .bestseller-strip .product-card{flex-basis:158px;width:158px;min-width:158px}
+.category-row{gap:8px;flex-wrap:wrap}
+.category-name{flex:1 1 120px;min-width:0;overflow-wrap:anywhere}
+.category-actions{display:flex;align-items:center;gap:5px;flex:0 0 auto}
+.category-actions button{border:0;background:#f8f3ef;color:var(--wine);border-radius:8px;padding:7px 9px;min-width:34px;min-height:34px;font-size:12px;font-weight:700}
+.category-actions button[data-del-category]{background:transparent;color:#b84a4b;font-weight:500}
+.category-actions button:disabled{opacity:.3;cursor:not-allowed}
+.setting-image-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:10px 0}
+.setting-image-actions .file-button{margin:0}
+@media(max-width:390px){#page-kasir .product-qty{gap:3px}#page-kasir .product-qty button{width:25px;min-width:25px;height:27px;min-height:27px;flex-basis:25px;border-radius:8px}#page-kasir .product-qty output{min-width:14px;font-size:11px}#pos-products .bestseller-strip .product-card{flex-basis:152px;width:152px;min-width:152px}.category-actions{gap:3px}.category-actions button{min-width:30px;padding:6px 7px}}
