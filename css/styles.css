@@ -656,11 +656,16 @@ body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var
 #page-kasir .metric.sales,.btn.primary,.chip.active{background:var(--wine)!important;border-color:var(--wine)!important}
 @media(max-width:420px){.theme-fields{grid-template-columns:minmax(0,1fr)}.theme-font-field{grid-column:auto}.cashier-tools-menu>summary{width:34px;height:34px}}
 
-/* v2.25: keep cashier tools above metric cards and prevent popover clipping */
-#page-kasir .cashier-heading{position:relative;z-index:80;isolation:isolate;overflow:visible}
-#page-kasir .cashier-tools{position:relative;z-index:90}
-#page-kasir .cashier-tools-menu{position:static}
-#page-kasir .cashier-tools-menu[open] .cashier-tools-popover{position:fixed;right:max(12px,env(safe-area-inset-right));top:max(58px,env(safe-area-inset-top));z-index:99999;max-height:calc(100dvh - 80px);overflow:auto}
+/* v2.26: natural-flow cashier brand/header and non-fixed settings menu */
+#page-kasir .cashier-heading{position:static!important;z-index:auto!important;isolation:auto!important;overflow:visible!important;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#page-kasir .cashier-heading-copy{position:static!important;z-index:auto!important;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+#page-kasir .cashier-brand-logo{position:static!important;display:block;width:clamp(132px,24vw,190px);height:auto;max-width:100%;object-fit:contain;object-position:left center;margin:0 0 12px;flex:0 0 auto}
+#page-kasir .cashier-heading .eyebrow{margin:0 0 3px}
+#page-kasir .cashier-heading h1{margin-top:0;line-height:1.15}
+#page-kasir .cashier-tools{position:static!important;z-index:auto!important;align-items:flex-start!important;flex:0 0 auto}
+#page-kasir .cashier-tools-menu{position:relative!important}
+#page-kasir .cashier-tools-menu[open] .cashier-tools-popover{position:absolute!important;right:0!important;top:calc(100% + 7px)!important;left:auto!important;z-index:100!important;max-height:min(70vh,420px);overflow:auto}
+@media(max-width:780px){#page-kasir .cashier-brand-logo{width:clamp(118px,38vw,160px);margin-bottom:9px}#page-kasir .cashier-heading{gap:8px}}
 .delivery-fee-box{margin:14px 0;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--bubble-bg,#f5e6dd)}
 .delivery-toggle{display:flex;align-items:center;gap:10px;cursor:pointer}
 .delivery-toggle input{width:19px;height:19px;accent-color:var(--wine);flex:0 0 auto}

@@ -165,6 +165,10 @@ function bindCashierHeaderImage(){
  }
  function cancelCrop(){if(dialog.open)dialog.close();sourceImage=null;if(sourceUrl){URL.revokeObjectURL(sourceUrl);sourceUrl=null}input.value="";}
  if(btn)btn.onclick=()=>input.click();
+ const cashierMenu=document.querySelector("#page-kasir .cashier-tools-menu");
+ const cashierPopover=cashierMenu?.querySelector(".cashier-tools-popover");
+ if(cashierPopover&&!cashierPopover.dataset.autoCloseBound){cashierPopover.dataset.autoCloseBound="1";cashierPopover.addEventListener("click",()=>{cashierMenu.open=false;});}
+ if(cashierMenu&&!cashierMenu.dataset.outsideCloseBound){cashierMenu.dataset.outsideCloseBound="1";document.addEventListener("click",e=>{if(cashierMenu.open&&!cashierMenu.contains(e.target))cashierMenu.open=false;});}
  const resetBtn=$("#cashier-image-reset-btn");if(resetBtn)resetBtn.onclick=()=>{if(!data.settings?.cashierHeaderImage){applyCashierHeaderImage();return}if(!confirm("Hapus background kasir dan kembalikan ke tampilan default?"))return;data.settings=data.settings||{};delete data.settings.cashierHeaderImage;persist();applyCashierHeaderImage();toast("Background dihapus. Tampilan default dipulihkan.")};
  input.onchange=()=>{const file=input.files?.[0];if(!file)return;if(!file.type.startsWith("image/")){toast("Pilih file gambar yang valid.");input.value="";return}if(sourceUrl)URL.revokeObjectURL(sourceUrl);sourceUrl=URL.createObjectURL(file);const img=new Image();img.onload=()=>{sourceImage=img;preview.src=sourceUrl;zoom.value="100";xpos.value="50";ypos.value="50";dialog.showModal();requestAnimationFrame(updatePreview)};img.onerror=()=>{toast("Gambar tidak dapat dibaca.");cancelCrop()};img.src=sourceUrl;};
  [zoom,xpos,ypos].forEach(el=>el.addEventListener("input",updatePreview));window.addEventListener("resize",()=>{if(dialog.open&&sourceImage)updatePreview()},{passive:true});
