@@ -13,10 +13,13 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.35">
+<link rel="stylesheet" href="./css/styles.css?v=2.37">
 </head>
 <body>
-<div id="login-screen" class="login-screen">
+<div id="boot-screen" class="boot-screen" role="status" aria-live="polite" aria-label="Memeriksa sesi login">
+  <div class="boot-card"><img src="./assets/orion-logo-full-4k.png?v=2.9" alt="OR!ON CORNDOG"><span class="boot-spinner" aria-hidden="true"></span><strong>Menyiapkan kasir...</strong><small>Memeriksa sesi login</small></div>
+</div>
+<div id="login-screen" class="login-screen hidden">
   <form id="login-form" class="login-card">
     <img class="login-logo" src="./assets/orion-logo-full-4k.png?v=2.9" alt="Logo OR!ON CORNDOG lengkap"><p class="eyebrow">POINT OF SALE PRO</p><h1>Masuk ke POS</h1>
     <p class="muted">Gunakan akun outlet untuk membuka kasir dan laporan.</p>
@@ -50,7 +53,7 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.35</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.37</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content"><button type="button" id="back-to-cashier" class="back-to-cashier" aria-label="Kembali ke kasir">← <span>Kasir</span></button>
   <section class="page active" id="page-kasir">
@@ -170,5 +173,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.35"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.37"></script>
 </body></html>

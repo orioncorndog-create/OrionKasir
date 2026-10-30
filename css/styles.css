@@ -708,3 +708,15 @@ body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var
 .active-category-label[hidden]{display:none!important}
 body.app-scrolled .active-category-label{top:calc(env(safe-area-inset-top,0px) + 48px)}
 @media(min-width:781px){.active-category-label{top:78px}body.app-scrolled .active-category-label{top:58px}}
+
+
+/* v2.37 — auth bootstrap splash: never flash login before session restore */
+.boot-screen{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;min-height:100dvh;padding:24px;background:radial-gradient(ellipse at 15% 10%,#f5dfbf 0,transparent 42%),radial-gradient(ellipse at 90% 85%,#ead4c9 0,transparent 40%),#faf6ef}
+.boot-screen.hidden{display:none!important}
+.boot-card{display:grid;justify-items:center;gap:13px;width:min(100%,320px);padding:30px 24px;border:1px solid #e9e2d9;border-radius:20px;background:rgba(255,255,255,.92);box-shadow:0 22px 70px #42221912;text-align:center}
+.boot-card img{display:block;width:min(220px,75%);height:78px;object-fit:contain}
+.boot-card strong{color:#5c1d18;font-size:14px}
+.boot-card small{color:#817a73;font-size:11px}
+.boot-spinner{width:28px;height:28px;border:3px solid #eadbd4;border-top-color:#5c1d18;border-radius:50%;animation:orion-boot-spin .8s linear infinite}
+@keyframes orion-boot-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.boot-spinner{animation:none}}
