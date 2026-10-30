@@ -86,6 +86,12 @@ Manifest sudah menggunakan `display: standalone`, `display_override` dengan fall
 - Cashier reporting: sales include cashier identity and a day-based shift key; cashier report view is filtered to their own current-day records. Server-side database policies must still be configured to enforce access securely.
 - Quick PIN field saves a device-local preference only; it is not yet a secure login shortcut and must not be treated as account authentication.
 
+## v2.33 — Barang terjual, navigasi dan katalog
+- Halaman Stok dialihkan menjadi peringkat barang terjual pada bulan berjalan; data transaksi lama tetap tersimpan dan rekap dihitung ulang otomatis saat bulan berganti.
+- Penjualan tidak lagi dibatasi atau mengurangi angka stok. Formulir menu tidak meminta stok.
+- Foto menu dikompres lebih ringan dan tetap dipertahankan saat data menu lain diedit; penghapusan foto hanya melalui konfirmasi eksplisit.
+- Tombol kembali ke kasir tersedia pada halaman selain kasir. Tombol Back perangkat kembali ke kasir, lalu meminta konfirmasi dua kali untuk keluar.
+- Kategori katalog mengikuti urutan kategori yang disimpan dan indikator kategori mengikuti bagian menu yang sedang terlihat.
+- Sesi Supabase tetap memanfaatkan sesi persisten perangkat; pengguna perlu logout untuk mengakhiri sesi secara normal.
 
-## v2.34 — Perbaikan cache kategori
-Versi ini menaikkan versi cache service worker dan parameter versi file CSS/JS agar browser tidak terus memakai JavaScript lama. Setelah unggah, tutup aplikasi/PWA sepenuhnya lalu buka ulang. Jika masih tampak versi lama, hapus cache situs dari pengaturan browser (jangan pilih hapus data akun/database) lalu buka kembali.
+Catatan: perilaku keluar aplikasi melalui tombol Back bergantung pada browser/PWA/TWA Android yang menjalankan aplikasi. Uji pada APK terpasang. Foto disimpan sebagai data gambar dalam data POS; tetap lakukan backup berkala, terutama bila memakai mode lokal.

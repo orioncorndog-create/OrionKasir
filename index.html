@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Orion Kasir">
-<meta name="theme-color" content="#faf7f1">
+<meta name="theme-color" content="#5c1d18">
 <meta name="application-name" content="Orion Kasir">
 <meta name="description" content="Sistem kasir dan operasional OR!ON CORNDOG">
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.36">
+<link rel="stylesheet" href="./css/styles.css?v=2.31">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -49,9 +49,9 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.30</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.33</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
-<main class="content">
+<main class="content"><button type="button" id="back-to-cashier" class="back-to-cashier" aria-label="Kembali ke kasir">← <span>Kasir</span></button>
   <section class="page active" id="page-kasir">
     <div class="page-heading cashier-heading"><div class="cashier-heading-copy"><img class="cashier-brand-logo" src="./assets/orion-logo-full-4k.png?v=2.27" alt="OR!ON CORNDOG"><p class="eyebrow">TRANSAKSI</p><h1>Kasir</h1><p class="muted">Pilih menu, atur jumlah, lalu proses pembayaran.</p></div><div class="heading-actions cashier-tools"><details class="cashier-tools-menu"><summary aria-label="Pengaturan tampilan kasir" title="Pengaturan tampilan">⋮</summary><div class="cashier-tools-popover"><button id="cashier-image-btn" type="button">▧ Ganti gambar background</button><button id="cashier-image-reset-btn" class="compact-image-reset-btn" type="button" hidden>↺ Hapus background</button><button id="cashier-theme-btn" type="button">◉ Kustomisasi warna & font</button></div></details><input id="cashier-image-input" type="file" accept="image/*" hidden></div></div>
     <div class="metrics compact">
@@ -62,7 +62,7 @@
     <div class="pos-grid">
       <section class="panel catalog">
         <div class="toolbar"><input id="product-search" type="search" placeholder="Cari menu..."><button class="btn primary" data-goto="menu">＋ Menu baru</button></div>
-        <div id="pos-categories" class="chips"></div><div id="pos-products" class="product-grid"></div>
+        <div id="pos-categories" class="chips"></div><div id="active-category-label" class="active-category-label" aria-live="polite">Kategori: Semua</div><div id="pos-products" class="product-grid"></div>
       </section>
       <aside class="panel cart-panel" id="cart-panel">
         <button type="button" id="cart-sheet-toggle" class="cart-sheet-toggle" aria-expanded="false"><span class="sheet-grip"></span><span class="sheet-toggle-row"><span class="sheet-label">Pesanan <b id="sheet-cart-count">0 item</b></span><span class="sheet-summary"><b id="sheet-cart-total">Rp0</b><span id="sheet-toggle-text">Lihat pembayaran ↑</span></span></span></button>
@@ -79,7 +79,7 @@
     </div>
   </section>
   <section class="page" id="page-menu">
-    <div class="page-heading"><div><p class="eyebrow">KATALOG PRODUK</p><h1>Menu & kategori</h1><p class="muted">Tambah, edit, nonaktifkan menu dan atur HPP untuk kebutuhan internal.</p></div><div class="heading-actions"><button id="ai-import-open-btn" class="btn outline">▧ Impor AI dari gambar</button><button id="add-product-btn" class="btn primary">＋ Tambah menu</button></div></div>
+    <div class="page-heading"><div><p class="eyebrow">KATALOG PRODUK</p><h1>Menu & kategori</h1><p class="muted">Tambah, edit, nonaktifkan menu dan atur HPP untuk kebutuhan internal.</p></div><button id="add-product-btn" class="btn primary">＋ Tambah menu</button></div>
     <div class="split">
       <div class="panel"><div class="panel-heading"><h2>Daftar menu</h2><input id="menu-search" class="small-search" placeholder="Cari menu..."></div><div id="menu-table" class="table-wrap"></div></div>
       <div class="panel"><div class="panel-heading"><h2>Kategori</h2><button id="add-category-btn" class="btn primary small-btn">＋ Kategori</button></div><div id="category-list" class="category-list"></div></div>
@@ -92,15 +92,7 @@
   <section class="page" id="page-stok">
     <div class="page-heading"><div><p class="eyebrow">INVENTORI</p><h1>Stok</h1><p class="muted">Pantau stok produk jual, catat penambahan dan penyesuaian stok.</p></div><button id="stock-adjust-btn" class="btn primary">＋ Penyesuaian stok</button></div>
     <div class="metrics compact"><article class="metric"><span>Produk aktif</span><strong id="stock-active">0</strong></article><article class="metric"><span>Stok menipis</span><strong id="stock-low">0</strong></article><article class="metric"><span>Habis</span><strong id="stock-out">0</strong></article></div>
-    <div class="panel">
-      <div class="bulk-stock-toolbar">
-        <label><input type="checkbox" id="stock-select-all"> Pilih semua menu</label>
-        <label>Stok untuk menu terpilih <input type="number" id="stock-bulk-value" min="0" step="1" placeholder="Jumlah stok"></label>
-        <button type="button" id="stock-bulk-apply" class="btn primary small-btn">Terapkan stok</button>
-      </div>
-      <p class="muted">Centang menu yang ingin diatur bersamaan. Nilai stok akan menggantikan stok saat ini untuk menu terpilih.</p>
-      <div id="stock-table" class="table-wrap"></div>
-    </div>
+    <div class="panel"><div id="stock-table" class="table-wrap"></div></div>
   </section>
   <section class="page" id="page-laporan">
     <div class="page-heading"><div><p class="eyebrow">ANALITIK</p><h1>Laporan penjualan</h1><p class="muted">Ringkasan penjualan, HPP dan laba kotor. Data internal, bukan untuk struk.</p></div><button id="export-report-btn" class="btn outline">Ekspor CSV</button></div>
@@ -154,26 +146,6 @@
 </section>
 <dialog id="form-dialog" class="modal"><form id="dynamic-form" method="dialog"><div class="modal-head"><div><p class="eyebrow" id="form-eyebrow">FORMULIR</p><h2 id="form-title">Tambah data</h2></div><button type="button" class="icon-btn" data-close>×</button></div><div id="form-fields" class="form-fields"></div><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn primary">Simpan</button></div></form></dialog>
 <dialog id="receipt-dialog" class="modal receipt-modal"><div id="receipt-content"></div><div class="modal-actions"><button class="btn outline" data-close> Tutup </button><button id="whatsapp-receipt" class="btn outline">Kirim WhatsApp</button><button id="print-receipt" class="btn primary">Cetak struk</button></div></dialog>
-
-<dialog id="ai-menu-import-dialog" class="modal ai-import-modal">
-  <div class="modal-head"><div><p class="eyebrow">IMPOR MENU</p><h2>Impor menu dari gambar</h2><p class="muted">Unggah screenshot laporan HPP. Hasil OCR bisa salah baca, jadi periksa dan konfirmasi sebelum disimpan.</p></div><button type="button" class="icon-btn" id="ai-import-close" aria-label="Tutup">×</button></div>
-  <label class="ai-upload-label">Pilih satu atau beberapa gambar<input id="ai-import-files" type="file" accept="image/*" multiple></label>
-  <div class="ai-import-actions"><button id="ai-import-scan-btn" type="button" class="btn primary">Baca gambar</button><span id="ai-import-status" class="muted" role="status">Gambar diproses di browser menggunakan OCR.</span></div>
-  <div id="ai-import-preview" class="ai-import-preview"></div>
-  <div id="ai-import-results" class="ai-import-results"></div>
-  <div class="modal-actions"><button type="button" id="ai-import-cancel" class="btn outline">Batal</button><button type="button" id="ai-import-save-btn" class="btn primary" disabled>Konfirmasi & impor menu</button></div>
-</dialog>
-
-<dialog id="category-editor-dialog" class="modal category-editor-modal">
-  <form id="category-editor-form">
-    <div class="modal-head"><div><p class="eyebrow">KELOLA KATEGORI</p><h2 id="category-editor-title">Kelola kategori</h2><p class="muted">Edit menu yang sudah ada atau tambahkan banyak menu sekaligus. Data lama tidak dihapus.</p></div><button type="button" class="icon-btn" id="category-editor-close" aria-label="Tutup">×</button></div>
-    <div id="category-editor-products" class="category-editor-products"></div>
-    <hr><h3>Tambah beberapa menu sekaligus</h3>
-    <p class="muted">Satu menu per baris dengan format: <b>Nama menu | Harga jual | HPP | Stok</b>. Harga, HPP, dan stok boleh dikosongkan (akan menjadi 0).</p>
-    <label class="bulk-menu-label">Daftar menu baru<textarea id="category-bulk-menu-lines" rows="6" placeholder="Contoh:&#10;Mozzarella Original | 18000 | 8454 | 100&#10;Mozzarella Cheddar | 22000 | 10709 | 100"></textarea></label>
-    <div class="modal-actions"><button type="button" id="category-editor-cancel" class="btn outline">Batal</button><button type="submit" class="btn primary">Simpan perubahan kategori</button></div>
-  </form>
-</dialog>
 <dialog id="detail-dialog" class="modal"><div id="detail-content"></div><div class="modal-actions"><button class="btn outline" data-close>Tutup</button></div></dialog>
 <dialog id="close-dialog" class="modal"><form id="close-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">OPERASIONAL</p><h2>Tutup outlet</h2></div><button type="button" class="icon-btn" data-close>×</button></div><p class="muted">Ringkasan hari ini akan disimpan sebagai laporan tutup outlet. Pastikan transaksi sudah selesai.</p><div id="close-summary"></div><label>Catatan tutup outlet<textarea id="close-note" rows="3" placeholder="Catatan kas, stok, atau kendala..."></textarea></label><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn danger">Konfirmasi tutup outlet</button></div></form></dialog>
 <dialog id="cashier-theme-dialog" class="modal theme-modal"><form id="cashier-theme-form" method="dialog"><div class="modal-head"><div><p class="eyebrow">TAMPILAN KASIR</p><h2>Kustomisasi warna & font</h2><p class="muted">Perubahan hanya mengatur tampilan aplikasi, bukan data transaksi.</p></div><button type="button" class="icon-btn" data-close aria-label="Tutup">×</button></div><div class="theme-fields">
@@ -197,5 +169,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.36"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.31"></script>
 </body></html>
