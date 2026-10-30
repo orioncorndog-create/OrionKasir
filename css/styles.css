@@ -727,3 +727,10 @@ html,body{overscroll-behavior-y:contain}
 #soft-refresh-indicator{position:fixed;z-index:9999;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;transform:translate(-50%,-150%);opacity:0;pointer-events:none;padding:9px 15px;border:1px solid #eadbd2;border-radius:999px;background:rgba(255,255,255,.96);box-shadow:0 6px 22px rgba(40,20,15,.12);font-size:12px;font-weight:700;color:#6d2934;transition:transform .2s,opacity .2s}
 #soft-refresh-indicator.visible{transform:translate(-50%,0);opacity:1}
 @media(max-width:780px){#page-kasir .catalog{padding-bottom:calc(104px + env(safe-area-inset-bottom))!important}#page-kasir .cart-panel.sheet-expanded .cart-items{overflow-y:auto;overscroll-behavior:contain;max-height:30dvh!important}#page-kasir .cart-panel .cart-footer{padding-bottom:calc(12px + env(safe-area-inset-bottom))}}
+
+/* v2.40: fixed-height mobile header prevents scroll-threshold oscillation */
+@media(max-width:780px){
+ .topbar,body.app-scrolled .topbar{height:64px!important;min-height:64px!important;padding:5px 10px!important;transition:none!important}
+ .topbar .brand-logo,body.app-scrolled .topbar .brand-logo{width:clamp(96px,28vw,132px)!important;max-height:52px!important;transition:none!important}
+ .active-category-label,body.app-scrolled .active-category-label{top:calc(env(safe-area-inset-top,0px) + 70px)!important;transition:none!important}
+}
