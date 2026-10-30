@@ -85,3 +85,7 @@ Manifest sudah menggunakan `display: standalone`, `display_override` dengan fall
 - Payment settings: selectable enabled methods for cash, manual/dynamic QRIS, transfer, debit/credit cards and e-wallets; gateway provider/merchant reference fields. Dynamic QRIS is a configuration scaffold only until a provider API is integrated securely on a backend. Do not store gateway secret keys in frontend code.
 - Cashier reporting: sales include cashier identity and a day-based shift key; cashier report view is filtered to their own current-day records. Server-side database policies must still be configured to enforce access securely.
 - Quick PIN field saves a device-local preference only; it is not yet a secure login shortcut and must not be treated as account authentication.
+
+
+## v2.34 — Perbaikan cache kategori
+Versi ini menaikkan versi cache service worker dan parameter versi file CSS/JS agar browser tidak terus memakai JavaScript lama. Setelah unggah, tutup aplikasi/PWA sepenuhnya lalu buka ulang. Jika masih tampak versi lama, hapus cache situs dari pengaturan browser (jangan pilih hapus data akun/database) lalu buka kembali.

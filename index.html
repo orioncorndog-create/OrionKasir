@@ -13,7 +13,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.32">
+<link rel="stylesheet" href="./css/styles.css?v=2.34">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -79,7 +79,7 @@
     </div>
   </section>
   <section class="page" id="page-menu">
-    <div class="page-heading"><div><p class="eyebrow">KATALOG PRODUK</p><h1>Menu & kategori</h1><p class="muted">Tambah, edit, nonaktifkan menu dan atur HPP untuk kebutuhan internal.</p></div><button id="add-product-btn" class="btn primary">＋ Tambah menu</button></div>
+    <div class="page-heading"><div><p class="eyebrow">KATALOG PRODUK</p><h1>Menu & kategori</h1><p class="muted">Tambah, edit, nonaktifkan menu dan atur HPP untuk kebutuhan internal.</p></div><div class="heading-actions"><button id="ai-import-open-btn" class="btn outline">▧ Impor AI dari gambar</button><button id="add-product-btn" class="btn primary">＋ Tambah menu</button></div></div>
     <div class="split">
       <div class="panel"><div class="panel-heading"><h2>Daftar menu</h2><input id="menu-search" class="small-search" placeholder="Cari menu..."></div><div id="menu-table" class="table-wrap"></div></div>
       <div class="panel"><div class="panel-heading"><h2>Kategori</h2><button id="add-category-btn" class="btn primary small-btn">＋ Kategori</button></div><div id="category-list" class="category-list"></div></div>
@@ -154,6 +154,16 @@
 </section>
 <dialog id="form-dialog" class="modal"><form id="dynamic-form" method="dialog"><div class="modal-head"><div><p class="eyebrow" id="form-eyebrow">FORMULIR</p><h2 id="form-title">Tambah data</h2></div><button type="button" class="icon-btn" data-close>×</button></div><div id="form-fields" class="form-fields"></div><div class="modal-actions"><button type="button" class="btn outline" data-close>Batal</button><button type="submit" class="btn primary">Simpan</button></div></form></dialog>
 <dialog id="receipt-dialog" class="modal receipt-modal"><div id="receipt-content"></div><div class="modal-actions"><button class="btn outline" data-close> Tutup </button><button id="whatsapp-receipt" class="btn outline">Kirim WhatsApp</button><button id="print-receipt" class="btn primary">Cetak struk</button></div></dialog>
+
+<dialog id="ai-menu-import-dialog" class="modal ai-import-modal">
+  <div class="modal-head"><div><p class="eyebrow">IMPOR MENU</p><h2>Impor menu dari gambar</h2><p class="muted">Unggah screenshot laporan HPP. Hasil OCR bisa salah baca, jadi periksa dan konfirmasi sebelum disimpan.</p></div><button type="button" class="icon-btn" id="ai-import-close" aria-label="Tutup">×</button></div>
+  <label class="ai-upload-label">Pilih satu atau beberapa gambar<input id="ai-import-files" type="file" accept="image/*" multiple></label>
+  <div class="ai-import-actions"><button id="ai-import-scan-btn" type="button" class="btn primary">Baca gambar</button><span id="ai-import-status" class="muted" role="status">Gambar diproses di browser menggunakan OCR.</span></div>
+  <div id="ai-import-preview" class="ai-import-preview"></div>
+  <div id="ai-import-results" class="ai-import-results"></div>
+  <div class="modal-actions"><button type="button" id="ai-import-cancel" class="btn outline">Batal</button><button type="button" id="ai-import-save-btn" class="btn primary" disabled>Konfirmasi & impor menu</button></div>
+</dialog>
+
 <dialog id="category-editor-dialog" class="modal category-editor-modal">
   <form id="category-editor-form">
     <div class="modal-head"><div><p class="eyebrow">KELOLA KATEGORI</p><h2 id="category-editor-title">Kelola kategori</h2><p class="muted">Edit menu yang sudah ada atau tambahkan banyak menu sekaligus. Data lama tidak dihapus.</p></div><button type="button" class="icon-btn" id="category-editor-close" aria-label="Tutup">×</button></div>
@@ -187,5 +197,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.32"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.35"></script>
 </body></html>
