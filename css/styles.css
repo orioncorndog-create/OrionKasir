@@ -701,3 +701,10 @@ body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var
 #page-kasir.active~.back-to-cashier{display:none}
 .active-category-label{position:sticky;top:84px;z-index:6;display:block;margin:8px 0;padding:9px 12px;border-radius:9px;background:#fff8ef;border:1px solid #f0dfca;border-left:4px solid var(--orange);color:var(--wine);font-size:12px;font-weight:800;box-shadow:0 3px 12px #00000012;min-height:36px}
 @media(max-width:780px){.active-category-label{top:calc(env(safe-area-inset-top,0px) + 116px);z-index:6;margin:8px 0 10px;padding:10px 12px;font-size:12px}}
+
+
+/* v2.35 — compact floating category indicator */
+.active-category-label{position:fixed!important;top:calc(env(safe-area-inset-top,0px) + 64px);left:50%;transform:translateX(-50%);z-index:45;width:max-content;max-width:calc(100vw - 28px);min-height:0;margin:0!important;padding:7px 14px!important;border:1px solid #eadfd4!important;border-left:0!important;border-radius:999px!important;background:rgba(255,255,255,.96)!important;color:var(--wine)!important;font-size:12px!important;font-weight:800!important;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 3px 12px #00000012!important;pointer-events:none}
+.active-category-label[hidden]{display:none!important}
+body.app-scrolled .active-category-label{top:calc(env(safe-area-inset-top,0px) + 48px)}
+@media(min-width:781px){.active-category-label{top:78px}body.app-scrolled .active-category-label{top:58px}}

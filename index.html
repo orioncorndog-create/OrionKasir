@@ -13,7 +13,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.34">
+<link rel="stylesheet" href="./css/styles.css?v=2.35">
 </head>
 <body>
 <div id="login-screen" class="login-screen">
@@ -33,6 +33,7 @@
   <div class="brand"><img class="brand-logo" src="./assets/orion-logo-full-4k.png?v=2.9" alt="Logo OR!ON CORNDOG lengkap"><div class="brand-caption"><small>POINT OF SALE PRO</small><span>Kasir • Inventori • Laporan</span></div></div>
   <div class="top-actions"><span id="connection-status" class="status"><i></i> Mode lokal</span><span id="user-label" class="user-label">Admin</span></div>
 </header>
+<div id="active-category-label" class="active-category-label" aria-live="polite">Milky Series</div>
 <button type="button" id="nav-edge-toggle" class="nav-edge-toggle" aria-label="Buka menu navigasi" aria-expanded="false"><span class="edge-grip"></span><span class="edge-menu-icon">☰</span></button><button type="button" id="nav-scrim" class="nav-scrim" aria-label="Tutup menu navigasi" tabindex="-1"></button>
 <div class="layout">
 <aside class="sidebar">
@@ -49,7 +50,7 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.33</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS v2.35</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content"><button type="button" id="back-to-cashier" class="back-to-cashier" aria-label="Kembali ke kasir">← <span>Kasir</span></button>
   <section class="page active" id="page-kasir">
@@ -62,7 +63,7 @@
     <div class="pos-grid">
       <section class="panel catalog">
         <div class="toolbar"><input id="product-search" type="search" placeholder="Cari menu..."><button class="btn primary" data-goto="menu">＋ Menu baru</button></div>
-        <div id="pos-categories" class="chips"></div><div id="active-category-label" class="active-category-label" aria-live="polite">Kategori: Semua</div><div id="pos-products" class="product-grid"></div>
+        <div id="pos-categories" class="chips"></div><div id="pos-products" class="product-grid"></div>
       </section>
       <aside class="panel cart-panel" id="cart-panel">
         <button type="button" id="cart-sheet-toggle" class="cart-sheet-toggle" aria-expanded="false"><span class="sheet-grip"></span><span class="sheet-toggle-row"><span class="sheet-label">Pesanan <b id="sheet-cart-count">0 item</b></span><span class="sheet-summary"><b id="sheet-cart-total">Rp0</b><span id="sheet-toggle-text">Lihat pembayaran ↑</span></span></span></button>
@@ -169,5 +170,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.34"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.35"></script>
 </body></html>
