@@ -1,4 +1,6 @@
-OR!ON CORNDOG POS PRO v2.38 — COMPLETE FIX
+OR!ON CORNDOG POS PRO v2.38 — BASE SECURITY / STORAGE MIGRATION
+
+Catatan: untuk aplikasi terbaru dengan integrasi foto AI, gunakan paket v2.39 dan README_v2.39_AI_IMAGE.txt.
 
 Berbasis langsung pada source v2.37 AUTO LOGIN FIX. Seluruh data seed, menu, transaksi, dan struktur PWA dipertahankan.
 
@@ -19,7 +21,7 @@ WAJIB SEBELUM DEPLOY CLOUD
 - Upload seluruh folder hasil ZIP ke hosting dengan HTTPS.
 - Konfigurasi Supabase Auth redirect URL sesuai domain aplikasi.
 - Gateway QRIS/ewallet belum diintegrasikan; statusnya sengaja tetap tidak aktif sampai backend provider benar-benar diimplementasikan dan diuji. Tidak ada klaim transaksi gateway aktif.
-- Foto AI otomatis untuk produk tanpa gambar tidak disertakan karena source ini tidak mempunyai layanan image-generation/API server. Produk tetap dapat memakai ikon/placeholder dan Owner/Manager dapat mengunggah foto menu.
+- Integrasi foto AI ditambahkan pada aplikasi v2.39 melalui Supabase Edge Function terpisah. Lihat README_v2.39_AI_IMAGE.txt.
 
 PEMERIKSAAN YANG DILAKUKAN
 - Arsip sumber dapat dibaca dan diuji integritasnya sebelum ekstraksi.

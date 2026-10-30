@@ -1,5 +1,5 @@
-const CACHE="orion-pos-v2.38";
-const ASSETS=["./","./index.html","./css/styles.css?v=2.38","./js/db.js","./js/app.js?v=2.38","./js/supabase-config.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./assets/icon_omzet_hari_ini.png","./assets/icon_hpp_terjual.png","./assets/icon_laba_kotor.png","./assets/orion-logo.jpg","./assets/orion-logo-full-4k.png"];
+const CACHE="orion-pos-v2.39";
+const ASSETS=["./","./index.html","./css/styles.css?v=2.39","./js/db.js","./js/app.js?v=2.39","./js/supabase-config.js","./manifest.json","./icons/icon-192.png","./icons/icon-512.png","./assets/icon_omzet_hari_ini.png","./assets/icon_hpp_terjual.png","./assets/icon_laba_kotor.png","./assets/orion-logo.jpg","./assets/orion-logo-full-4k.png"];
 self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener("fetch",event=>{
