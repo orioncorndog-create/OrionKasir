@@ -720,3 +720,10 @@ body.app-scrolled .active-category-label{top:calc(env(safe-area-inset-top,0px) +
 .boot-spinner{width:28px;height:28px;border:3px solid #eadbd4;border-top-color:#5c1d18;border-radius:50%;animation:orion-boot-spin .8s linear infinite}
 @keyframes orion-boot-spin{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.boot-spinner{animation:none}}
+
+
+/* v2.38 stability: soft pull-to-refresh and safe cashier cart spacing */
+html,body{overscroll-behavior-y:contain}
+#soft-refresh-indicator{position:fixed;z-index:9999;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;transform:translate(-50%,-150%);opacity:0;pointer-events:none;padding:9px 15px;border:1px solid #eadbd2;border-radius:999px;background:rgba(255,255,255,.96);box-shadow:0 6px 22px rgba(40,20,15,.12);font-size:12px;font-weight:700;color:#6d2934;transition:transform .2s,opacity .2s}
+#soft-refresh-indicator.visible{transform:translate(-50%,0);opacity:1}
+@media(max-width:780px){#page-kasir .catalog{padding-bottom:calc(104px + env(safe-area-inset-bottom))!important}#page-kasir .cart-panel.sheet-expanded .cart-items{overflow-y:auto;overscroll-behavior:contain;max-height:30dvh!important}#page-kasir .cart-panel .cart-footer{padding-bottom:calc(12px + env(safe-area-inset-bottom))}}
