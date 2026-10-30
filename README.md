@@ -95,3 +95,11 @@ Manifest sudah menggunakan `display: standalone`, `display_override` dengan fall
 - Sesi Supabase tetap memanfaatkan sesi persisten perangkat; pengguna perlu logout untuk mengakhiri sesi secara normal.
 
 Catatan: perilaku keluar aplikasi melalui tombol Back bergantung pada browser/PWA/TWA Android yang menjalankan aplikasi. Uji pada APK terpasang. Foto disimpan sebagai data gambar dalam data POS; tetap lakukan backup berkala, terutama bila memakai mode lokal.
+
+
+## Patch v2.34 (30 Oktober 2026)
+- Label kategori kasir dibuat sticky di bawah header dan navigasi HP serta mengikuti kategori yang sedang terlihat.
+- Navigasi Back Android memakai history guard: halaman selain Kasir kembali ke Kasir; di Kasir perlu dua kali Back untuk keluar.
+- Foto menu otomatis dikompresi ke JPEG maksimal sisi 640 px dan ditargetkan sekitar 240 KB sebelum disimpan.
+- Mode lokal demo menyimpan status login di perangkat sampai pengguna memilih Logout. Sesi Supabase tetap menggunakan persistSession.
+- Cache service worker dinaikkan ke v2.34 agar patch termuat.

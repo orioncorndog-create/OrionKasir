@@ -699,4 +699,5 @@ body{font-family:var(--pos-font-family,'DM Sans'),sans-serif!important;color:var
 .back-to-cashier{display:none;position:sticky;top:6px;z-index:30;margin:0 0 12px;padding:8px 13px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--wine);font-weight:800;box-shadow:0 2px 8px #00000010}
 .back-to-cashier:not([hidden]){display:block}.back-to-cashier[hidden]{display:none!important}
 #page-kasir.active~.back-to-cashier{display:none}
-.active-category-label{position:sticky;top:0;z-index:8;display:block;margin:8px 0;padding:8px 12px;border-radius:9px;background:#fff8ef;border-left:4px solid var(--orange);color:var(--wine);font-size:12px;font-weight:800;box-shadow:0 2px 8px #0000000d}
+.active-category-label{position:sticky;top:84px;z-index:6;display:block;margin:8px 0;padding:9px 12px;border-radius:9px;background:#fff8ef;border:1px solid #f0dfca;border-left:4px solid var(--orange);color:var(--wine);font-size:12px;font-weight:800;box-shadow:0 3px 12px #00000012;min-height:36px}
+@media(max-width:780px){.active-category-label{top:calc(env(safe-area-inset-top,0px) + 116px);z-index:6;margin:8px 0 10px;padding:10px 12px;font-size:12px}}
