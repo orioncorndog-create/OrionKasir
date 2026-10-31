@@ -762,3 +762,14 @@ html,body{overscroll-behavior-y:contain}
 /* Phase 5: Inventory & BOM */
 .inventory-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}.inventory-panel{margin:16px 0;padding:20px}.inventory-actions{display:flex;gap:10px;flex-wrap:wrap}.inventory-table{overflow-x:auto}.inventory-table table{width:100%;border-collapse:collapse;min-width:620px}.inventory-table th,.inventory-table td{padding:11px 10px;border-bottom:1px solid var(--line,#eadfda);text-align:left;font-size:.9rem}.inventory-table th{color:var(--muted,#806e68);font-weight:700}.inventory-low{color:#a13d2e;font-weight:800}.inventory-ok{color:#28734b;font-weight:700}.inventory-table button{padding:6px 10px}.recipe-items-list{display:grid;gap:8px}.recipe-item-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--line,#eadfda);border-radius:12px}.recipe-list{display:grid;gap:10px;margin-top:18px}.recipe-card{padding:13px;border:1px solid var(--line,#eadfda);border-radius:12px}.recipe-card small{display:block;color:var(--muted,#806e68);margin-top:5px}.recipe-add-wrap{display:flex;align-items:end}.inventory-empty{padding:18px;color:var(--muted,#806e68);text-align:center}
 @media(max-width:850px){.inventory-grid{grid-template-columns:1fr}.inventory-panel{padding:14px}.inventory-table table{min-width:560px}}
+
+/* Owner staff role management */
+.staff-management-section{margin-top:22px;padding-top:18px;border-top:1px solid var(--line,#eadfda)}
+.staff-list{display:grid;gap:10px;margin-top:12px}
+.staff-list-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,160px) auto;gap:10px;align-items:center;padding:12px;border:1px solid var(--line,#eadfda);border-radius:12px}
+.staff-list-row strong{display:block;font-size:.94rem}
+.staff-list-row small{display:block;color:var(--muted,#806e68);overflow-wrap:anywhere;margin-top:3px}
+.staff-list-row select{min-width:0;width:100%;padding:9px;border:1px solid var(--line,#d8cbc5);border-radius:9px;background:var(--surface,#fff);color:inherit}
+.staff-list-row button{white-space:nowrap}
+.staff-list-status{font-size:.82rem;color:var(--muted,#806e68);margin-top:8px}
+@media(max-width:520px){.staff-list-row{grid-template-columns:minmax(0,1fr) auto}.staff-list-row select{grid-column:1}.staff-list-row button{grid-column:2;grid-row:2}}
