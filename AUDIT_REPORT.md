@@ -72,3 +72,17 @@ database backup has been taken and the SQL has been reviewed/tested on a staging
 5. Complete granular RBAC/RLS and audit events.
 6. Add financial reports from immutable transaction/HPP snapshots.
 7. Complete printer bridge/device tests, backup documentation and regression tests.
+
+
+## Phase 3 implementation status — Shift backend
+
+Added `migration_phase3_shift_rpc.sql` with scoped RPCs for opening individual/shared shifts,
+joining/leaving shared drawers, cash movements, drawer creation, active-shift lookup, and
+cash reconciliation/closure. All operations derive identity and role from the authenticated
+Supabase session and append audit events.
+
+Static review only. SQL has not been executed against a PostgreSQL/Supabase instance.
+The current v2.40 checkout is not yet connected to `payment_records`, so the reconciliation
+RPC intentionally reports only normalized payment records and must not be treated as a
+complete live shift total until the transaction engine integration is completed.
+The application UI and checkout gate are not yet connected to these RPCs.

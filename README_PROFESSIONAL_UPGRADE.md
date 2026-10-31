@@ -117,3 +117,32 @@ Migrasi bersifat additive dan tidak menghapus tabel/data lama.
 **Status:** fondasi database saja. Modul baru belum terhubung ke UI kasir/checkout dan belum
 boleh dianggap siap produksi. Uji migrasi pada project Supabase staging setelah backup sebelum
 diterapkan ke project produksi.
+
+
+## Phase 3 — Shift Management Backend (31 Oktober 2026)
+
+File baru: `migration_phase3_shift_rpc.sql`.
+
+RPC yang ditambahkan:
+- `orion_shift_open(mode, opening_cash, drawer_id, note)` — buka shift individual/shared.
+- `orion_shift_join(shift_id)` — bergabung ke shared cash drawer.
+- `orion_shift_leave(shift_id)` — keluar dari shared shift tanpa menutup laci.
+- `orion_shift_cash_movement(...)` — catat kas masuk/keluar/setor kas.
+- `orion_shift_close(shift_id, counted_cash, note)` — rekonsiliasi dan tutup shift.
+- `orion_shift_current()` — baca shift aktif milik pengguna.
+- `orion_shift_open_drawers()` — daftar laci aktif.
+- `orion_shift_create_drawer(name, code)` — Owner/Manager membuat laci bersama.
+
+Keamanan:
+- Semua operasi memakai `auth.uid()` dan `pos_profiles` server-side.
+- RPC menggunakan SECURITY DEFINER dengan `search_path` kosong.
+- Tabel baru tetap tanpa akses langsung dari browser; akses melalui RPC terbatas.
+- Setiap aksi shift menulis audit event.
+- Satu pengguna tidak dapat membuka atau bergabung ke lebih dari satu shift aktif.
+- Shared drawer dikunci saat dibuka untuk mencegah pembukaan bersamaan.
+
+Batasan yang belum selesai:
+- RPC ini belum dipanggil oleh UI aplikasi.
+- `payment_records` belum diisi oleh checkout lama; rekonsiliasi menghitung transaksi yang tercatat pada tabel tersebut saja. Transaksi lama yang hanya ada di `pos_state` tidak otomatis dihitung sebagai penjualan shift.
+- Belum ada pengujian terhadap database Supabase pengguna. Jalankan fase ini hanya di staging setelah Phase 2 dan backup.
+- Jangan aktifkan gate shift di kasir sebelum checkout atomic dan UI shift terintegrasi pada fase berikutnya.
