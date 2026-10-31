@@ -103,3 +103,7 @@ Catatan: perilaku keluar aplikasi melalui tombol Back bergantung pada browser/PW
 - Foto menu otomatis dikompresi ke JPEG maksimal sisi 640 px dan ditargetkan sekitar 240 KB sebelum disimpan.
 - Mode lokal demo menyimpan status login di perangkat sampai pengguna memilih Logout. Sesi Supabase tetap menggunakan persistSession.
 - Cache service worker dinaikkan ke v2.34 agar patch termuat.
+
+
+## Phase 4
+Lihat `PHASE4_SHIFT_FRONTEND.md` untuk halaman manajemen shift, urutan migrasi, dan batasan integrasi checkout.

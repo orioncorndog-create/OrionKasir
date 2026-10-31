@@ -13,7 +13,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=2.39">
+<link rel="stylesheet" href="./css/styles.css?v=4.0">
 </head>
 <body>
 <div id="boot-screen" class="boot-screen" role="status" aria-live="polite" aria-label="Memeriksa sesi login">
@@ -44,6 +44,7 @@
   <div class="outlet-label"><small>OUTLET AKTIF</small><strong id="outlet-name-side">OR!ON CORNDOG</strong><span id="outlet-state" class="pill open">Buka</span></div>
   <nav id="main-nav">
     <button class="nav-btn active" data-page="kasir"><span>▦</span> Kasir</button>
+    <button class="nav-btn" data-page="shift"><span>◷</span> Shift Kasir</button>
     <button class="nav-btn" data-page="menu"><span>☷</span> Menu & Kategori</button>
     <button class="nav-btn" data-page="promo"><span>％</span> Promo</button>
     <button class="nav-btn" data-page="stok"><span>▤</span> Stok</button>
@@ -53,7 +54,7 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS v2.39</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS Professional · Phase 4</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content"><button type="button" id="back-to-cashier" class="back-to-cashier" aria-label="Kembali ke kasir">← <span>Kasir</span></button>
   <section class="page active" id="page-kasir">
@@ -118,6 +119,47 @@
     <div class="toolbar"><input id="sales-search" type="search" placeholder="Cari nomor transaksi atau menu..."><input id="sales-date" type="date"><button id="clear-date" class="btn outline">Semua tanggal</button></div>
     <div class="panel"><div id="sales-table" class="table-wrap"></div></div>
   </section>
+  <section class="page" id="page-shift">
+    <div class="page-heading"><div><p class="eyebrow">OPERASIONAL KASIR</p><h1>Manajemen Shift</h1><p class="muted">Kelola shift individual, shared cash drawer, pergerakan kas, dan rekonsiliasi.</p></div><div class="heading-actions"><button id="shift-refresh" class="btn outline" type="button">↻ Muat ulang</button></div></div>
+    <div id="shift-backend-notice" class="shift-notice">Memeriksa koneksi Supabase…</div>
+    <div id="shift-current-card" class="panel shift-current-card"><div class="empty-state">Memuat status shift…</div></div>
+    <div class="shift-grid">
+      <section class="panel shift-panel">
+        <h2>Buka Shift</h2><p class="muted">Pilih shift individual atau gunakan laci kas bersama yang sedang tersedia.</p>
+        <form id="shift-open-form" class="form-grid">
+          <label>Mode shift<select id="shift-mode"><option value="individual">Individual</option><option value="shared">Shared cash drawer</option></select></label>
+          <label id="shift-drawer-field" hidden>Cash drawer<select id="shift-drawer"><option value="">Memuat laci…</option></select></label>
+          <label>Modal awal (Rp)<input id="shift-opening-cash" type="number" min="0" step="1" value="0" required></label>
+          <label class="wide">Catatan pembukaan<input id="shift-opening-note" maxlength="500" placeholder="Opsional"></label>
+          <div class="wide"><button class="btn primary" type="submit">Buka Shift</button></div>
+        </form>
+        <div class="shift-subsection" id="shift-drawer-admin" hidden><h3>Buat Cash Drawer</h3><form id="shift-drawer-form" class="form-grid"><label>Nama laci<input id="shift-drawer-name" maxlength="100" required placeholder="Contoh: Kasir Utama"></label><label>Kode laci<input id="shift-drawer-code" maxlength="40" placeholder="Opsional"></label><div class="wide"><button class="btn outline" type="submit">Buat Cash Drawer</button></div></form></div>
+        <div class="shift-subsection"><h3>Shared shift yang dapat diikuti</h3><div id="shift-open-list" class="shift-list"><p class="muted">Memuat daftar…</p></div></div>
+      </section>
+      <section class="panel shift-panel">
+        <h2>Pergerakan Kas</h2><p class="muted">Catat kas masuk, kas keluar, atau cash drop pada shift aktif.</p>
+        <form id="shift-movement-form" class="form-grid">
+          <label>Jenis<select id="shift-movement-type"><option value="cash_in">Kas masuk</option><option value="cash_out">Kas keluar</option><option value="cash_drop">Cash drop / setoran</option></select></label>
+          <label>Nominal (Rp)<input id="shift-movement-amount" type="number" min="1" step="1" required></label>
+          <label class="wide">Alasan<input id="shift-movement-reason" maxlength="300" required placeholder="Contoh: pembelian kebutuhan operasional"></label>
+          <div class="wide"><button class="btn outline" type="submit">Simpan Pergerakan Kas</button></div>
+        </form>
+        <div class="shift-subsection"><h3>Keluar dari shared shift</h3><p class="muted">Keluar hanya mengakhiri keanggotaan kasir; tidak menutup laci bersama.</p><button id="shift-leave" type="button" class="btn outline" disabled>Keluar dari Shift Bersama</button></div>
+      </section>
+      <section class="panel shift-panel">
+        <h2>Tutup Shift & Rekonsiliasi</h2><p class="muted">Rekonsiliasi backend saat ini hanya menghitung pembayaran yang sudah tercatat di <code>payment_records</code>. Checkout lama belum mengisi tabel ini.</p>
+        <form id="shift-close-form" class="form-grid">
+          <label>Kas fisik dihitung (Rp)<input id="shift-counted-cash" type="number" min="0" step="1" required></label>
+          <label class="wide">Catatan penutupan<input id="shift-close-note" maxlength="500" placeholder="Opsional"></label>
+          <div class="wide"><button class="btn danger" type="submit">Tutup Shift & Rekonsiliasi</button></div>
+        </form>
+      </section>
+      <section class="panel shift-panel">
+        <h2>Riwayat Shift</h2><p class="muted">Riwayat yang dapat diakses akun berdasarkan keanggotaan dan role.</p>
+        <div id="shift-history" class="shift-list"><p class="muted">Memuat riwayat…</p></div>
+      </section>
+    </div>
+  </section>
   <section class="page" id="page-pengaturan">
     <div class="page-heading"><div><p class="eyebrow">KONFIGURASI OUTLET</p><h1>Pengaturan</h1><p class="muted">Profil outlet, hak akses pegawai, dan perangkat keras.</p></div></div>
     <div class="settings-tabs" role="tablist" aria-label="Bagian pengaturan">
@@ -173,5 +215,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=2.39"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=4.0"></script>
 </body></html>

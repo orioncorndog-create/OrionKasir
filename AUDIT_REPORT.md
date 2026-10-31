@@ -86,3 +86,28 @@ The current v2.40 checkout is not yet connected to `payment_records`, so the rec
 RPC intentionally reports only normalized payment records and must not be treated as a
 complete live shift total until the transaction engine integration is completed.
 The application UI and checkout gate are not yet connected to these RPCs.
+
+
+## Phase 4 implementation status — Shift frontend
+
+Added:
+- Shift Kasir navigation and responsive UI.
+- Current shift, active shared shift discovery, shift history and drawer list via scoped RPC.
+- Individual/shared shift opening.
+- Owner/Manager cash drawer creation.
+- Join/leave shared shift.
+- Cash in/out/drop recording.
+- Shift close and cash reconciliation UI.
+- Phase 4 read RPC migration (`migration_phase4_shift_ui.sql`).
+- Service-worker cache version bump to v4.0.
+
+Validation:
+- `node --check` passed for app.js, db.js, supabase-config.js, and service-worker.js.
+- Static source assertions passed for the new page, forms, RPC call names, role navigation, and intentionally absent checkout gate.
+- ZIP extraction/integrity will be checked for the generated deliverable.
+
+Not verified:
+- SQL has not been executed against PostgreSQL/Supabase.
+- Live RPC authorization and UI flows have not been tested using separate Owner/Manager/Cashier accounts.
+- Checkout remains local-first and does not populate `payment_records`; therefore shift reconciliation is explicitly incomplete for legacy sales. Checkout gate remains disabled.
+- Per-shift member roster and manager-driven member removal are not yet exposed.

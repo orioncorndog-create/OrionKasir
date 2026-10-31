@@ -146,3 +146,8 @@ Batasan yang belum selesai:
 - `payment_records` belum diisi oleh checkout lama; rekonsiliasi menghitung transaksi yang tercatat pada tabel tersebut saja. Transaksi lama yang hanya ada di `pos_state` tidak otomatis dihitung sebagai penjualan shift.
 - Belum ada pengujian terhadap database Supabase pengguna. Jalankan fase ini hanya di staging setelah Phase 2 dan backup.
 - Jangan aktifkan gate shift di kasir sebelum checkout atomic dan UI shift terintegrasi pada fase berikutnya.
+
+
+## Phase 4 — Shift Management Frontend
+
+Implementasi halaman Shift Kasir tersedia pada source terbaru. Baca `PHASE4_SHIFT_FRONTEND.md` dan jalankan `migration_phase4_shift_ui.sql` setelah migrasi Phase 2 dan Phase 3. UI belum mengaktifkan shift gate checkout karena checkout legacy belum menulis `payment_records`; rekonsiliasi belum boleh dianggap sebagai total transaksi lengkap. SQL belum diuji pada Supabase asli.
