@@ -13,7 +13,7 @@
 <title>OR!ON CORNDOG — POS Pro</title>
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
-<link rel="stylesheet" href="./css/styles.css?v=4.0">
+<link rel="stylesheet" href="./css/styles.css?v=5.0">
 </head>
 <body>
 <div id="boot-screen" class="boot-screen" role="status" aria-live="polite" aria-label="Memeriksa sesi login">
@@ -45,6 +45,7 @@
   <nav id="main-nav">
     <button class="nav-btn active" data-page="kasir"><span>▦</span> Kasir</button>
     <button class="nav-btn" data-page="shift"><span>◷</span> Shift Kasir</button>
+    <button class="nav-btn" data-page="inventaris"><span>▧</span> Inventaris & Resep</button>
     <button class="nav-btn" data-page="menu"><span>☷</span> Menu & Kategori</button>
     <button class="nav-btn" data-page="promo"><span>％</span> Promo</button>
     <button class="nav-btn" data-page="stok"><span>▤</span> Stok</button>
@@ -54,7 +55,7 @@
     <button class="nav-btn" data-page="riwayat"><span>↺</span> Riwayat Penjualan</button>
     <button class="nav-btn" data-page="pengaturan"><span>⚙</span> Pengaturan</button>
   </nav>
-  <div class="sidebar-bottom"><small>OR!ON POS Professional · Phase 4</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
+  <div class="sidebar-bottom"><small>OR!ON POS Professional · Phase 5</small><button id="close-outlet-btn" class="btn danger full">Tutup Outlet</button><button id="logout-btn" class="btn ghost full">Keluar</button></div>
 </aside>
 <main class="content"><button type="button" id="back-to-cashier" class="back-to-cashier" aria-label="Kembali ke kasir">← <span>Kasir</span></button>
   <section class="page active" id="page-kasir">
@@ -118,6 +119,17 @@
     <div class="page-heading"><div><p class="eyebrow">TRANSAKSI TERSIMPAN</p><h1>Riwayat penjualan</h1><p class="muted">Lihat detail transaksi atau cetak ulang struk pelanggan.</p></div><button id="export-sales-btn" class="btn outline">Ekspor CSV</button></div>
     <div class="toolbar"><input id="sales-search" type="search" placeholder="Cari nomor transaksi atau menu..."><input id="sales-date" type="date"><button id="clear-date" class="btn outline">Semua tanggal</button></div>
     <div class="panel"><div id="sales-table" class="table-wrap"></div></div>
+  </section>
+  <section class="page" id="page-inventaris">
+    <div class="page-heading"><div><p class="eyebrow">PHASE 5 · INVENTORY & BOM</p><h1>Inventaris Bahan Baku</h1><p class="muted">Kelola stok bahan dan resep menu. Resep tidak diisi otomatis; masukkan takaran sesuai standar produksi OR!ON.</p></div><div class="heading-actions"><button id="inventory-refresh" class="btn outline" type="button">↻ Muat ulang</button></div></div>
+    <div id="inventory-notice" class="shift-notice warning">Memeriksa koneksi inventaris…</div>
+    <div class="inventory-grid">
+      <section class="panel form-panel"><h2>Tambah / Edit Bahan</h2><form id="material-form" class="form-grid"><input id="material-id" type="hidden"><label>Nama bahan<input id="material-name" required maxlength="120" placeholder="Contoh: Susu UHT"></label><label>Kategori<input id="material-category" maxlength="60" placeholder="Dairy, tepung, topping…"></label><label>Satuan dasar<select id="material-unit"><option value="g">Gram (g)</option><option value="ml">Mililiter (ml)</option><option value="pcs">Pcs</option></select></label><label>Minimum stok<input id="material-minimum" type="number" min="0" step="0.0001" value="0" required></label><label class="wide">Supplier (opsional)<input id="material-supplier" maxlength="120"></label><div class="wide inventory-actions"><button class="btn primary" type="submit">Simpan Bahan</button><button id="material-reset" class="btn outline" type="button">Kosongkan</button></div></form></section>
+      <section class="panel form-panel"><h2>Catat Pergerakan Stok</h2><form id="material-movement-form" class="form-grid"><label class="wide">Bahan baku<select id="movement-material" required><option value="">Muat bahan…</option></select></label><label>Jenis<select id="movement-type"><option value="purchase">Pembelian / stok masuk</option><option value="adjustment_in">Penyesuaian masuk</option><option value="adjustment_out">Penyesuaian keluar</option><option value="waste">Terbuang / waste</option><option value="expired">Kedaluwarsa</option><option value="opname">Stok opname (jumlah akhir)</option></select></label><label id="movement-quantity-label">Jumlah<input id="movement-quantity" type="number" min="0.0001" step="0.0001" required></label><label id="movement-cost-wrap">Harga pembelian total (Rp)<input id="movement-cost" type="number" min="0" step="1" placeholder="Opsional"></label><label class="wide">Alasan / referensi<input id="movement-reason" maxlength="250" required placeholder="Contoh: Pembelian supplier"></label><div class="wide"><button class="btn primary" type="submit">Simpan Pergerakan</button></div></form></section>
+    </div>
+    <section class="panel inventory-panel"><div class="panel-heading"><div><h2>Daftar Bahan Baku</h2><p class="muted">Stok aktif dan status minimum.</p></div></div><div id="materials-table" class="inventory-table"><div class="empty-state">Belum dimuat.</div></div></section>
+    <section class="panel inventory-panel"><h2>Resep Menu (BOM)</h2><p class="muted">Satu resep aktif per menu. Simpan versi baru untuk memperbarui resep; versi lama tetap tersimpan.</p><form id="recipe-form" class="form-grid"><label>Menu POS<select id="recipe-product" required></select></label><label>Bahan baku<select id="recipe-material"></select></label><label>Takaran<input id="recipe-quantity" type="number" min="0.0001" step="0.0001" placeholder="Jumlah per 1 produk"></label><div class="recipe-add-wrap"><button id="recipe-add-item" type="button" class="btn outline">＋ Tambah bahan</button></div><div id="recipe-items-list" class="wide recipe-items-list"><p class="muted">Belum ada bahan dalam rancangan resep.</p></div><label class="setting-toggle wide"><span><strong>Aktifkan versi resep ini</strong><small>Aktifkan setelah takaran sudah diverifikasi. Pengurangan stok otomatis belum dinyalakan pada Phase 5.</small></span><input id="recipe-activate" type="checkbox"></label><div class="wide"><button class="btn primary" type="submit">Simpan Versi Resep</button></div></form><div id="recipes-list" class="recipe-list"><p class="muted">Belum ada resep.</p></div></section>
+    <section class="panel inventory-panel"><h2>Riwayat Pergerakan Stok</h2><div id="inventory-movements" class="inventory-table"><p class="muted">Belum dimuat.</p></div></section>
   </section>
   <section class="page" id="page-shift">
     <div class="page-heading"><div><p class="eyebrow">OPERASIONAL KASIR</p><h1>Manajemen Shift</h1><p class="muted">Kelola shift individual, shared cash drawer, pergerakan kas, dan rekonsiliasi.</p></div><div class="heading-actions"><button id="shift-refresh" class="btn outline" type="button">↻ Muat ulang</button></div></div>
@@ -215,5 +227,5 @@
 </dialog>
 <div id="toast" class="toast" role="status"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=4.0"></script>
+<script src="./js/supabase-config.js"></script><script src="./js/db.js"></script><script src="./js/app.js?v=5.0"></script>
 </body></html>
