@@ -175,8 +175,27 @@ async function initBackend(){
  }catch(e){console.error(e);setAuthMessage("Koneksi Supabase gagal: "+e.message,true)}
 }
 async function activateSession(user){const next={name:user.user_metadata?.display_name||user.email?.split("@")[0]||user.phone||"Pengguna",email:user.email||"",phone:user.phone||"",authId:user.id,role:"employee"};const pr=await supabase.from("pos_profiles").select("display_name,role,active").eq("id",user.id).maybeSingle();if(pr.error)throw pr.error;if(pr.data){if(pr.data.active===false)throw new Error("Akun dinonaktifkan");next.name=pr.data.display_name||next.name;next.role=pr.data.role||"employee"}activeUser=next;activeAuthId=user.id}
-async function pullRemote(){if(!supabase)return;const {data:rows,error}=await supabase.from("pos_state").select("payload").eq("id",1).maybeSingle();if(error)throw error;if(rows?.payload){window.__orionPullingRemote=true;try{data={...ORION_DB.fresh(),...rows.payload};ORION_DB.save(data)}finally{window.__orionPullingRemote=false}}}
-function pushRemote(){if(!supabase)return Promise.resolve();const write=async()=>{const snapshot=JSON.parse(JSON.stringify(data));const {error}=await supabase.from("pos_state").upsert({id:1,payload:snapshot,updated_at:new Date().toISOString()});if(error)throw error};const next=remotePushQueue.then(write,write);remotePushQueue=next.catch(()=>{});return next}
+async function pullRemote(){
+ if(!supabase)return;
+ // v2.38+ mencabut akses tabel langsung; baca snapshot melalui RPC berizin.
+ const {data:payload,error}=await supabase.rpc("pos_get_state");
+ if(error)throw error;
+ if(payload&&typeof payload==="object"){
+  window.__orionPullingRemote=true;
+  try{data={...ORION_DB.fresh(),...payload};ORION_DB.save(data)}
+  finally{window.__orionPullingRemote=false}
+ }
+}
+function pushRemote(){
+ if(!supabase)return Promise.resolve();
+ const write=async()=>{
+  const snapshot=JSON.parse(JSON.stringify(data));
+  // RPC menjaga pembatasan role di server; jangan menulis pos_state langsung.
+  const {error}=await supabase.rpc("pos_save_state",{new_payload:snapshot});
+  if(error)throw error;
+ };
+ const next=remotePushQueue.then(write,write);remotePushQueue=next.catch(()=>{});return next;
+}
 function showApp(){if(!activeUser)activeUser={name:"Admin Outlet",email:"admin@orion.local",role:"owner"};if(!activeUser.role)activeUser.role="employee";$("#login-screen").classList.add("hidden");$("#app").classList.remove("hidden");applyRoleUI();renderAll();if(!canOpenPage("kasir"))showPage("kasir")}
 let signupMode=false;
 function setAuthMessage(message,isError=false){const el=$("#login-message");el.textContent=message;el.classList.toggle("error",!!isError);el.classList.toggle("verification",!isError&&/verifikasi email|buka gmail|konfirmasi email|langkah berikutnya/i.test(message))}
