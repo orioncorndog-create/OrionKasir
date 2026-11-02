@@ -8,7 +8,7 @@ declare v_uid uuid := auth.uid(); v_role text;
 begin
  if v_uid is null then raise exception 'Login diperlukan'; end if;
  select role into v_role from public.pos_profiles where id=v_uid and active=true;
- if v_role not in ('owner','admin','manager') then raise exception 'Akses inventaris hanya untuk Owner/Manajer'; end if;
+ if v_role is null or v_role not in ('owner','admin','manager') then raise exception 'Akses inventaris hanya untuk Owner/Manajer'; end if;
  return v_uid;
 end; $$;
 
