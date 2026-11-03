@@ -1,4 +1,10 @@
-// Konfigurasi Supabase OR!ON CORNDOG POS Pro. Gunakan Project URL dan publishable key (atau anon legacy).
-// Jangan pernah memasukkan service_role / sb_secret key ke aplikasi browser.
-window.ORION_SUPABASE_URL = "https://anfxoqvifoamoydpzomj.supabase.co";
-window.ORION_SUPABASE_ANON_KEY = "sb_publishable_gtQQu-vJsV33rHWcuEx8Fg__v8c_2ru";
+// OR!ON CORNDOG POS PRO v2.36 — STAGING ONLY.
+// Gunakan hanya publishable/anon key milik project STAGING.
+// Jangan pernah memasukkan service_role atau sb_secret key ke browser.
+window.ORION_BACKEND_REQUIRED = true;
+window.ORION_BACKEND_MODE = "supabase";
+// Set true only after confirming pos_get_state/pos_save_state signatures and RLS on STAGING.
+window.ORION_RPC_CONTRACT_VERIFIED = false;
+window.ORION_SUPABASE_URL = "https://varissdevhgyeqsijpli.supabase.co";
+// Isi dengan publishable key STAGING dari Supabase Dashboard/API Keys.
+window.ORION_SUPABASE_ANON_KEY = "REPLACE_WITH_STAGING_PUBLISHABLE_KEY";

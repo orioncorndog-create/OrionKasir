@@ -105,5 +105,52 @@ Catatan: perilaku keluar aplikasi melalui tombol Back bergantung pada browser/PW
 - Cache service worker dinaikkan ke v2.34 agar patch termuat.
 
 
-## Phase 4
-Lihat `PHASE4_SHIFT_FRONTEND.md` untuk halaman manajemen shift, urutan migrasi, dan batasan integrasi checkout.
+## v2.36 — Password recovery & staging build
+
+This archive is a **STAGING build only**. `js/supabase-config.js` points to `varissdevhgyeqsijpli.supabase.co` and deliberately contains a placeholder for the staging publishable key. Insert the STAGING project's `sb_publishable_...` key before deploying. Never use a service-role key or `sb_secret_...` key in browser code. The application fails closed to local/demo mode while the placeholder remains.
+
+### Password recovery
+- Login screen includes **Lupa password?** and an email request form.
+- Calls `supabase.auth.resetPasswordForEmail(email, { redirectTo })` with `?flow=recovery` on the current staging origin.
+- Handles `type=recovery` callback and `PASSWORD_RECOVERY` auth event before opening the POS.
+- New password and confirmation are required; minimum 8 characters; calls `supabase.auth.updateUser({ password })`.
+- On success, signs out and returns to login. On failure, session and input form remain available for retry.
+- In Supabase Staging → Authentication → URL Configuration, allow the exact staging/Preview URL (including its path pattern as needed). Keep Production Auth settings unchanged.
+- Check the Reset Password email template uses Supabase's recovery URL placeholder (`{{ .ConfirmationURL }}`), and check SMTP/provider delivery settings in STAGING.
+
+### Staging deployment checklist
+1. Confirm target Supabase project ID is `varissdevhgyeqsijpli`.
+2. Put its public publishable key in `js/supabase-config.js`; never paste secrets.
+3. Configure Site URL and Redirect URLs in **Staging only** for the chosen Cloudflare Pages Preview URL.
+4. Confirm staging RPC function contracts `pos_get_state()` and `pos_save_state(...)` in SQL before using cloud sync. The frontend now calls these RPCs; argument name/payload envelope must match actual staging function signatures.
+5. Test an owner and manager login with their already-existing staging accounts, password recovery, sync and all POS modules. Do not create duplicate owner or manager accounts for tests.
+6. Upload the contents of this `orion/` directory to a separate Cloudflare Pages staging/Preview project. Do not use `orion-corndog.pages.dev`.
+
+### Known validation limits
+The source archive could be inspected and JavaScript syntax can be checked locally. Live Auth mail delivery, owner/manager authentication, RPC behavior, staging RLS, and Cloudflare Pages deployment require a working authorized Supabase connection, a valid staging publishable key, and the actual Preview URL. These have not been represented as passed. No Production project or database was modified.
+
+
+## v2.36 — Password recovery & staging build
+
+This is a **STAGING build only**. `js/supabase-config.js` points to `varissdevhgyeqsijpli.supabase.co` and deliberately contains a placeholder for the staging publishable key. Insert the STAGING project's `sb_publishable_...` key before deploying. Never use a service-role key or `sb_secret_...` key in browser code. The application fails closed to local/demo mode while the placeholder remains.
+
+### Password recovery
+- Login screen includes **Lupa password?** and an email request form.
+- Calls `supabase.auth.resetPasswordForEmail(email, { redirectTo })` with `?flow=recovery` on the current staging origin.
+- Handles `type=recovery` callback and `PASSWORD_RECOVERY` event before opening POS.
+- New password and confirmation are required; minimum 8 characters; calls `supabase.auth.updateUser({ password })`.
+- On success, signs out and returns to login.
+- Allow the exact Preview URL in Staging Authentication → URL Configuration. Keep Production Auth settings unchanged.
+
+### Sync RPC
+- Client now calls `pos_get_state()` and `pos_save_state(p_payload: data)` rather than directly reading/upserting `pos_state`. Cloud writes remain blocked until `ORION_RPC_CONTRACT_VERIFIED` is explicitly set true after staging SQL/RLS audit.
+- **Important:** the staging SQL function signatures and payload envelope are not yet verified; confirm before enabling cloud sync.
+
+### Staging deployment
+1. Confirm project ID `varissdevhgyeqsijpli`.
+2. Insert its public publishable key in `js/supabase-config.js`; never paste secrets.
+3. Configure Site URL and Redirect URLs in **Staging only**.
+4. Test existing owner and manager accounts; do not create duplicates.
+5. Deploy the `orion/` folder to a separate Cloudflare Pages Preview/staging site, never `orion-corndog.pages.dev`.
+
+Live Auth delivery, owner/manager login, actual RPC behavior, staging RLS, and deployment remain untested due to staging project permission denial and missing key/Preview URL. No Production resources were modified.
